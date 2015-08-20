@@ -2,10 +2,9 @@
 	session_start();
 
 	include '../checkLoggedIn.php';
-	include '../pc_stuff_lookup.php';
 	include '../array_report.php';
 
-	$computerName = str_replace(' ','',$_POST['computerName']) ;
+	$computerName = str_replace(' ','', $_POST['computerName']) ;
 	$pageTitle = "Edited {$computerName}";
 	
 ?>
@@ -21,10 +20,10 @@
 				mysqli_query($mysqlConnection, "UPDATE computer SET
 				hostname = '{$computerName}',
 				os = '{$_POST['operatingsystem']}',
-				bit = '{$_POST['bit']}',
 				employee = '{$_POST['employee']}',
 				exemployee = '{$_POST['exemployee']}',
 				rebuilder = '{$_POST['rebuilder']}',
+				password = '{$_POST['password']}',
 				ram = '{$_POST['ram']}',
 				hdd = '{$_POST['hdd']}',
 				opt  = '{$_POST['opt']}',
@@ -37,14 +36,13 @@
 				broadview = '{$_POST['broadview']}',
 				cell = '{$_POST['cell']}',
 				notes = '{$_POST['notes']}',
-				status = '{$_POST['status']}',
 				cpu = '{$_POST['cpu']}',
 				model = '{$_POST['model']}',
 				servicetag = '{$_POST['servicetag']}',
 				escode = '{$_POST['escode']}',
 				date = '{$_POST['date']}',
 				dop = '{$_POST['dop']}'
-				WHERE computerid = {$_POST['id']}");
+				WHERE computerid = {$_POST['computerid']}");
 				mysqli_close($mysqlConnection);
 
 				header("Location: ../viewComputer.php?computerName={$computerName}");

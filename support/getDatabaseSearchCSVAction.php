@@ -14,17 +14,17 @@
 
 	include "mysqlConnect.php";
 	$csv_rows = mysqli_query($mysqlConnection, "SELECT $all_except_id FROM computer WHERE 
-		hostname LIKE ('%{$sort}%') OR
-		os LIKE ('%{$sort}%') OR
-		bit LIKE ('%{$sort}%') OR
-		employee LIKE ('%{$sort}%') OR
-		rebuilder LIKE ('%{$sort}%') OR
-		cpu LIKE ('%{$sort}%') OR
-		status LIKE ('%{$sort}%') OR
-		programs LIKE ('%{$sort}%') OR
-		servicetag LIKE ('%{$sort}%') OR
-		escode LIKE ('%{$sort}%') OR
-		model LIKE ('%{$sort}%')
+		hostname LIKE ('%{$query}%') OR
+		os LIKE ('%{$query}%') OR
+		bit LIKE ('%{$query}%') OR
+		employee LIKE ('%{$query}%') OR
+		rebuilder LIKE ('%{$query}%') OR
+		cpu LIKE ('%{$query}%') OR
+		status LIKE ('%{$query}%') OR
+		programs LIKE ('%{$query}%') OR
+		servicetag LIKE ('%{$query}%') OR
+		escode LIKE ('%{$query}%') OR
+		model LIKE ('%{$query}%')
  		ORDER BY hostname ASC");
 	while ($csv_row = mysqli_fetch_assoc($csv_rows)) {
 		fputcsv($output, $csv_row);

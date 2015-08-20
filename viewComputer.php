@@ -1,13 +1,11 @@
 <?php
 	session_start();
 
-    include 'checkLoggedIn.php';  
-    include 'connection.php';
-    include 'pc_stuff_lookup.php';
+    include 'checkLoggedIn.php';
+	include "pc_stuff_lookup.php";
 	include 'array_report.php';
 
 	$computerName = $_GET['computerName'];
-	$row = mysql_fetch_array(mysql_query("SELECT * FROM computer WHERE hostname = '$computerName' "));
 	$pageTitle = $computerName;
 	$headerContent = "<span id='rightLinks'>
 		<a href='editInfo.php?computerName={$computerName}' class='navLink, green'>Edit</a> Info - 
@@ -30,49 +28,96 @@
 	</head>
 	<body>
 		<?php include 'header.php'; ?>
-			<div class="portal blue" id="viewComputer">
-				<h1 id="printComputerName"><?=$computerName?></h1><h2 id="printOS">Service Tag: <?=$row[14]?> - OS: <?=$row[2]." ".$row[3]?></h2>
-			</div>
-			<table>
-				<?php
-					$j = 3;
+			<?php
+				include "support/mysqlConnect.php";
+				$list = mysqli_fetch_object(mysqli_query($mysqlConnection, "SELECT * FROM computer WHERE hostname = '{$computerName}' "));
+				mysqli_close($mysqlConnection);
 				
-					for ($i=4; $i < (count($row)/2); $i++) {
-						if ($i<18) {
+				function getInstalledItems($hostname, $fieldname) {
+					include "support/mysqlConnect.php";
+					$result = mysqli_query($mysqlConnection, "SELECT $fieldname FROM computer WHERE hostname = '{$hostname}'");
+					$item = mysqli_fetch_row($result);
+					if ($item[0] === "") {
+						echo "<tr>
+								<td>Nothing to do here!</td>
+							</tr>";
+					} else {
+						$items = explode(" - ", $item[0]);
+						for ($i = 0; $i < count($items); $i++) {
 							echo "<tr>
-					<td>".$array_report[$j]."</td>
-					<td>".$row[$i]."</td>";
-							$j++;$i++;
-							echo "
-					<td>".$array_report[$j]."</td>
-					<td>".$row[$i]."</td>
-				</tr>
-				";
-							$j++;
-						} else if ($i == 18) {
-							echo "<tr>
-					<td>".$array_report[$j]."</td>
-					<td>".$row[$i]."</td>
-				</tr>
-				";
-							$i++;
-						} else if ($i>=19 && $i<=25) {
-							$j=25;
-						} else if ($i>25) {
-							echo "<tr>
-					<td>".$array_report[$j]."</td>
-					<td>".$row[$i]."</td>";
-							$j++;$i++;
-							echo "
-					<td>".$array_report[$j]."</td>
-					<td>".$row[$i]."</td>
-				</tr>
-				";
-							$j++;
+									<td>
+										<input type='checkbox'/>{$items[$i]}
+									</td>
+								</tr>";
 						}
 					}
-					$notes = $row[25];
-				?>
+					mysqli_close($mysqlConnection);
+				}
+			?>
+			<div class="portal blue" id="viewComputer">
+				<h1 id="printComputerName"><?=$computerName?></h1><h2 id="printOS">Service Tag: <?=$list->servicetag?> - OS: <?=$list->os?></h2>
+			</div>
+			<table>
+				<tr>
+					<td>Employee:</td>
+					<td><?=$list->employee?></td>
+					<td>Ex-Employee:</td>
+					<td><?=$list->exemployee?></td>
+				</tr>
+				<tr>
+					<td>Rebuilder:</td>
+					<td><?=$list->rebuilder?></td>
+					<td>Password:</td>
+					<td><?=$list->password?></td>
+				</tr>
+				<tr>
+					<td>Model:</td>
+					<td><?=$list->model?></td>
+					<td>CPU:</td>
+					<td><?=$list->cpu?></td>
+				</tr>
+				<tr>
+					<td>RAM:</td>
+					<td><?=$list->ram?></td>
+					<td>HDD:</td>
+					<td><?=$list->hdd?></td>
+				</tr>
+				<tr>
+					<td>Optical Drive:</td>
+					<td><?=$list->opt?></td>
+					<td>Battery:</td>
+					<td><?=$list->power?></td>
+				</tr>
+				<tr>
+					<td>Service Tag:</td>
+					<td><?=$list->servicetag?></td>
+					<td>Express Service Code:</td>
+					<td><?=$list->escode?></td>
+				</tr>
+				<tr>
+					<td>MAC-Address LAN:</td>
+					<td><?=$list->maclan?></td>
+					<td>MAC-Address WAN:</td>
+					<td><?=$list->macwifi?></td>
+				</tr>
+				<tr>
+					<td>Date of Build:</td>
+					<td><?=$list->date?></td>
+					<td>Date of Purchase:</td>
+					<td><?=$list->dop?></td>
+				</tr>
+				<tr>
+					<td>Cell Phone Number:</td>
+					<td><?=$list->cell?></td>
+					<td>Broadview Number:</td>
+					<td><?=$list->broadview?></td>
+				</tr>
+				<tr>
+					<td>Silverpop Account:</td>
+					<td><?=$list->silverpop?></td>
+					<td>EFax Account:</td>
+					<td><?=$list->efax?></td>
+				</tr>
 			</table>
 			<div id="software">
 				<table>
@@ -80,7 +125,7 @@
 	 					<td class="tobedone" colspan="2">Applications</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName,'programs')
+						getInstalledItems($computerName, 'programs')
 					?>
 				</table>
 			</div>
@@ -90,7 +135,7 @@
 						<td class="tobedone" colspan="2">Updates to be installed</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName,'updates')
+						getInstalledItems($computerName, 'updates')
 					?>
 				</table>
 			</div>
@@ -100,7 +145,7 @@
 						<td class="tobedone" colspan="2">Configuration</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName,'config')
+						getInstalledItems($computerName, 'config')
 					?>
 				</table>
 			</div>
@@ -110,7 +155,7 @@
 						<td class="tobedone" colspan="2">Printers</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName,'printers')
+						getInstalledItems($computerName, 'printers')
 					?>
 				</table>
 			</div>
@@ -120,7 +165,7 @@
 						<td class="tobedone" colspan="2">Additional Hardware</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName,'addhw')
+						getInstalledItems($computerName, 'addhw')
 					?>
 				</table>
 			</div>
@@ -130,11 +175,10 @@
 						<td class="tobedone">Notes</td><td></td>
 					</tr>
 					<tr>
-    					<td colspan="2"><?php echo $notes; ?></td>
+    					<td colspan="2"><?=$list->notes;?></td>
    					</tr>
 				</table>
 			</div>
 			<?php
-				mysql_close($connection);
 				include 'footer.php';
 			?>
