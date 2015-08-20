@@ -2,10 +2,8 @@
 	session_start();
 
 	include '../checkLoggedIn.php';
-	include '../connection.php';
 
 	$pageTitle = "Added {$_POST['item']}";
-	
 ?>
 <!doctype html>
 <html>
@@ -16,12 +14,13 @@
 	<body>
 		<?php include '../header.php'; ?>
 			<?php
+				include 'mysqlConnect.php';
 				$item = mysql_real_escape_string($_POST['item']);
 				$table = mysql_real_escape_string($_POST['table']);
 				$field = mysql_real_escape_string($_POST['field']);
 
-				mysql_query("INSERT INTO {$table} ({$field}) VALUES ('{$item}')");
-				mysql_close($connection);
+				mysqli_query($mysqlConnection, "INSERT INTO {$table} ({$field}) VALUES ('{$item}')");
+				mysqli_close($mysqlConnection);
 			?>
 			<div class="portal green">
 				<h2>Succsessfuly added <?=$_POST['item']?>!</h2>

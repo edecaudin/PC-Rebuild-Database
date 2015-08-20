@@ -2,7 +2,6 @@
 	session_start();
 
     include '../checkLoggedIn.php';
-    include '../connection.php';
     include '../pc_stuff_lookup.php';
 	include '../array_report.php';
 
@@ -18,7 +17,8 @@
 	<body>
 		<?php include '../header.php'; ?>
 			<?php
-				$hostresult = mysql_query("SELECT hostname FROM computer");
+				include "mysqlConnect.php";
+				$hostresult = mysqli_query($mysqlConnection, "SELECT hostname FROM computer");
 				if ($computerName == "") {
 					echo "<script type='text/javascript'>
 						alert('Computer name is empty!');
@@ -26,7 +26,7 @@
 					</script>";
 					exit;
 				}
-				while ($hostget = mysql_fetch_row($hostresult)) {
+				while ($hostget = mysqli_fetch_row($hostresult)) {
 					if ($hostget[0] == $computerName) {
 						echo "<script type='text/javascript'>
 							alert('$computerName already exists!');
@@ -35,8 +35,8 @@
 						exit;
 					}
 				}
-				mysql_query("INSERT INTO computer (Hostname) VALUES ('$computerName')");
-				mysql_close($connection);
+				mysqli_query($mysqlConnection, "INSERT INTO computer (Hostname) VALUES ('$computerName')");
+				mysqli_close($mysqlConnection);
 			?>
 			<div class="portal green">
 				<h2>Succsessfuly created <?=$computerName?>!</h2>

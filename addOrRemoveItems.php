@@ -2,7 +2,6 @@
 	session_start();
 
 	include 'checkLoggedIn.php';
-	include 'connection.php';
 	include 'pc_stuff_lookup.php';
 
 	$pageTitle = "Add or Remove Items";
@@ -83,7 +82,7 @@
 				<form id="removeApplication" action="support/removeItemAction.php" method="post">
 					<select id="selectApplication" name="item">
 						<?php  
-							stuff_lookup(programs, software);
+							getTableItems('programs', 'software');
 						?>
 					</select>
 					<input type="hidden" name="table" value="software"/>
@@ -96,7 +95,7 @@
 				<form id="removePrinter" action="support/removeItemAction.php" method="post">
 					<select id="selectPrinter" name="item">
 						<?php  
-							stuff_lookup(device, printers);
+							getTableItems('device', 'printers');
 						?>
 					</select>
 					<input type="hidden" name="table" value="printers"/>
@@ -109,7 +108,7 @@
 				<form id="removeUpdate" action="support/removeItemAction.php" method="post">
 					<select id="selectUpdate" name="item">
 						<?php  
-							stuff_lookup(update_software, updates);
+							getTableItems('update_software', 'updates');
 						?>
 					</select>
 					<input type="hidden" name="table" value="updates"/>
@@ -122,7 +121,7 @@
 				<form id="removeConfiguration" action="support/removeItemAction.php" method="post">
 					<select id="selectConfiguration" name="item">
 						<?php  
-							stuff_lookup(configuration, config);
+							getTableItems('configuration', 'config');
 						?>
 					</select>
 					<input type="hidden" name="table" value="config"/>
@@ -135,7 +134,7 @@
 				<form id="removeHardware" action="support/removeItemAction.php" method="post">
 					<select id="selectHardware" name="item">
 						<?php  
-							stuff_lookup(additionalhardware, hardware);
+							getTableItems('additionalhardware', 'hardware');
 						?>
 					</select>
 					<input type="hidden" name="table" value="hardware"/>
@@ -148,7 +147,7 @@
 				<form id="removeOS" action="support/removeItemAction.php" method="post">
 					<select id="selectOS" name="item">
 						<?php  
-							stuff_lookup(os_select, operating_systems);
+							getTableItems('os_select', 'operating_systems');
 						?>
 					</select>
 					<input type="hidden" name="table" value="operating_systems"/>
@@ -157,6 +156,5 @@
 				</form>
 			</div>
 			<?php
-				mysql_close($connection);
 				include 'footer.php';
 			?>

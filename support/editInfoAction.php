@@ -2,7 +2,6 @@
 	session_start();
 
 	include '../checkLoggedIn.php';
-	include '../connection.php';
 	include '../pc_stuff_lookup.php';
 	include '../array_report.php';
 
@@ -18,7 +17,8 @@
 	<body>
 		<?php include '../header.php'; ?>
 			<?php
-				mysql_query("UPDATE computer SET
+				include "mysqlConnect.php";
+				mysqli_query($mysqlConnection, "UPDATE computer SET
 				hostname = '{$computerName}',
 				os = '{$_POST['operatingsystem']}',
 				bit = '{$_POST['bit']}',
@@ -45,7 +45,7 @@
 				date = '{$_POST['date']}',
 				dop = '{$_POST['dop']}'
 				WHERE computerid = {$_POST['id']}");
-				mysql_close($connection);
+				mysqli_close($mysqlConnection);
 
 				header("Location: ../viewComputer.php?computerName={$computerName}");
 

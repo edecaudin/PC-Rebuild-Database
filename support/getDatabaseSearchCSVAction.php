@@ -2,7 +2,6 @@
 	session_start();
 
     include "../checkLoggedIn.php";
-	include '../connection.php';
 	include "../array_report.php";
 
 	$query = $_GET["sort"];
@@ -13,7 +12,8 @@
 	$output = fopen("php://output", "w");
 	fputcsv($output, $array_report);
 
-	$csv_rows = mysql_query("SELECT $all_except_id FROM computer WHERE 
+	include "mysqlConnect.php";
+	$csv_rows = mysqli_query($mysqlConnection, "SELECT $all_except_id FROM computer WHERE 
 		hostname LIKE ('%{$sort}%') OR
 		os LIKE ('%{$sort}%') OR
 		bit LIKE ('%{$sort}%') OR
@@ -26,7 +26,8 @@
 		escode LIKE ('%{$sort}%') OR
 		model LIKE ('%{$sort}%')
  		ORDER BY hostname ASC");
-	while ($csv_row = mysql_fetch_assoc($csv_rows)) {
+	while ($csv_row = mysqli_fetch_assoc($csv_rows)) {
 		fputcsv($output, $csv_row);
 	}
+	mysqli_close($mysqlConnection);
 ?>

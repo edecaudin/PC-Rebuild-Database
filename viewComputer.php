@@ -80,7 +80,7 @@
 	 					<td class="tobedone" colspan="2">Applications</td>
 					</tr>
 					<?php
-						recreate_rebuildform_checked($computerName,'programs')
+						getInstalledItems($computerName,'programs')
 					?>
 				</table>
 			</div>
@@ -90,7 +90,7 @@
 						<td class="tobedone" colspan="2">Updates to be installed</td>
 					</tr>
 					<?php
-						recreate_rebuildform_checked($computerName,'updates')
+						getInstalledItems($computerName,'updates')
 					?>
 				</table>
 			</div>
@@ -100,7 +100,7 @@
 						<td class="tobedone" colspan="2">Configuration</td>
 					</tr>
 					<?php
-						recreate_rebuildform_checked($computerName,'config')
+						getInstalledItems($computerName,'config')
 					?>
 				</table>
 			</div>
@@ -110,7 +110,7 @@
 						<td class="tobedone" colspan="2">Printers</td>
 					</tr>
 					<?php
-						recreate_rebuildform_checked($computerName,'printers')
+						getInstalledItems($computerName,'printers')
 					?>
 				</table>
 			</div>
@@ -120,7 +120,7 @@
 						<td class="tobedone" colspan="2">Additional Hardware</td>
 					</tr>
 					<?php
-						recreate_rebuildform_checked($computerName,'addhw')
+						getInstalledItems($computerName,'addhw')
 					?>
 				</table>
 			</div>

@@ -30,7 +30,7 @@
 							<optgroup id="itteam" label="Rebuilder">
 								<?php
 									getTableItems("rebuilder", "itteam");
-								?>	
+								?>
 							</optgroup>
 						</select>
 					</form>
@@ -39,7 +39,9 @@
 			<h2 id="downloadCSV"><a href="support/getDatabaseCSVAction.php"><span class="blue">Download</span> a .csv version of the database</a></h2>
 			<div id="searchResults"></div>
 			<div id="databaseTable">
-				<?php include 'support/getDatabaseAction.php'; ?>
+				<?php
+					include 'support/getDatabaseAction.php';
+				?>
 			</div>
 			<?php
 				include 'footer.php';

@@ -1,30 +1,27 @@
 <?php
 	session_start();
 
-    include '../checkLoggedIn.php';
-    include '../connection.php';
-    include '../pc_stuff_lookup.php';
+    include "../checkLoggedIn.php";
+    include "../pc_stuff_lookup.php";
 	
-	$computerName = $_POST['computerName'];
+	$computerName = $_POST["computerName"];
 	$pageTitle = "Edited {$computerName}";
 ?>
 <!doctype html>
 <html>
 	<head>
-		<?php include '../head.php'; ?>
+		<?php include "../head.php"; ?>
 	</head>
 	<body>
-		<?php include '../header.php'; ?>
+		<?php include "../header.php"; ?>
 			<?php
-				$id = $_POST['id'];
-				saveChangesFromCheckbox($id,'programs','software',$_POST['software'],'programs');
-				saveChangesFromCheckbox($id,'configuration','config',$_POST['config'],'config');
-				saveChangesFromCheckbox($id,'additionalhardware','hardware',$_POST['hardware'],'addhw');
-				saveChangesFromCheckbox($id,'update_software','updates',$_POST['updates'],'updates');
-				saveChangesFromCheckbox($id,'device','printers',$_POST['printers'],'printers');
-				mysql_close($connection);
-				
+				updateConfig($_POST["software"], "programs", $computerName);
+				updateConfig($_POST["config"], "config", $computerName);
+				updateConfig($_POST["hardware"], "addhw", $computerName);
+				updateConfig($_POST["updates"], "updates", $computerName);
+				updateConfig($_POST["printers"], "printers", $computerName);
+
 				header("Location: ../viewComputer.php?computerName={$computerName}");
 
-				include '../footer.php';
+				include "../footer.php";
 			?>

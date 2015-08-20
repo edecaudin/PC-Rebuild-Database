@@ -1,14 +1,14 @@
 <?php
 	session_start();
 
-	include '../connection.php';
-
 	if (isset($_SESSION["username"])) {
 		header("Location: ../index.php");
 	}
 
 	$username = $_POST["username"];
-	$getUser = mysql_fetch_object(mysql_query("SELECT username, password FROM users WHERE username LIKE '$username' LIMIT 1"));
+	include "mysqlConnect.php";
+	$getUser = mysqli_fetch_object(mysqli_query($mysqlConnection, "SELECT username, password FROM users WHERE username LIKE '$username' LIMIT 1"));
+	mysqli_close($mysqlConnection);
 	
 	if ($getUser->password === md5($_POST["password"])) {
 		$_SESSION["username"] = $username;	

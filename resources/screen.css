@@ -5,6 +5,7 @@
 	body {
 		font-family: 'Roboto Condensed', sans-serif;
 		font-size: 11pt;
+		color: #224242;
 	}
 
 	a {
@@ -141,7 +142,6 @@
 		width: 90%;
 		float: left;
 		margin: 4px;
-		color: darkslategray;
 	}
 	
 	div:not(.portal)>h2 {

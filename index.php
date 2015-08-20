@@ -1,9 +1,8 @@
 <?php
 	session_start();
 
-	include 'checkLoggedIn.php';
-	include 'connection.php';
-	include 'pc_stuff_lookup.php';
+	include "checkLoggedIn.php";
+	include "pc_stuff_lookup.php";
 	
 	$pageTitle = "Home";
 ?>
@@ -15,7 +14,7 @@
 	<body>
 		<?php include 'header.php'; ?>
 			<div class="portal blue">
-				<h2>Welcome to the Vendome PC Rebuild Database <?= $_SESSION['username']?>!</h2>
+				<h2>Welcome to the Vendome PC Rebuild Database <?=$_SESSION['username']?>!</h2>
 			</div>
 			<div class="box">
 				<h2><a href="newComputer.php"><span class="green">Add</span> a new computer</a></h2>
@@ -30,7 +29,9 @@
 				<form action="viewComputer.php" method="get">
 					Edit and create a printable report of any computer:
 					<select name="computerName">
-						<?php pc_lookup(); ?>
+						<?php
+							getTableItems("hostname", "computer");
+						?>
 					</select> 
 					<input type="submit" value="Get Report"/>
 				</form>
@@ -40,6 +41,5 @@
 				View and search the entire computer database, sorted by computer name.
 			</div>
 			<?php
-				mysql_close($connection);
 				include 'footer.php';
 			?>

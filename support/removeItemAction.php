@@ -2,10 +2,8 @@
 	session_start();
 
 	include '../checkLoggedIn.php';
-	include '../connection.php';
 
 	$pageTitle = "Removed {$_POST['item']}";
-	
 ?>
 <!doctype html>
 <html>
@@ -20,8 +18,9 @@
 				$table = mysql_real_escape_string($_POST['table']);
 				$field = mysql_real_escape_string($_POST['field']);
 
-				mysql_query("DELETE FROM {$table} WHERE {$field} = '{$item}'");
-				mysql_close($connection);
+				include "mysqlConnect.php";
+				mysqli_query($mysqlConnection, "DELETE FROM {$table} WHERE {$field} = '{$item}'");
+				mysqli_close($mysqlConnection);
 			?>
 			<div class="portal red">
 				<h2>Succsessfuly deleted <?=$_POST['item']?>!</h2>
