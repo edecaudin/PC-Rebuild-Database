@@ -1,6 +1,5 @@
 <?php
 	include "mysqlConnect.php";
-
 	if (isset($_POST["searchterm"])) {
 		$result = mysqli_query($mysqlConnection, "SELECT * FROM computer WHERE
 			hostname LIKE ('%".mysql_real_escape_string(utf8_decode($_POST["searchterm"]))."%') OR
@@ -31,6 +30,5 @@
 		} while ($list = mysqli_fetch_object($result));
 		echo "<h2 id='downloadCSV'><a href='support/getDatabaseSearchCSVAction.php?sort={$_POST['searchterm']}'><span class='blue'>Download</span> a .csv version of the search results</a></h2>";
 	}
-
 	mysqli_close($mysqlConnection);
 ?>

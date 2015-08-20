@@ -15,7 +15,7 @@
 	<body>
 		<?php include "../header.php"; ?>
 			<?php
-				include "../mysqlConnect.php";
+				include "mysqlConnect.php";
 				mysqli_query($mysqlConnection, "DELETE FROM computer WHERE hostname = '{$computerName}'");
 				mysqli_close($mysqlConnection);
 			?>

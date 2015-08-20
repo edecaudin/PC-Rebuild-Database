@@ -126,7 +126,7 @@
 					</select>
 					<input type="hidden" name="table" value="config"/>
 					<input type="hidden" name="field" value="configuration"/>
-					<input type="button" value="Remove Configuratoin" onClick="removeItem('selectConfiguration', 'removeConfiguration')"/>
+					<input type="button" value="Remove Configuration" onClick="removeItem('selectConfiguration', 'removeConfiguration')"/>
 				</form>
 			</div>
 			<div class="box">

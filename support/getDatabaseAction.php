@@ -1,6 +1,5 @@
 <?php 
 	include "mysqlConnect.php";
-
 	$listresult = mysqli_query($mysqlConnection, "SELECT hostname, os, bit, employee, servicetag, maclan, oskey, model, dop, macwifi FROM computer ORDER BY hostname ASC");
 	while ($list = mysqli_fetch_object($listresult)) {
 		echo "<div class='databaseCell' id='databaseHeaderCell'>Hostname: <a href='viewComputer.php?computerName={$list->hostname}' class='navLink'>{$list->hostname}</a></div>
@@ -13,6 +12,5 @@
 <div class='databaseCell'>MAC WLAN: {$list->macwifi}</div>
 ";
 	}
-
 	mysqli_close($mysqlConnection);
 ?>
