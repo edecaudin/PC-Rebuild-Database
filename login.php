@@ -1,8 +1,14 @@
 <?php
+	session_start();
+	
 	$pageTitle = "Login";
 	$headerContent = "<span id='rightLinks'>
 					<a href='javascript:document.forms[\"login\"].submit();' class='navLink, green'>Login</a>
 				</span>";
+
+	if (isset($_SESSION["username"])) {
+		header("Location: index.php");
+	}
 ?>
 <!doctype html>
 <html>

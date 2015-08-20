@@ -2,7 +2,6 @@
 	session_start();
 
 	include 'checkLoggedIn.php';
-	include 'connection.php';
 	include 'pc_stuff_lookup.php';
 	
 	$pageTitle = "Database";
@@ -18,19 +17,19 @@
 			<div class="portal blue">
 				<h2 id="searchDatabase">Search the database: <input type="text" onKeyUp="searchFor(this.value);"></h2>
 				<h2>Filter the database:
-					<form id="sortform" action="support/getDatabaseFilterCSVAction.php" method="get">
+					<form id="filterDatabase" action="support/getDatabaseFilterCSVAction.php" method="get">
 						<select name="sort" id="sort" onChange="document.forms['sortform'].submit();">
-							<option name='none' value='none'>Select from here</option>
+							<option>Select filter</option>
 							<optgroup id="operating_systems" label="Operating Systems">
-								<option name='Windows'>Windows</option>
-								<option name='Mac OSX'>Mac OS X</option>
+								<option>Windows</option>
+								<option>Mac OS X</option>
 								<?php
-									stuff_lookup(os_select, operating_systems);
+									getTableItems("os_select", "operating_systems");
 								?>
 							</optgroup>
 							<optgroup id="itteam" label="Rebuilder">
 								<?php
-									stuff_lookup(Rebuilder, itteam);
+									getTableItems("rebuilder", "itteam");
 								?>	
 							</optgroup>
 						</select>
@@ -42,7 +41,6 @@
 			<div id="databaseTable">
 				<?php include 'support/getDatabaseAction.php'; ?>
 			</div>
-		<?php
-			mysql_close($connection);
-			include 'footer.php';
-		?>
+			<?php
+				include 'footer.php';
+			?>

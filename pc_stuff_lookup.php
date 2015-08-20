@@ -27,6 +27,19 @@ function stuff_lookup($fieldname, $tablename, $selected = null) {
 		}
 }
 
+function getTableItems($fieldname, $tablename, $selected = null) {
+	include "support/mysqlConnect.php";
+
+	$result = mysqli_query($mysqlConnection, "SELECT $fieldname FROM $tablename ORDER BY $fieldname ASC");
+	$count = 1;
+	while ($item = mysqli_fetch_row($result)) {
+		echo "<option name='$item'".(isset($selected) && $item[0] === $selected ? " selected" : "").">{$item[0]}</option>";
+		$count++;
+	}
+
+	mysqli_close($mysqlConnection);
+}
+
 function recreate_rebuildform_checked($hostname, $fieldname) {
 	$checkedresult = mysql_query("SELECT $fieldname FROM computer WHERE hostname = '{$hostname}'");
 	$checkedall = array();
@@ -48,38 +61,34 @@ This function is used for the edit menu programs and configuration. It compares 
 Diese Funktion wird von den Bearbeitenmenüs programs und configuration benutzt. Sie vergleicht alle vorhanden Elemente der Datenbank mit denen die eigentlich auf dem Computer vorhanden sind und erstellt eine Übersicht mit allen Elementen, auf der installierten hervorgehoben und angewählt sind. Durch an- und abwählen einzelner Elemente können diese zum Computer hinzugefügt oder gelöscht werden. Desweiteren wird ein unsichtbares Textfeld erstellt welches die Computer ID überträgt.
 */
 function installedStuffLookup($hostname,$select,$table_where_select,$what_change) {
-$computerreport = "SELECT $what_change, computerid FROM computer WHERE hostname = '$hostname' ";
-$computerinfos = mysql_query($computerreport);
-
-$select_all_software = "SELECT $select FROM $table_where_select ORDER BY $select ASC";
-$all_software = mysql_query($select_all_software);
+	$computerreport = "SELECT $what_change, computerid FROM computer WHERE hostname = '$hostname' ";
+	$computerinfos = mysql_query($computerreport);
 	
-$one_program = array(); 
-	while($installed = mysql_fetch_object($computerinfos))
-		{ $programs = $installed->$what_change; $id = $installed->computerid; }
+	$select_all_software = "SELECT $select FROM $table_where_select ORDER BY $select ASC";
+	$all_software = mysql_query($select_all_software);
+		
+	$one_program = array(); 
+	while($installed = mysql_fetch_object($computerinfos)) { 
+		$programs = $installed->$what_change; $id = $installed->computerid;
+	}
 	$one_program = explode(" - ",$programs);
 	
 	$all_available_software = array();	
 	while ($get = mysql_fetch_row($all_software)) {
 		$all_available_software[] = $get[0];
-		}
+	}
 		
 	$i=0;
-	while ($i<count($all_available_software)) {
+	while ($i < count($all_available_software)) {
 		$check_that = $all_available_software[$i];
-		if(in_array($check_that, $one_program, TRUE)) {
-			echo "<div class='edit_me_2_inst'>
-			<input type='checkbox' name='".$table_where_select."[]' value='$all_available_software[$i]' checked>
-			 $all_available_software[$i]</div>";
-			} else {
-				echo "<div class='edit_me_2'>
-				<input type='checkbox' name='".$table_where_select."[]' value='$all_available_software[$i]'>
-			 $all_available_software[$i]</div>";
-				}
-				$i++;
-	
+		$isInstalled = in_array($check_that, $one_program, TRUE);
+		echo "<div class='edit_me_2".($isInstalled ? "_inst" : "")."'>
+			<input type='checkbox' name='".$table_where_select."[]' value='{$all_available_software[$i]}'".($isInstalled ? " checked" : "").">
+			<label for='".$table_where_select."[]'>{$all_available_software[$i]}</label>
+		</div>";
+		$i++;
 	}
-	echo "<input style='visibility:hidden;' type='text' name='id' value='$id'>";
+	echo "<input type='hidden' name='id' value='$id'/>";
 } 
 
 /*
@@ -106,19 +115,5 @@ if ($how_many_things == 1) {
 				$nothing = "UPDATE computer SET $what_change = '$with_change[0]' WHERE computerid = $id";
 				$make_change = mysql_query($nothing);
 				}
-}
-
-function getDatabaseTable() {
-	$listresult = mysql_query("SELECT hostname, os, bit, employee, servicetag, status, oskey, model, dop, macwifi FROM computer ORDER BY hostname ASC");
-	while ($list = mysql_fetch_object($listresult)) {
-		echo "<div class='tobedone databaseCell'>Hostname: {$list->hostname}</div>
-				<div class='databaseCell'>OS: {$list->os}, {$list->bit}</div>
-				<div class='databaseCell'>Date of Purchase: {$list->dop}</div>
-				<div class='databaseCell'>MAC WIFI: {$list->macwifi}</div>
-				<div class='databaseCell' id='databaseClearCell'>User: {$list->employee}</div>
-				<div class='databaseCell'>Model: {$list->model}</div>
-				<div class='databaseCell'>Service Tag: {$list->servicetag}</div>
-				<div class='databaseCell'>Status: {$list->status}</div>";
-	} 
 }
 ?>

@@ -7,7 +7,7 @@ function searchFor(searchterm) {
 	try {
 		var XMLHttp = new XMLHttpRequest();
 
-		XMLHttp.open("post", "search.php", true);
+		XMLHttp.open("post", "support/getDatabaseSearchAction.php", true);
 		XMLHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		XMLHttp.send("searchterm=" + searchterm);
 		

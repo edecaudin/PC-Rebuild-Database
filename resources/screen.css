@@ -152,27 +152,42 @@
 		text-shadow: 0.01px 0.01px 2px darkgray;
 	}
 	
+	div#searchDatabse, #filterDatabase {
+		display: inline;
+	}
+	
 	#downloadCSV {
 		float: left;
 	}
 	
-	.databaseCell {
+	div.databaseCell {
 		width: 23%;
 		float: left;
 		padding: 5px;
 	}
 	
-	#databaseClearCell {
+	div#databaseHeaderCell {
+		clear: left;
+		transition: background-color 0.5s, color 0.5s;
+		background-color: lightgray;
+	}
+	
+	div#databaseHeaderCell:hover {
+		background-color: slategray;
+		color: white;
+	}
+	
+	div#databaseHeaderCell:hover a.navLink {
+		text-decoration: underline;
+	}
+	
+	div#databaseClearCell {
 		clear: left;
 	}
 	
-	#searchResults {
+	div#searchResults {
 		float: left;
 		clear: left;
-	}
-	
-	#sortform {
-		display: inline;
 	}
 
  	/* Table Styles */
