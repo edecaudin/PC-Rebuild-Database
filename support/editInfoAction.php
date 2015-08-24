@@ -1,51 +1,49 @@
 <?php
 	session_start();
 
-	include '../checkLoggedIn.php';
-	include '../array_report.php';
+	include "../checkLoggedIn.php";
+	include "../array_report.php";
 
-	$computerName = str_replace(' ','', $_POST['computerName']) ;
-	$pageTitle = "Edited {$computerName}";
+	include "../classes/Computer.php";
+	$computer = new Computer(intval($_POST["computerid"]));
+
+	$pageTitle = "Edited {$computer["hostname"]}";
 	
 ?>
 <!doctype html>
 <html>
 	<head>
-		<?php include '../head.php'; ?>
+		<?php include "../head.php"; ?>
 	</head>
 	<body>
-		<?php include '../header.php'; ?>
+		<?php include "../header.php"; ?>
 			<?php
-				include "mysqlConnect.php";
-				mysqli_query($mysqlConnection, "UPDATE computer SET
-				hostname = '{$computerName}',
-				os = '{$_POST['operatingsystem']}',
-				employee = '{$_POST['employee']}',
-				exemployee = '{$_POST['exemployee']}',
-				rebuilder = '{$_POST['rebuilder']}',
-				password = '{$_POST['password']}',
-				ram = '{$_POST['ram']}',
-				hdd = '{$_POST['hdd']}',
-				opt  = '{$_POST['opt']}',
-				power = '{$_POST['power']}',
-				maclan = '{$_POST['maclan']}',
-				macwifi = '{$_POST['macwifi']}',
-				oskey = '{$_POST['oskey']}',
-				silverpop = '{$_POST['silverpop']}',
-				efax = '{$_POST['efax']}',
-				broadview = '{$_POST['broadview']}',
-				cell = '{$_POST['cell']}',
-				notes = '{$_POST['notes']}',
-				cpu = '{$_POST['cpu']}',
-				model = '{$_POST['model']}',
-				servicetag = '{$_POST['servicetag']}',
-				escode = '{$_POST['escode']}',
-				date = '{$_POST['date']}',
-				dop = '{$_POST['dop']}'
-				WHERE computerid = {$_POST['computerid']}");
-				mysqli_close($mysqlConnection);
+				$computer["hostname"] = $_POST["computerName"];
+				$computer["os"] = $_POST["operatingsystem"];
+				$computer["employee"] = $_POST["employee"];
+				$computer["exemployee"] = $_POST["exemployee"];
+				$computer["rebuilder"] = $_POST["rebuilder"];
+				$computer["password"] = $_POST["password"];
+				$computer["ram"] = $_POST["ram"];
+				$computer["hdd"] = $_POST["hdd"];
+				$computer["opt"]  = $_POST["opt"];
+				$computer["power"] = $_POST["power"];
+				$computer["maclan"] = $_POST["maclan"];
+				$computer["macwifi"] = $_POST["macwifi"];
+				$computer["oskey"] = $_POST["oskey"];
+				$computer["silverpop"] = $_POST["silverpop"];
+				$computer["efax"] = $_POST["efax"];
+				$computer["broadview"] = $_POST["broadview"];
+				$computer["cell"] = $_POST["cell"];
+				$computer["notes"] = $_POST["notes"];
+				$computer["cpu"] = $_POST["cpu"];
+				$computer["model"] = $_POST["model"];
+				$computer["servicetag"] = $_POST["servicetag"];
+				$computer["escode"] = $_POST["escode"];
+				$computer["date"] = $_POST["date"];
+				$computer["dop"] = $_POST["dop"];
 
-				header("Location: ../viewComputer.php?computerName={$computerName}");
+				header("Location: ../viewComputer.php?computerName={$computer["hostname"]}");
 
-				include '../footer.php';
+				include "../footer.php";
 			?>

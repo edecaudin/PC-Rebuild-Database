@@ -4,10 +4,20 @@
 	include "checkLoggedIn.php";
 	include "pc_stuff_lookup.php";
 	
-	$computerName = $_GET["computerName"];
-	$pageTitle = "Editing {$computerName}";
+	include "classes/Computer.php";
+	$computer = new Computer($_GET["computerName"]);
+
+	if (!$computer->doesExist) {
+		echo "<script type=\"text/javascript\">
+			alert(\"{$_GET["computerName"]} does not exist!\");
+			window.history.back();
+		</script>";
+		exit;
+	}
+
+	$pageTitle = "Editing {$computer["hostname"]}";
 	$headerContent = "<strong id='rightLinks'>
-		<a href='viewComputer.php?computerName={$computerName}' class='navLink'>Back</a> to {$computerName} - 
+		<a href='viewComputer.php?computerName={$computer["hostname"]}' class='navLink'>Back</a> to {$computer["hostname"]} - 
 		<a href='javascript:document.forms[\"editInfo\"].submit()' class='navLink, green'>Save</a> Info
 	</strong>";
 ?>
@@ -18,18 +28,13 @@
 	</head>
 	<body>
 		<?php include "header.php"; ?>
-			<?php
-				include "support/mysqlConnect.php";
-				$list = mysqli_fetch_object(mysqli_query($mysqlConnection, "SELECT * FROM computer WHERE hostname = '{$computerName}' "));
-				mysqli_close($mysqlConnection);
-			?>
 			<form name="editInfo" action="support/editInfoAction.php" method="post">
 				<div class="portal blue" id="viewComputer">
-					<h1 id="printComputerName">Editing <input type="text" name="computerName" value="<?=$list->hostname?>" maxlength="15"></h1>
-					<h2 id="printOS">Service Tag: <input type="text" name="servicetag" value="<?=$list->servicetag?>"> -
+					<h1 id="printComputerName">Editing <input type="text" name="computerName" value="<?=$computer["hostname"]?>" maxlength="15"></h1>
+					<h2 id="printOS">Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"> -
 						<select name="operatingsystem">
 							<?php
-								getTableItems(os_select, operating_systems, $list->os);
+								getTableItems("os_select", "operating_systems", $computer["os"]);
 							?>
 						</select>
 					</h2>
@@ -37,75 +42,75 @@
 				<table style="clear: left;">
 						<tr>
 							<td>Employee:</td>
-							<td><input type="text" name="employee" value="<?=$list->employee?>"></td>
+							<td><input type="text" name="employee" value="<?=$computer["employee"]?>"/></td>
 							<td>Ex-Employee:</td>
-							<td><input type="text" name="exemployee" value="<?=$list->exemployee?>"></td>
+							<td><input type="text" name="exemployee" value="<?=$computer["exemployee"]?>"/></td>
 						</tr>
 						<tr>
 							<td>Rebuilder:</td>
 							<td>
 								<select name="rebuilder">
 									<?php
-										getTableItems("rebuilder", "itteam", $list->rebuilder);
+										getTableItems("rebuilder", "itteam", $computer["rebuilder"]);
 									?>
 								</select>  
 							</td>
 							<td>Password:</td>
-							<td><input type="text" name="password" value="<?=$list->password?>"></td>
+							<td><input type="text" name="password" value="<?=$computer["password"]?>"/></td>
 						</tr>
 						<tr>
 							<td>Model:</td>
-							<td><input type="text" name="model" value="<?=$list->model?>"></td>
+							<td><input type="text" name="model" value="<?=$computer["model"]?>"/></td>
 							<td>CPU:</td>
-							<td><input type="text" name="cpu" value="<?=$list->cpu?>"></td>
+							<td><input type="text" name="cpu" value="<?=$computer["cpu"]?>"/></td>
 						</tr>
 						<tr>
 							<td>RAM:</td>
-							<td><input type="text" name="ram" value="<?=$list->ram?>"></td>
+							<td><input type="text" name="ram" value="<?=$computer["ram"]?>"/></td>
 							<td>HDD:</td>
-							<td><input type="text" name="hdd" value="<?=$list->hdd?>"></td>
+							<td><input type="text" name="hdd" value="<?=$computer["hdd"]?>"/></td>
 						</tr>
 						<tr>
 							<td>Optical Drive:</td>
-							<td><input type="text" name="opt" value="<?=$list->opt?>"></td>
+							<td><input type="text" name="opt" value="<?=$computer["opt"]?>"/></td>
 							<td>Battery:</td>
-							<td><input type="text" name="power" value="<?=$list->power?>"></td>
+							<td><input type="text" name="power" value="<?=$computer["power"]?>"/></td>
 						</tr>
 						<tr>
 							<td>OS License Key:</td>
-							<td><input type="text" name="oskey" value="<?=$list->oskey?>"></td>
+							<td><input type="text" name="oskey" value="<?=$computer["oskey"]?>"/></td>
 							<td>Express Service Code:</td>
-							<td><input type="text" name="escode" value="<?=$list->escode?>"></td>
+							<td><input type="text" name="escode" value="<?=$computer["escode"]?>"/></td>
 						</tr>
 						<tr>
 							<td>MAC-Address LAN:</td>
-							<td><input type="text" name="maclan" value="<?=$list->maclan?>"></td>
+							<td><input type="text" name="maclan" value="<?=$computer["maclan"]?>"/></td>
 							<td>MAC-Address WAN:</td>
-							<td><input type="text" name="macwifi" value="<?=$list->macwifi?>"></td>
+							<td><input type="text" name="macwifi" value="<?=$computer["macwifi"]?>"/></td>
 						</tr>
 						<tr>
 							<td>Rebuild Date:</td>
-							<td><input type="text" name="date" value="<?=$list->date?>"></td>
+							<td><input type="text" name="date" value="<?=$computer["date"]?>"/></td>
 							<td>Date of Purchase:</td>
-							<td><input type="text" name="dop" value="<?=$list->dop?>"></td>
+							<td><input type="text" name="dop" value="<?=$computer["dop"]?>"/></td>
 						</tr>
 						<tr>
 							<td>Cell Phone Number:</td>
-							<td><input type="text" name="cell" value="<?=$list->cell?>"></td>
+							<td><input type="text" name="cell" value="<?=$computer["cell"]?>"/></td>
 							<td>Broadview Number:</td>
-							<td><input type="text" name="broadview" value="<?=$list->broadview?>"></td>
+							<td><input type="text" name="broadview" value="<?=$computer["broadview"]?>"/></td>
 						</tr>
 						<tr>
 							<td>Silverpop Account:</td>
-							<td><input type="text" name="silverpop" value="<?=$list->silverpop?>"></td>
+							<td><input type="text" name="silverpop" value="<?=$computer["silverpop"]?>"/></td>
 							<td>EFax Account:</td>
-							<td><input type="text" name="efax" value="<?=$list->efax?>"></td>
+							<td><input type="text" name="efax" value="<?=$computer["efax"]?>"/></td>
 						</tr>
 						<tr>
 							<td>Notes:</td>
-							<td colspan="3"><textarea name="notes"><?=$list->notes?></textarea></td>
+							<td colspan="3"><textarea name="notes"><?=$computer["notes"]?></textarea></td>
 						</tr>
-						<input type="hidden" name="computerid" value="<?=$list->computerid?>"/>
+						<input type="hidden" name="computerid" value="<?=$computer["computerid"]?>"/>
 				</table>
 			</form>
 	<?php

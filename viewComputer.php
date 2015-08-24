@@ -1,121 +1,125 @@
 <?php
 	session_start();
 
-    include 'checkLoggedIn.php';
+    include "checkLoggedIn.php";
 	include "pc_stuff_lookup.php";
 
-	$computerName = $_GET['computerName'];
-	$pageTitle = $computerName;
-	$headerContent = "<strong id='rightLinks'>
-		<a href='editInfo.php?computerName={$computerName}' class='navLink green'>Edit</a> Info - 
-		<a href='editConfig.php?computerName={$computerName}' class='navLink green'>Edit</a> Config - 
-		<a href='javascript:deleteComputer()' class='navLink red'>Delete</a> {$computerName}
+	include "classes/Computer.php";
+	$computer = new Computer($_GET["computerName"]);
+	
+	if (!$computer->doesExist) {
+		echo "<script type=\"text/javascript\">
+			alert(\"{$_GET["computerName"]} does not exist!\");
+			window.history.back();
+		</script>";
+		exit;
+	}
+	
+	$pageTitle = $computer["hostname"];
+	$headerContent = "<strong id=\"rightLinks\">
+		<a href=\"editInfo.php?computerName={$computer["hostname"]}\" class=\"navLink green\">Edit</a> Info - 
+		<a href=\"editConfig.php?computerName={$computer["hostname"]}\" class=\"navLink green\">Edit</a> Config - 
+		<a href=\"javascript:deleteComputer()\" class=\"navLink red\">Delete</a> {$computer["hostname"]}
 	</strong>";
 ?>
 <!doctype html>
 <html>
 	<head>
-		<?php include 'head.php'; ?>
-		<link rel='stylesheet' href='../../rebuild/resources/print.css'>
+		<?php include "head.php"; ?>
+		<link rel="stylesheet"" href="../../rebuild/resources/print.css">
 		<script>
 			function deleteComputer() {
-				if (confirm("Are you sure you want to delete <?=$computerName?>?")) {
-					window.location.assign("support/deleteComputerAction.php?computerName=<?=$computerName?>");
+				if (confirm("Are you sure you want to delete <?=$computer["hostname"]?>?")) {
+					window.location.assign("support/deleteComputerAction.php?computerName=<?=$computer["hostname"]?>");
 				}
 			}
 		</script>
 	</head>
 	<body>
-		<?php include 'header.php'; ?>
+		<?php include "header.php"; ?>
 			<?php
-				include "support/mysqlConnect.php";
-				$list = mysqli_fetch_object(mysqli_query($mysqlConnection, "SELECT * FROM computer WHERE hostname = '{$computerName}' "));
-				mysqli_close($mysqlConnection);
-				
-				function getInstalledItems($hostname, $fieldname) {
-					include "support/mysqlConnect.php";
-					$result = mysqli_query($mysqlConnection, "SELECT $fieldname FROM computer WHERE hostname = '{$hostname}'");
-					$item = mysqli_fetch_row($result);
-					if ($item[0] === "") {
+				function getInstalledItems($fieldname) {
+					global $computer;
+					$field = $computer[$fieldname];
+					if ($field === "") {
 						echo "<tr>
 								<td>Nothing to do here!</td>
 							</tr>";
 					} else {
-						$items = explode(" - ", $item[0]);
-						for ($i = 0; $i < count($items); $i++) {
+						$items = explode(" - ", $field);
+						foreach ($items as $item) {
 							echo "<tr>
 									<td>
-										<input type='checkbox'/>{$items[$i]}
+										<input type=\"checkbox\"/>{$item}
 									</td>
 								</tr>";
 						}
 					}
-					mysqli_close($mysqlConnection);
 				}
 			?>
 			<div class="portal blue" id="viewComputer">
-				<h1 id="printComputerName"><?=$computerName?></h1><h2 id="printOS">Service Tag: <?=$list->servicetag?> - OS: <?=$list->os?></h2>
+				<h1 id="printComputerName"><?=$computer["hostname"]?></h1><h2 id="printOS">Service Tag: <?=$computer["servicetag"]?> - OS: <?=$computer["os"]?></h2>
 			</div>
 			<table>
 				<tr>
 					<td>Employee:</td>
-					<td><?=$list->employee?></td>
+					<td><?=$computer["employee"]?></td>
 					<td>Ex-Employee:</td>
-					<td><?=$list->exemployee?></td>
+					<td><?=$computer["exemployee"]?></td>
 				</tr>
 				<tr>
 					<td>Rebuilder:</td>
-					<td><?=$list->rebuilder?></td>
+					<td><?=$computer["rebuilder"]?></td>
 					<td>Password:</td>
-					<td><?=$list->password?></td>
+					<td><?=$computer["password"]?></td>
 				</tr>
 				<tr>
 					<td>Model:</td>
-					<td><?=$list->model?></td>
+					<td><?=$computer["model"]?></td>
 					<td>CPU:</td>
-					<td><?=$list->cpu?></td>
+					<td><?=$computer["cpu"]?></td>
 				</tr>
 				<tr>
 					<td>RAM:</td>
-					<td><?=$list->ram?></td>
+					<td><?=$computer["ram"]?></td>
 					<td>HDD:</td>
-					<td><?=$list->hdd?></td>
+					<td><?=$computer["hdd"]?></td>
 				</tr>
 				<tr>
 					<td>Optical Drive:</td>
-					<td><?=$list->opt?></td>
+					<td><?=$computer["opt"]?></td>
 					<td>Battery:</td>
-					<td><?=$list->power?></td>
+					<td><?=$computer["power"]?></td>
 				</tr>
 				<tr>
-					<td>Service Tag:</td>
-					<td><?=$list->servicetag?></td>
+					<td>OS License Key:</td>
+					<td><?=$computer["oskey"]?></td>
 					<td>Express Service Code:</td>
-					<td><?=$list->escode?></td>
+					<td><?=$computer["escode"]?></td>
 				</tr>
 				<tr>
 					<td>MAC-Address LAN:</td>
-					<td><?=$list->maclan?></td>
+					<td><?=$computer["maclan"]?></td>
 					<td>MAC-Address WAN:</td>
-					<td><?=$list->macwifi?></td>
+					<td><?=$computer["macwifi"]?></td>
 				</tr>
 				<tr>
 					<td>Date of Build:</td>
-					<td><?=$list->date?></td>
+					<td><?=$computer["date"]?></td>
 					<td>Date of Purchase:</td>
-					<td><?=$list->dop?></td>
+					<td><?=$computer["dop"]?></td>
 				</tr>
 				<tr>
 					<td>Cell Phone Number:</td>
-					<td><?=$list->cell?></td>
+					<td><?=$computer["cell"]?></td>
 					<td>Broadview Number:</td>
-					<td><?=$list->broadview?></td>
+					<td><?=$computer["broadview"]?></td>
 				</tr>
 				<tr>
 					<td>Silverpop Account:</td>
-					<td><?=$list->silverpop?></td>
+					<td><?=$computer["silverpop"]?></td>
 					<td>EFax Account:</td>
-					<td><?=$list->efax?></td>
+					<td><?=$computer["efax"]?></td>
 				</tr>
 			</table>
 			<div id="software">
@@ -124,7 +128,7 @@
 	 					<td class="tobedone" colspan="2">Applications</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName, 'programs')
+						getInstalledItems("programs");
 					?>
 				</table>
 			</div>
@@ -134,7 +138,7 @@
 						<td class="tobedone" colspan="2">Updates to be installed</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName, 'updates')
+						getInstalledItems("updates");
 					?>
 				</table>
 			</div>
@@ -144,7 +148,7 @@
 						<td class="tobedone" colspan="2">Configuration</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName, 'config')
+						getInstalledItems("config");
 					?>
 				</table>
 			</div>
@@ -154,7 +158,7 @@
 						<td class="tobedone" colspan="2">Printers</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName, 'printers')
+						getInstalledItems("printers");
 					?>
 				</table>
 			</div>
@@ -164,7 +168,7 @@
 						<td class="tobedone" colspan="2">Additional Hardware</td>
 					</tr>
 					<?php
-						getInstalledItems($computerName, 'addhw')
+						getInstalledItems("addhw");
 					?>
 				</table>
 			</div>
@@ -174,10 +178,10 @@
 						<td class="tobedone">Notes</td><td></td>
 					</tr>
 					<tr>
-    					<td colspan="2"><?=$list->notes;?></td>
+    					<td colspan="2"><?=$computer["notes"]?></td>
    					</tr>
 				</table>
 			</div>
 			<?php
-				include 'footer.php';
+				include "footer.php";
 			?>
