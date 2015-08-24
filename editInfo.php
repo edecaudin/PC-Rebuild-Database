@@ -6,10 +6,10 @@
 	
 	$computerName = $_GET["computerName"];
 	$pageTitle = "Editing {$computerName}";
-	$headerContent = "<span id='rightLinks'>
+	$headerContent = "<strong id='rightLinks'>
 		<a href='viewComputer.php?computerName={$computerName}' class='navLink'>Back</a> to {$computerName} - 
 		<a href='javascript:document.forms[\"editInfo\"].submit()' class='navLink, green'>Save</a> Info
-	</span>";
+	</strong>";
 ?>
 <!doctype html>
 <html>

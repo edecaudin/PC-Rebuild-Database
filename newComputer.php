@@ -4,7 +4,7 @@
 	include 'checkLoggedIn.php';
 	
 	$pageTitle = "New Computer";
-	$headerContent = "<span id='rightLinks'><a href='javascript:document.forms[\"newComputer\"].submit()' class='navLink green'>Create</a> Computer</span>";
+	$headerContent = "<strong id='rightLinks'><a href='javascript:document.forms[\"newComputer\"].submit()' class='navLink green'>Create</a> Computer</strong>";
 ?>
 <!doctype html>
 <html>

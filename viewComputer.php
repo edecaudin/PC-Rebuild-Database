@@ -3,15 +3,14 @@
 
     include 'checkLoggedIn.php';
 	include "pc_stuff_lookup.php";
-	include 'array_report.php';
 
 	$computerName = $_GET['computerName'];
 	$pageTitle = $computerName;
-	$headerContent = "<span id='rightLinks'>
-		<a href='editInfo.php?computerName={$computerName}' class='navLink, green'>Edit</a> Info - 
-		<a href='editConfig.php?computerName={$computerName}' class='navLink, green'>Edit</a> Config - 
-		<a href='javascript:deleteComputer()' class='navLink, red'>Delete</a> {$computerName}
-	</span>";
+	$headerContent = "<strong id='rightLinks'>
+		<a href='editInfo.php?computerName={$computerName}' class='navLink green'>Edit</a> Info - 
+		<a href='editConfig.php?computerName={$computerName}' class='navLink green'>Edit</a> Config - 
+		<a href='javascript:deleteComputer()' class='navLink red'>Delete</a> {$computerName}
+	</strong>";
 ?>
 <!doctype html>
 <html>

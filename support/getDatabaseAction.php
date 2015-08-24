@@ -1,4 +1,4 @@
-<?php 
+<?php
 	include "mysqlConnect.php";
 	$listresult = mysqli_query($mysqlConnection, "SELECT hostname, os, bit, employee, servicetag, maclan, oskey, model, dop, macwifi FROM computer ORDER BY hostname ASC");
 	while ($list = mysqli_fetch_object($listresult)) {

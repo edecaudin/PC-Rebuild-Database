@@ -4,25 +4,19 @@
 	
 	body {
 		font-family: 'Roboto Condensed', sans-serif;
-		font-size: 12px;
+		font-size: 10pt;
 	}
 
-	table {
-		clear: left;
-	}
-
-	#logo {
+	.noPrint {
 		display: none;
 	}
-
-	#content {
-		margin-left:auto;
-		margin-right:auto;
-		width:100%;
+	
+	div#content {
+		width: 100%;
 	}
 
-	.portal {
-		width: 670px;
+	div.portal {
+		width: 100%;
 		float: left;
 		color: white;
 		background-color: royalblue;
@@ -34,7 +28,24 @@
 		padding-bottom: 7px;
 		margin-bottom: 5px;
 	}
-	
+
+	table {
+		clear: left;
+	}
+
+	td {
+		width: 23%;
+	}
+
+	td.big {
+		font-size: 26px;
+	}
+
+	.tobedone {
+		background-color: #CCC;
+		padding: 0.5% 1% 0.5% 1%;
+	}
+
 	h1#printComputerName, h2#printOS {
 		display: inline;
 	}
@@ -43,81 +54,8 @@
 		margin-right: 20px;
 	}
 
-	.noPrint {
-		display: none;
+	#software, #updates, #configuration, #printer, #hardware, #notes {
+		width: 50%;
+		float: left;
 	}
-
-#software {
-	width:49.5%;
-	float:left;
-	padding-left:0.5%;
-	}
-
-#updates {
-	width:49.5%;
-	float:left;
-	padding-left:0.5%;
-	}
-	
-#configuration {
-	width:49.5%;
-	float:left;
-	padding-left:0.5%;
-	}
-
-#printer {
-	width:49.5%;
-	float:left;
-	padding-left:0.5%;
-	}
-
-#hardware {
-	width:49.5%;
-	float:left;
-	padding-left:0.5%;
-	}
-	
-#notes {
-	width:49.5%;
-	float:left;
-	padding-left:0.5%;
-	}
-
-#info {
-	width:95%;
-	float:left;
-	padding:0.2%;
-	color:#ffffff;
-	background-color:#C63;
-	text-align:center;
-	}
-	
-	td {
-		width:23%;
-		padding-left:1%;
-		padding-right:1%;
-	}
-
-	td.big {
-		font-size:26px;
-	}
-	
-	tr.reb_head {
-		color: white;
-		background-color: royalblue;	
-	}
-
-	.tobedone {
-		background-color:#CCC;
-	}
-
-	#notespan {
-		background-color:#CCC;
-		padding-left:1%;
-		padding-right:1%;
-		width:48%;
-		min-width:48%;
-		margin-bottom:1%;
-	}
-
 }

@@ -1,7 +1,7 @@
 <div id='content'>
-			<img src='../../rebuild/resources/logo.png' id='logo'>
+			<img src='../../rebuild/resources/logo.png' class="noPrint" id='logo'>
 			<div class='header noPrint'>
-				<?=(isset($_SESSION["username"]) ? "<span id='leftLinks'><a href='../../rebuild/index.php' class='navLink'>Home</a></span>" : "")?>
+				<?=(isset($_SESSION["username"]) ? "<strong id='leftLinks'><a href='../../rebuild/index.php' class='navLink'>Home</a></strong>" : "")?>
 				<?=(isset ($headerContent) ? "
 ".$headerContent : "")?>
 

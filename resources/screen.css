@@ -115,7 +115,7 @@
 		color: white;
 	}
 
-	div.header:hover a, div.footer:hover a {
+	div.header:hover a.navLink, div.footer:hover a.navLink {
 		color: inherit !important;
 		text-decoration: underline;
 	}
@@ -124,16 +124,14 @@
 		color: white;
 	}
 	
-	span#leftLinks {
-		font-weight: bold;
-		padding-left: 6px;
+	#leftLinks {
 		float: left;
+		padding-left: 6px;
 	}
 	
-	span#rightLinks {
-		font-weight: bold;
-		padding-right: 6px;
+	#rightLinks {
 		float: right;
+		padding-right: 6px;
 	}
 
 	/* Index Styles */
@@ -152,12 +150,14 @@
 		text-shadow: 0.01px 0.01px 2px darkgray;
 	}
 	
-	div#searchDatabse, #filterDatabase {
-		display: inline;
+	div#databaseTable, div#searchResults {
+		width: 100%;
+		max-height: 550px;
+		overflow-y: scroll;
 	}
 	
-	#downloadCSV {
-		float: left;
+	div#searchResults:empty {
+		display: none;
 	}
 	
 	div.databaseCell {
@@ -182,11 +182,6 @@
 	}
 	
 	div#databaseClearCell {
-		clear: left;
-	}
-	
-	div#searchResults {
-		float: left;
 		clear: left;
 	}
 
