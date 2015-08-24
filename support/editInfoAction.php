@@ -1,12 +1,13 @@
 <?php
 	session_start();
 
-	include "../checkLoggedIn.php";
+ 	require("../checkLoggedIn.php");
 
-	include "../classes/Computer.php";
-	$computer = new Computer(intval($_POST["computerid"]));
+	require_once("../classes/Table.php");
+	require_once("../classes/Row.php");
+	$computer = new Row(new Table("computer"), intval($_POST["computer_id"]));
 
-	$pageTitle = "Edited {$computer["hostname"]}";
+	$pageTitle = "Edited {$computer["computer_name"]}";
 	
 ?>
 <!doctype html>
@@ -17,7 +18,7 @@
 	<body>
 		<?php include "../header.php"; ?>
 			<?php
-				$computer["hostname"] = $_POST["computerName"];
+				$computer["computer_name"] = $_POST["computerName"];
 				$computer["os"] = $_POST["operatingsystem"];
 				$computer["employee"] = $_POST["employee"];
 				$computer["exemployee"] = $_POST["exemployee"];
@@ -42,7 +43,7 @@
 				$computer["date"] = $_POST["date"];
 				$computer["dop"] = $_POST["dop"];
 
-				header("Location: ../viewComputer.php?computerName={$computer["hostname"]}");
+				header("Location: ../viewComputer.php?computerName={$computer["computer_name"]}");
 
 				include "../footer.php";
 			?>

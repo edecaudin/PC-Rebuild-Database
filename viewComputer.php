@@ -1,25 +1,26 @@
 <?php
 	session_start();
 
-    include "checkLoggedIn.php";
-	include "pc_stuff_lookup.php";
+    require("checkLoggedIn.php");
+	include_once("pc_stuff_lookup.php");
 
-	include "classes/Computer.php";
-	$computer = new Computer($_GET["computerName"]);
-	
-	if (!$computer->doesExist) {
+	require_once("classes/Table.php");
+	require_once("classes/Row.php");
+	$computer = new Row(new Table("computer"), $_GET["computerName"]);
+
+	if (!$computer->doesExist()) {
 		echo "<script type=\"text/javascript\">
 			alert(\"{$_GET["computerName"]} does not exist!\");
 			window.history.back();
 		</script>";
 		exit;
 	}
-	
-	$pageTitle = $computer["hostname"];
+
+	$pageTitle = $computer["computer_name"];
 	$headerContent = "<strong id=\"rightLinks\">
-		<a href=\"editInfo.php?computerName={$computer["hostname"]}\" class=\"navLink green\">Edit</a> Info - 
-		<a href=\"editConfig.php?computerName={$computer["hostname"]}\" class=\"navLink green\">Edit</a> Config - 
-		<a href=\"javascript:deleteComputer()\" class=\"navLink red\">Delete</a> {$computer["hostname"]}
+		<a href=\"editInfo.php?computerName={$computer["computer_name"]}\" class=\"navLink green\">Edit</a> Info - 
+		<a href=\"editConfig.php?computerName={$computer["computer_name"]}\" class=\"navLink green\">Edit</a> Config - 
+		<a href=\"javascript:deleteComputer()\" class=\"navLink red\">Delete</a> {$computer["computer_name"]}
 	</strong>";
 ?>
 <!doctype html>
@@ -29,8 +30,8 @@
 		<link rel="stylesheet"" href="../../rebuild/resources/print.css">
 		<script>
 			function deleteComputer() {
-				if (confirm("Are you sure you want to delete <?=$computer["hostname"]?>?")) {
-					window.location.assign("support/deleteComputerAction.php?computerName=<?=$computer["hostname"]?>");
+				if (confirm("Are you sure you want to delete <?=$computer["computer_name"]?>?")) {
+					window.location.assign("support/deleteComputerAction.php?computerName=<?=$computer["computer_name"]?>");
 				}
 			}
 		</script>
@@ -58,7 +59,7 @@
 				}
 			?>
 			<div class="portal blue" id="viewComputer">
-				<h1 id="printComputerName"><?=$computer["hostname"]?></h1><h2 id="printOS">Service Tag: <?=$computer["servicetag"]?> - OS: <?=$computer["os"]?></h2>
+				<h1 id="printComputerName"><?=$computer["computer_name"]?></h1><h2 id="printOS">Service Tag: <?=$computer["servicetag"]?> - OS: <?=$computer["os"]?></h2>
 			</div>
 			<table>
 				<tr>

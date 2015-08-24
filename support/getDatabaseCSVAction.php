@@ -14,7 +14,7 @@
 	if (!isset($_GET["search"])) {
 		$computers = Computer::getList();
 	} else {
-		$computers = Computer::getList($search = mysql_real_escape_string($_GET["search"]), array("hostname", "os", "employee", "rebuilder", "cpu", "programs", "servicetag", "escode", "model"));
+		$computers = Computer::getList($search = mysql_real_escape_string($_GET["search"]), array("computer_name", "os", "employee", "rebuilder", "cpu", "programs", "servicetag", "escode", "model"));
 	}
 
 	header("Content-Type: text/csv; charset=utf-8");

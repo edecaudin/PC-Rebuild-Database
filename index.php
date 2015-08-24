@@ -30,7 +30,7 @@
 					Edit and create a printable report of any computer:
 					<select name="computerName">
 						<?php
-							getTableItems("hostname", "computer");
+							getTableItems("computer");
 						?>
 					</select> 
 					<input type="submit" value="Get Report"/>

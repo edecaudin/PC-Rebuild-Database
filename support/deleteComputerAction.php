@@ -16,7 +16,7 @@
 		<?php include "../header.php"; ?>
 			<?php
 				include "mysqlConnect.php";
-				mysqli_query($mysqlConnection, "DELETE FROM computer WHERE hostname = '{$computerName}'");
+				mysqli_query($mysqlConnection, "DELETE FROM computer WHERE computer_name = '{$computerName}'");
 				mysqli_close($mysqlConnection);
 			?>
 			<div class="portal red">

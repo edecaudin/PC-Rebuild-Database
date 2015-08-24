@@ -21,9 +21,9 @@
 				<h2>Editing <?=$computerName?></h2>
 			</div>
 			<?php
-				function installedStuffLookup($hostname,$select,$table_where_select,$what_change) {
+				function installedStuffLookup($computerName, $select, $table_where_select,$what_change) {
 					include "support/mysqlConnect.php";
-					$computerreport = "SELECT $what_change, computerid FROM computer WHERE hostname = '$hostname' ";
+					$computerreport = "SELECT $what_change, computer_id FROM computer WHERE computer_name = '$computerName' ";
 					$computerinfos = mysqli_query($mysqlConnection, $computerreport);
 					
 					$select_all_software = "SELECT $select FROM $table_where_select ORDER BY $select ASC";
@@ -32,7 +32,7 @@
 					$one_program = array(); 
 					$installed = mysqli_fetch_object($computerinfos);
 					$programs = $installed->$what_change;
-					$id = $installed->computerid;
+					$id = $installed->computer_id;
 					$one_program = explode(" - ",$programs);
 					
 					$all_available_software = array();	

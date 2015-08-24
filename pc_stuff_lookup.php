@@ -1,14 +1,13 @@
 <?php
-	function getTableItems($fieldname, $tablename, $selected = null, $limiterField = null, $limiter = null) {
-		include "support/mysqlConnect.php";
+	require_once("classes/Table.php");
+	require_once("classes/Row.php");
 	
-		$result = mysqli_query($mysqlConnection, "SELECT $fieldname FROM $tablename ".(isset($limiterField) && isset($limiter) ? "WHERE {$limiterField} = '{$limiter}' " : "")."ORDER BY $fieldname ASC");
-		$count = 1;
-		while ($item = mysqli_fetch_row($result)) {
-			echo "<option".(isset($selected) && $item[0] === $selected ? " selected" : "").">{$item[0]}</option>";
-			$count++;
+	function getTableItems($tableName, $selected = null) {
+		$table = new Table($tableName);
+		$result = $table->runQuery();
+		foreach ($result as $row) {
+			$item = new Row($table, intval($row[$tableName."_id"]));
+			echo "<option".(isset($selected) && $item[$tableName."_name"] === $selected ? " selected" : "").">".$item[$tableName."_name"]."</option>";
 		}
-	
-		mysqli_close($mysqlConnection);
 	}
 ?>

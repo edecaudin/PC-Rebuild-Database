@@ -27,8 +27,8 @@
 				<h2><span class="green">Add</span> an application</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="software"/>
-					<input type="hidden" name="field" value="programs"/>
+					<input type="hidden" name="table" value="application"/>
+					<input type="hidden" name="field" value="application_name"/>
 					<input type="submit" value="Add Application"/>
 				</form>
 			</div>
@@ -36,8 +36,8 @@
 				<h2><span class="green">Add</span> a printer</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="printers"/>
-					<input type="hidden" name="field" value="device"/>
+					<input type="hidden" name="table" value="printer"/>
+					<input type="hidden" name="field" value="printer_name"/>
 					<input type="submit" value="Add Printer"/>
 				</form>
 			</div>
@@ -45,8 +45,8 @@
 				<h2><span class="green">Add</span> something to update</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="updates"/>
-					<input type="hidden" name="field" value="update_software"/>
+					<input type="hidden" name="table" value="update"/>
+					<input type="hidden" name="field" value="update_name"/>
 					<input type="submit" value="Add Update"/>
 				</form>
 			</div>
@@ -82,11 +82,11 @@
 				<form id="removeApplication" action="support/removeItemAction.php" method="post">
 					<select id="selectApplication" name="item">
 						<?php  
-							getTableItems('programs', 'software');
+							getTableItems("application");
 						?>
 					</select>
-					<input type="hidden" name="table" value="software"/>
-					<input type="hidden" name="field" value="programs"/>
+					<input type="hidden" name="table" value="application"/>
+					<input type="hidden" name="field" value="application_name"/>
 					<input type="button" value="Remove Application" onClick="removeItem('selectApplication', 'removeApplication')"/>
 				</form>
 			</div>
@@ -95,11 +95,11 @@
 				<form id="removePrinter" action="support/removeItemAction.php" method="post">
 					<select id="selectPrinter" name="item">
 						<?php  
-							getTableItems('device', 'printers');
+							getTableItems("printer");
 						?>
 					</select>
-					<input type="hidden" name="table" value="printers"/>
-					<input type="hidden" name="field" value="device"/>
+					<input type="hidden" name="table" value="printer"/>
+					<input type="hidden" name="field" value="printer_name"/>
 					<input type="button" value="Remove Printer" onClick="removeItem('selectPrinter', 'removePrinter')"/>
 				</form>
 			</div>
@@ -108,11 +108,11 @@
 				<form id="removeUpdate" action="support/removeItemAction.php" method="post">
 					<select id="selectUpdate" name="item">
 						<?php  
-							getTableItems('update_software', 'updates');
+							getTableItems("update");
 						?>
 					</select>
-					<input type="hidden" name="table" value="updates"/>
-					<input type="hidden" name="field" value="update_software"/>
+					<input type="hidden" name="table" value="update"/>
+					<input type="hidden" name="field" value="update_name"/>
 					<input type="button" value="Remove Update" onClick="removeItem('selectUpdate', 'removeUpdate')"/>
 				</form>
 			</div>
@@ -121,11 +121,11 @@
 				<form id="removeConfiguration" action="support/removeItemAction.php" method="post">
 					<select id="selectConfiguration" name="item">
 						<?php  
-							getTableItems('configuration', 'config');
+							getTableItems("config");
 						?>
 					</select>
 					<input type="hidden" name="table" value="config"/>
-					<input type="hidden" name="field" value="configuration"/>
+					<input type="hidden" name="field" value="config_name"/>
 					<input type="button" value="Remove Configuration" onClick="removeItem('selectConfiguration', 'removeConfiguration')"/>
 				</form>
 			</div>
@@ -134,11 +134,11 @@
 				<form id="removeHardware" action="support/removeItemAction.php" method="post">
 					<select id="selectHardware" name="item">
 						<?php  
-							getTableItems('additionalhardware', 'hardware');
+							getTableItems("hardware");
 						?>
 					</select>
 					<input type="hidden" name="table" value="hardware"/>
-					<input type="hidden" name="field" value="additionalhardware"/>
+					<input type="hidden" name="field" value="hardware_name"/>
 					<input type="button" value="Remove Hardware" onClick="removeItem('selectHardware', 'removeHardware')"/>
 				</form>
 			</div>
@@ -147,11 +147,11 @@
 				<form id="removeOS" action="support/removeItemAction.php" method="post">
 					<select id="selectOS" name="item">
 						<?php  
-							getTableItems('os_select', 'operating_systems');
+							getTableItems("operating_system");
 						?>
 					</select>
-					<input type="hidden" name="table" value="operating_systems"/>
-					<input type="hidden" name="field" value="os_select"/>
+					<input type="hidden" name="table" value="operating_system"/>
+					<input type="hidden" name="field" value="operating_system_name"/>
 					<input type="button" value="Remove OS" onClick="removeItem('selectOS', 'removeOS')"/>
 				</form>
 			</div>

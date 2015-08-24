@@ -10,13 +10,13 @@
 <html>
 	<head>
 		<?php include "../head.php"; ?>
-		<script>timer=setTimeout(function(){ window.location="../viewComputer.php?computerName=<?=$computerName?>";}, 1500)</script>
+		<script>timer=setTimeout(function(){ window.location="../viewComputer.php?computerName=<?=$computerName?>";}, 15000)</script>
 	</head>
 	<body>
 		<?php include "../header.php"; ?>
 			<?php
 				include "mysqlConnect.php";
-				$hostresult = mysqli_query($mysqlConnection, "SELECT hostname FROM computer");
+				$hostresult = mysqli_query($mysqlConnection, "SELECT `computer_name` FROM `computer`");
 				if ($computerName == "") {
 					echo "<script type=\"text/javascript\">
 						alert(\"Computer name is empty!\");
@@ -33,7 +33,7 @@
 						exit;
 					}
 				}
-				mysqli_query($mysqlConnection, "INSERT INTO computer (Hostname) VALUES ('$computerName')");
+				mysqli_query($mysqlConnection, "INSERT INTO `computer` (`computer_name` VALUES ('$computerName')");
 				mysqli_close($mysqlConnection);
 			?>
 			<div class="portal green">

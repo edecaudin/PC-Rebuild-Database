@@ -1,8 +1,7 @@
 <?php
 	session_start();
 
-	include 'checkLoggedIn.php';
-	include 'pc_stuff_lookup.php';
+	require("checkLoggedIn.php");
 	
 	$pageTitle = "Database";
 ?>

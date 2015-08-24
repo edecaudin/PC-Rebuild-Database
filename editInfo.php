@@ -1,13 +1,14 @@
 <?php
 	session_start();
 
-	include "checkLoggedIn.php";
-	include "pc_stuff_lookup.php";
-	
-	include "classes/Computer.php";
-	$computer = new Computer($_GET["computerName"]);
+    require("checkLoggedIn.php");
+	include_once("pc_stuff_lookup.php");
 
-	if (!$computer->doesExist) {
+	require_once("classes/Table.php");
+	require_once("classes/Row.php");
+	$computer = new Row(new Table("computer"), $_GET["computerName"]);
+
+	if (!$computer->doesExist()) {
 		echo "<script type=\"text/javascript\">
 			alert(\"{$_GET["computerName"]} does not exist!\");
 			window.history.back();
@@ -15,9 +16,9 @@
 		exit;
 	}
 
-	$pageTitle = "Editing {$computer["hostname"]}";
+	$pageTitle = "Editing {$computer["computer_name"]}";
 	$headerContent = "<strong id='rightLinks'>
-		<a href='viewComputer.php?computerName={$computer["hostname"]}' class='navLink'>Back</a> to {$computer["hostname"]} - 
+		<a href='viewComputer.php?computerName={$computer["computer_name"]}' class='navLink'>Back</a> to {$computer["computer_name"]} - 
 		<a href='javascript:document.forms[\"editInfo\"].submit()' class='navLink, green'>Save</a> Info
 	</strong>";
 ?>
@@ -30,11 +31,11 @@
 		<?php include "header.php"; ?>
 			<form name="editInfo" action="support/editInfoAction.php" method="post">
 				<div class="portal blue" id="viewComputer">
-					<h1 id="printComputerName">Editing <input type="text" name="computerName" value="<?=$computer["hostname"]?>" maxlength="15"></h1>
+					<h1 id="printComputerName">Editing <input type="text" name="computerName" value="<?=$computer["computer_name"]?>" maxlength="15"></h1>
 					<h2 id="printOS">Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"> -
 						<select name="operatingsystem">
 							<?php
-								getTableItems("os_select", "operating_systems", $computer["os"]);
+								getTableItems("operating_system", $computer["os"]);
 							?>
 						</select>
 					</h2>
@@ -51,7 +52,7 @@
 							<td>
 								<select name="rebuilder">
 									<?php
-										getTableItems("rebuilder", "itteam", $computer["rebuilder"]);
+										getTableItems("rebuilder", $computer["rebuilder"]);
 									?>
 								</select>  
 							</td>
@@ -110,7 +111,7 @@
 							<td>Notes:</td>
 							<td colspan="3"><textarea name="notes"><?=$computer["notes"]?></textarea></td>
 						</tr>
-						<input type="hidden" name="computerid" value="<?=$computer["computerid"]?>"/>
+						<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
 				</table>
 			</form>
 	<?php

@@ -20,7 +20,7 @@
 						$changes[0] = "";
 					}
 					include "mysqlConnect.php";
-					mysqli_query($mysqlConnection, "UPDATE computer SET $field = '".mysql_real_escape_string(implode(" - ", $changes))."' WHERE hostname = '$computerName'");
+					mysqli_query($mysqlConnection, "UPDATE computer SET $field = '".mysql_real_escape_string(implode(" - ", $changes))."' WHERE computer_name = '$computerName'");
 					mysqli_close($mysqlConnection);
 				}
 				updateConfig($_POST["software"], "programs", $computerName);
