@@ -20,9 +20,9 @@
 				try {
 					var XMLHttp = new XMLHttpRequest();
 			
-					XMLHttp.open("post", "support/getDatabaseSearchAction.php", true);
+					XMLHttp.open("post", "support/getDatabaseAction.php", true);
 					XMLHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-					XMLHttp.send("searchterm=" + searchterm);
+					XMLHttp.send("search=" + searchterm);
 					
 					XMLHttp.onreadystatechange = function() {
 						if (XMLHttp.readyState == 4) {

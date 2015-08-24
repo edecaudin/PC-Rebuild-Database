@@ -2,7 +2,6 @@
 	session_start();
 
 	include "../checkLoggedIn.php";
-	include "../array_report.php";
 
 	include "../classes/Computer.php";
 	$computer = new Computer(intval($_POST["computerid"]));

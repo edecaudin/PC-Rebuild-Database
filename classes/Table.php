@@ -1,5 +1,4 @@
 <?php
-	
 	if (file_exists("support/mysqlConnect.php")) {
   		include("support/mysqlConnect.php");
 	}
