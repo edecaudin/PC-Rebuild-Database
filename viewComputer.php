@@ -2,12 +2,10 @@
 	session_start();
 
     require("checkLoggedIn.php");
-	include_once("pc_stuff_lookup.php");
-
 	require_once("classes/Table.php");
 	require_once("classes/Row.php");
-	$computer = new Row(new Table("computer"), $_GET["computerName"]);
 
+	$computer = new Row(new Table("computer"), $_GET["computerName"]);
 	if (!$computer->doesExist()) {
 		echo "<script type=\"text/javascript\">
 			alert(\"{$_GET["computerName"]} does not exist!\");
@@ -27,11 +25,11 @@
 <html>
 	<head>
 		<?php include "head.php"; ?>
-		<link rel="stylesheet"" href="../../rebuild/resources/print.css">
+		<link rel="stylesheet" href="../../rebuild/resources/print.css">
 		<script>
 			function deleteComputer() {
 				if (confirm("Are you sure you want to delete <?=$computer["computer_name"]?>?")) {
-					window.location.assign("support/deleteComputerAction.php?computerName=<?=$computer["computer_name"]?>");
+					document.forms["deleteComputer"].submit();
 				}
 			}
 		</script>
@@ -184,6 +182,10 @@
    					</tr>
 				</table>
 			</div>
+			<form name="deleteComputer" action="support/deleteItemAction.php" method="post">
+				<input type="hidden" name="item" value="<?=$computer["computer_name"]?>"/>
+				<input type="hidden" name="tableName" value="computer"/>
+			</form>
 			<?php
 				include "footer.php";
 			?>

@@ -14,7 +14,7 @@
 		<?php include "../head.php"; ?>
 		<script>
 			timer=setTimeout(function() {
-				window.location="<?=$_POST["tableName"] === "computer" ? "../viewComputer.php?computerName={$item}" : "../addOrRemoveItems.php"?>";
+				window.location="<?=$_POST["tableName"] === "computer" ? "../viewComputer.php?computerName={$item}" : "../addOrDeleteItems.php"?>";
 			}, 1250);
 		</script>
 	</head>

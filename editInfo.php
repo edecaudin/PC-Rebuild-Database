@@ -2,12 +2,10 @@
 	session_start();
 
 	require("checkLoggedIn.php");
-	include_once("pc_stuff_lookup.php");
-
 	require_once("classes/Table.php");
 	require_once("classes/Row.php");
+	
 	$computer = new Row(new Table("computer"), $_GET["computerName"]);
-
 	if (!$computer->doesExist()) {
 		echo "<script type=\"text/javascript\">
 			alert(\"{$_GET["computerName"]} does not exist!\");
@@ -35,7 +33,8 @@
 					<h2 id="printOS">Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"> -
 						<select name="operatingsystem">
 							<?php
-								getTableItems("operating_system", $computer["os"]);
+								$table = new Table("operating_system");
+								$table->echoRowsAsOptions($table->runQuery(), $computer["os"]);
 							?>
 						</select>
 					</h2>
@@ -52,7 +51,8 @@
 							<td>
 								<select name="rebuilder">
 									<?php
-										getTableItems("rebuilder", $computer["rebuilder"]);
+										$table = new Table("rebuilder");
+										$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
 									?>
 								</select>  
 							</td>

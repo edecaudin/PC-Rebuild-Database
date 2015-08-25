@@ -5,6 +5,8 @@
   		require_once("../support/mysqlConnect.php");
 	}
 	
+	require_once("Row.php");
+	
 	class Table {
 		protected static $name;
 
@@ -27,8 +29,12 @@
 				$query = $query."{$columns[$i]} LIKE ('%{$search}%')";
 				return $mysqlConnection->query($query)->fetch_all(MYSQLI_ASSOC);
 			}
-			
-			
+		}
+		function echoRowsAsOptions($result, $selected = null) {
+			foreach ($result as $row) {
+				$item = new Row($this, $row[$this->getName()."_name"]);
+				echo "<option".(!is_null($selected) && $item[$this->getName()."_name"] === $selected ? " selected" : "").">".$item[$this->getName()."_name"]."</option>";
+			}
 		}
 		function getName() {
 			return $this->name;
