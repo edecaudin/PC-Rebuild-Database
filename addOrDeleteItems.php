@@ -1,15 +1,13 @@
 <?php
-	session_start();
-
-	require("checkLoggedIn.php");
-	require_once("classes/Table.php");
+	require("actions/checkLoggedInAction.php");
+	require_once("mysql/Table.php");
 
 	$pageTitle = "Add or Delete Items";
 ?>
 <!doctype html>
 <html>
 	<head>
-		<?php include 'head.php'; ?>
+		<?php include("templates/head.php"); ?>
 		<script>
 			function deleteItem(item, id) {
 				if (confirm("Are you sure you want to delete " + document.getElementById(item).value + "?")) {
@@ -19,13 +17,13 @@
 		</script>
 	</head>
 	<body>
-		<?php include 'header.php'; ?>
+		<?php include("templates/header.php"); ?>
 			<div class="portal blue">
 				<h2>Add or Delete Items</h2>
 			</div>
 			<div class="box">
 				<h2><span class="green">Add</span> an application</h2>
-				<form action="support/addItemAction.php" method="post">
+				<form action="actions/addItemAction.php" method="post">
 					<input type="text" name="item"/>
 					<input type="hidden" name="tableName" value="application"/>
 					<input type="submit" value="Add Application"/>
@@ -33,7 +31,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="green">Add</span> a printer</h2>
-				<form action="support/addItemAction.php" method="post">
+				<form action="actions/addItemAction.php" method="post">
 					<input type="text" name="item"/>
 					<input type="hidden" name="tableName" value="printer"/>
 					<input type="submit" value="Add Printer"/>
@@ -41,7 +39,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="green">Add</span> something to update</h2>
-				<form action="support/addItemAction.php" method="post">
+				<form action="actions/addItemAction.php" method="post">
 					<input type="text" name="item"/>
 					<input type="hidden" name="tableName" value="update"/>
 					<input type="submit" value="Add Update"/>
@@ -49,7 +47,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="green">Add</span> a configuration step</h2>
-				<form action="support/addItemAction.php" method="post">
+				<form action="actions/addItemAction.php" method="post">
 					<input type="text" name="item"/>
 					<input type="hidden" name="tableName" value="config"/>
 					<input type="submit" value="Add Configuration"/>
@@ -57,7 +55,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="green">Add</span> hardware to give to users</h2>
-				<form action="support/addItemAction.php" method="post">
+				<form action="actions/addItemAction.php" method="post">
 					<input type="text" name="item"/>
 					<input type="hidden" name="tableName" value="hardware"/>
 					<input type="submit" value="Add Hardware"/>
@@ -65,7 +63,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="green">Add</span> an OS</h2>
-				<form action="support/addItemAction.php" method="post">
+				<form action="actions/addItemAction.php" method="post">
 					<input type="text" name="item"/>
 					<input type="hidden" name="tableName" value="operating_system"/>
 					<input type="submit" value="Add OS"/>
@@ -73,7 +71,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="red">Delete</span> an application</h2>
-				<form id="deleteApplication" action="support/deleteItemAction.php" method="post">
+				<form id="deleteApplication" action="actions/deleteItemAction.php" method="post">
 					<select id="selectApplication" name="item">
 						<?php  
 							$table = new Table("application");
@@ -86,7 +84,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="red">Delete</span> a printer</h2>
-				<form id="deletePrinter" action="support/deleteItemAction.php" method="post">
+				<form id="deletePrinter" action="actions/deleteItemAction.php" method="post">
 					<select id="selectPrinter" name="item">
 						<?php  
 							$table = new Table("printer");
@@ -99,7 +97,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="red">Delete</span> something to update</h2>
-				<form id="deleteUpdate" action="support/deleteItemAction.php" method="post">
+				<form id="deleteUpdate" action="actions/deleteItemAction.php" method="post">
 					<select id="selectUpdate" name="item">
 						<?php  
 							$table = new Table("update");
@@ -112,7 +110,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="red">Delete</span> a configuration step</h2>
-				<form id="deleteConfiguration" action="support/deleteItemAction.php" method="post">
+				<form id="deleteConfiguration" action="actions/deleteItemAction.php" method="post">
 					<select id="selectConfiguration" name="item">
 						<?php  
 							$table = new Table("config");
@@ -125,7 +123,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="red">Delete</span> hardware to give to users</h2>
-				<form id="deleteHardware" action="support/deleteItemAction.php" method="post">
+				<form id="deleteHardware" action="actions/deleteItemAction.php" method="post">
 					<select id="selectHardware" name="item">
 						<?php  
 							$table = new Table("hardware");
@@ -138,7 +136,7 @@
 			</div>
 			<div class="box">
 				<h2><span class="red">Delete</span> an OS</h2>
-				<form id="deleteOS" action="support/deleteItemAction.php" method="post">
+				<form id="deleteOS" action="actions/deleteItemAction.php" method="post">
 					<select id="selectOS" name="item">
 						<?php  
 							$table = new Table("operating_system");
@@ -149,6 +147,6 @@
 					<input type="button" value="Delete OS" onClick="deleteItem('selectOS', 'deleteOS')"/>
 				</form>
 			</div>
-			<?php
-				include 'footer.php';
-			?>
+			<?php include("templates/footer.php"); ?>
+	</body>
+</html>

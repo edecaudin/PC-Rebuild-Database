@@ -1,12 +1,11 @@
 <?php
-	if (file_exists("support/mysqlConnect.php")) {
-  		require_once("support/mysqlConnect.php");
+	if (file_exists("mysql/mysqlConnect.php")) {
+  		require_once("mysql/mysqlConnect.php");
 	} else {
-  		require_once("../support/mysqlConnect.php");
+  		require_once("../mysql/mysqlConnect.php");
 	}
-	
 	require_once("Row.php");
-	
+
 	class Table {
 		protected static $name;
 
@@ -33,7 +32,7 @@
 		function echoRowsAsOptions($result, $selected = null) {
 			foreach ($result as $row) {
 				$item = new Row($this, $row[$this->getName()."_name"]);
-				echo "<option".(!is_null($selected) && $item[$this->getName()."_name"] === $selected ? " selected" : "").">".$item[$this->getName()."_name"]."</option>";
+				echo("<option".(!is_null($selected) && $item[$this->getName()."_name"] === $selected ? " selected" : "").">".$item[$this->getName()."_name"]."</option>");
 			}
 		}
 		function getName() {

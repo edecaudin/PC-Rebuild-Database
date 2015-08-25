@@ -1,10 +1,4 @@
 <?php
-	if (file_exists("support/mysqlConnect.php")) {
-  		require_once("support/mysqlConnect.php");
-	} else {
-  		require_once("../support/mysqlConnect.php");
-	}
-	
 	class Row implements ArrayAccess {
 		private $table;
 		private $id;

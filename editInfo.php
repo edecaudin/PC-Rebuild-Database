@@ -1,36 +1,33 @@
 <?php
-	session_start();
-
-	require("checkLoggedIn.php");
-	require_once("classes/Table.php");
-	require_once("classes/Row.php");
+	require("actions/checkLoggedInAction.php");
+	require_once("mysql/Table.php");
 	
 	$computer = new Row(new Table("computer"), $_GET["computerName"]);
 	if (!$computer->doesExist()) {
-		echo "<script type=\"text/javascript\">
+		echo("<script type=\"text/javascript\">
 			alert(\"{$_GET["computerName"]} does not exist!\");
 			window.history.back();
-		</script>";
-		exit;
+		</script>");
+		exit();
 	}
 
 	$pageTitle = "Editing {$computer["computer_name"]}";
-	$headerContent = "<strong id='rightLinks'>
-		<a href='viewComputer.php?computerName={$computer["computer_name"]}' class='navLink'>Back</a> to {$computer["computer_name"]} - 
-		<a href='javascript:document.forms[\"editInfo\"].submit()' class='navLink, green'>Save</a> Info
-	</strong>";
+	$headerContent = "<strong id=\"rightLinks\">
+					<a href=\"viewComputer.php?computerName={$computer["computer_name"]}\" class=\"navLink\">Back</a> to {$computer["computer_name"]} - 
+					<a href=\"javascript:document.forms['editInfo'].submit()\" class=\"navLink, green\">Save</a> Info
+				</strong>";
 ?>
 <!doctype html>
 <html>
 	<head>
-		<?php include "head.php"; ?>
+		<?php include("templates/head.php"); ?>
 	</head>
 	<body>
-		<?php include "header.php"; ?>
-			<form name="editInfo" action="support/editInfoAction.php" method="post">
+		<?php include("templates/header.php"); ?>
+			<form id="editInfo" action="actions/editInfoAction.php" method="post">
 				<div class="portal blue" id="viewComputer">
-					<h1 id="printComputerName">Editing <input type="text" name="computerName" value="<?=$computer["computer_name"]?>" maxlength="15"></h1>
-					<h2 id="printOS">Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"> -
+					<h1 id="printComputerName">Editing <input type="text" name="computerName" value="<?=$computer["computer_name"]?>" maxlength="15"/></h1>
+					<h2 id="printOS">Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"/> -
 						<select name="operatingsystem">
 							<?php
 								$table = new Table("operating_system");
@@ -79,15 +76,15 @@
 						</tr>
 						<tr>
 							<td>OS License Key:</td>
-							<td><input type="text" name="oskey" value="<?=$computer["oskey"]?>"/></td>
+							<td><input type="text" name="oskey" value="<?=$computer["oskey"]?>" maxlength="29"/></td>
 							<td>Express Service Code:</td>
 							<td><input type="text" name="escode" value="<?=$computer["escode"]?>"/></td>
 						</tr>
 						<tr>
-							<td>MAC-Address LAN:</td>
-							<td><input type="text" name="maclan" value="<?=$computer["maclan"]?>"/></td>
-							<td>MAC-Address WAN:</td>
-							<td><input type="text" name="macwifi" value="<?=$computer["macwifi"]?>"/></td>
+							<td>MAC Address (LAN):</td>
+							<td><input type="text" name="maclan" value="<?=$computer["maclan"]?>" maxlength="17"/></td>
+							<td>MAC Address (WLAN):</td>
+							<td><input type="text" name="macwifi" value="<?=$computer["macwifi"]?>" maxlength="17"/></td>
 						</tr>
 						<tr>
 							<td>Rebuild Date:</td>
@@ -114,6 +111,6 @@
 						<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
 				</table>
 			</form>
-	<?php
-		include 'footer.php';
-	?>
+			<?php include("templates/footer.php"); ?>
+	</body>
+</html>

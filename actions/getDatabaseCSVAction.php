@@ -1,8 +1,6 @@
 <?php
-	session_start();
-
-    require("../checkLoggedIn.php");
-  	require_once("../classes/Table.php");
+	require("checkLoggedInAction.php");
+  	require_once("../mysql/Table.php");
 
 	$table = new Table("computer");
 	if (!isset($_GET["search"])) {

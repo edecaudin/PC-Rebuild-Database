@@ -1,30 +1,27 @@
 <?php
-	session_start();
-
-    require("checkLoggedIn.php");
-	require_once("classes/Table.php");
-	require_once("classes/Row.php");
+	require("actions/checkLoggedInAction.php");
+	require_once("mysql/Table.php");
 
 	$computer = new Row(new Table("computer"), $_GET["computerName"]);
 	if (!$computer->doesExist()) {
-		echo "<script type=\"text/javascript\">
+		echo("<script type=\"text/javascript\">
 			alert(\"{$_GET["computerName"]} does not exist!\");
 			window.history.back();
-		</script>";
-		exit;
+		</script>");
+		exit();
 	}
 
 	$pageTitle = $computer["computer_name"];
 	$headerContent = "<strong id=\"rightLinks\">
-		<a href=\"editInfo.php?computerName={$computer["computer_name"]}\" class=\"navLink green\">Edit</a> Info - 
-		<a href=\"editConfig.php?computerName={$computer["computer_name"]}\" class=\"navLink green\">Edit</a> Config - 
-		<a href=\"javascript:deleteComputer()\" class=\"navLink red\">Delete</a> {$computer["computer_name"]}
-	</strong>";
+					<a href=\"editInfo.php?computerName={$computer["computer_name"]}\" class=\"navLink green\">Edit</a> Info - 
+					<a href=\"editConfig.php?computerName={$computer["computer_name"]}\" class=\"navLink green\">Edit</a> Config - 
+					<a href=\"javascript:deleteComputer()\" class=\"navLink red\">Delete</a> {$computer["computer_name"]}
+				</strong>";
 ?>
 <!doctype html>
 <html>
 	<head>
-		<?php include "head.php"; ?>
+		<?php include("templates/head.php"); ?>
 		<link rel="stylesheet" href="../../rebuild/resources/print.css">
 		<script>
 			function deleteComputer() {
@@ -35,23 +32,23 @@
 		</script>
 	</head>
 	<body>
-		<?php include "header.php"; ?>
+		<?php include("templates/header.php"); ?>
 			<?php
 				function getInstalledItems($fieldname) {
 					global $computer;
 					$field = $computer[$fieldname];
 					if ($field === "") {
-						echo "<tr>
+						echo("<tr>
 								<td>Nothing to do here!</td>
-							</tr>";
+							</tr>");
 					} else {
 						$items = explode(" - ", $field);
 						foreach ($items as $item) {
-							echo "<tr>
+							echo("<tr>
 									<td>
 										<input type=\"checkbox\"/>{$item}
 									</td>
-								</tr>";
+								</tr>");
 						}
 					}
 				}
@@ -98,9 +95,9 @@
 					<td><?=$computer["escode"]?></td>
 				</tr>
 				<tr>
-					<td>MAC-Address LAN:</td>
+					<td>MAC Address (LAN):</td>
 					<td><?=$computer["maclan"]?></td>
-					<td>MAC-Address WAN:</td>
+					<td>MAC Address (WLAN):</td>
 					<td><?=$computer["macwifi"]?></td>
 				</tr>
 				<tr>
@@ -178,14 +175,14 @@
 						<td class="tobedone">Notes</td><td></td>
 					</tr>
 					<tr>
-    					<td colspan="2"><?=$computer["notes"]?></td>
+						<td colspan="2"><?=$computer["notes"]?></td>
    					</tr>
 				</table>
 			</div>
-			<form name="deleteComputer" action="support/deleteItemAction.php" method="post">
+			<form id="deleteComputer" action="actions/deleteItemAction.php" method="post">
 				<input type="hidden" name="item" value="<?=$computer["computer_name"]?>"/>
 				<input type="hidden" name="tableName" value="computer"/>
 			</form>
-			<?php
-				include "footer.php";
-			?>
+			<?php include("templates/footer.php"); ?>
+	</body>
+</html>

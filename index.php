@@ -1,20 +1,18 @@
 <?php
-	session_start();
-
-	require("checkLoggedIn.php");
-	require_once("classes/Table.php");
+	require("actions/checkLoggedInAction.php");
+	require_once("mysql/Table.php");
 
 	$pageTitle = "Home";
 ?>
 <!doctype html>
 <html>
 	<head>
-		<?php include 'head.php'; ?>
+		<?php include("templates/head.php"); ?>
 	</head>
 	<body>
-		<?php include 'header.php'; ?>
+		<?php include("templates/header.php"); ?>
 			<div class="portal blue">
-				<h2>Welcome to the Vendome PC Rebuild Database <?=$_SESSION['username']?>!</h2>
+				<h2>Welcome to the Vendome PC Rebuild Database <?=$_SESSION["username"]?>!</h2>
 			</div>
 			<div class="box">
 				<h2><a href="addComputer.php"><span class="green">Add</span> a new computer</a></h2>
@@ -41,6 +39,6 @@
 				<h2><a href="viewDatabase.php"><span class="blue">View</span> the database</a></h2>
 				View and search the entire computer database, sorted by computer name.
 			</div>
-			<?php
-				include 'footer.php';
-			?>
+			<?php include("templates/footer.php"); ?>
+	</body>
+</html>
