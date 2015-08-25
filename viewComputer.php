@@ -22,7 +22,7 @@
 <html>
 	<head>
 		<?php include("templates/head.php"); ?>
-		<link rel="stylesheet" href="../../rebuild/resources/print.css">
+		<link rel="stylesheet" href="resources/print.css">
 		<script>
 			function deleteComputer() {
 				if (confirm("Are you sure you want to delete <?=$computer["computer_name"]?>?")) {
@@ -38,17 +38,15 @@
 					global $computer;
 					$field = $computer[$fieldname];
 					if ($field === "") {
-						echo("<tr>
-								<td>Nothing to do here!</td>
-							</tr>");
+						echo("<div class=\"viewRow\">
+								Nothing to do here!
+							</div>");
 					} else {
 						$items = explode(" - ", $field);
 						foreach ($items as $item) {
-							echo("<tr>
-									<td>
-										<input type=\"checkbox\"/>{$item}
-									</td>
-								</tr>");
+							echo("<div class=\"viewRow\">
+									<input type=\"checkbox\"/>{$item}
+								</div>");
 						}
 					}
 				}
@@ -57,127 +55,99 @@
 				<h1 id="printComputerName"><?=$computer["computer_name"]?></h1>
 				<h2 id="printOS">Service Tag: <?=$computer["servicetag"]?> - OS: <?=$computer["os"]?></h2>
 			</div>
-			<table>
-				<tr>
-					<td>Employee:</td>
-					<td><?=$computer["employee"]?></td>
-					<td>Ex-Employee:</td>
-					<td><?=$computer["exemployee"]?></td>
-				</tr>
-				<tr>
-					<td>Rebuilder:</td>
-					<td><?=$computer["rebuilder"]?></td>
-					<td>Password:</td>
-					<td><?=$computer["password"]?></td>
-				</tr>
-				<tr>
-					<td>Model:</td>
-					<td><?=$computer["model"]?></td>
-					<td>CPU:</td>
-					<td><?=$computer["cpu"]?></td>
-				</tr>
-				<tr>
-					<td>RAM:</td>
-					<td><?=$computer["ram"]?></td>
-					<td>HDD:</td>
-					<td><?=$computer["hdd"]?></td>
-				</tr>
-				<tr>
-					<td>Optical Drive:</td>
-					<td><?=$computer["opt"]?></td>
-					<td>Battery:</td>
-					<td><?=$computer["power"]?></td>
-				</tr>
-				<tr>
-					<td>OS License Key:</td>
-					<td><?=$computer["oskey"]?></td>
-					<td>Express Service Code:</td>
-					<td><?=$computer["escode"]?></td>
-				</tr>
-				<tr>
-					<td>MAC Address (LAN):</td>
-					<td><?=$computer["maclan"]?></td>
-					<td>MAC Address (WLAN):</td>
-					<td><?=$computer["macwifi"]?></td>
-				</tr>
-				<tr>
-					<td>Date of Build:</td>
-					<td><?=$computer["date"]?></td>
-					<td>Date of Purchase:</td>
-					<td><?=$computer["dop"]?></td>
-				</tr>
-				<tr>
-					<td>Cell Phone Number:</td>
-					<td><?=$computer["cell"]?></td>
-					<td>Broadview Number:</td>
-					<td><?=$computer["broadview"]?></td>
-				</tr>
-				<tr>
-					<td>Silverpop Account:</td>
-					<td><?=$computer["silverpop"]?></td>
-					<td>EFax Account:</td>
-					<td><?=$computer["efax"]?></td>
-				</tr>
-			</table>
-			<div id="software">
-				<table>
-					<tr>
-	 					<td class="tobedone" colspan="2">Applications</td>
-					</tr>
-					<?php
-						getInstalledItems("programs");
-					?>
-				</table>
+			<div class="viewRow">
+				<div class="viewCell">Employee:</div>
+				<div class="viewCell"><?=$computer["employee"]?></div>
+				<div class="viewCell">Ex-Employee:</div>
+				<div class="viewCell"><?=$computer["exemployee"]?></div>
 			</div>
-			<div id="updates">
-				<table>
-					<tr>
-						<td class="tobedone" colspan="2">Updates to be installed</td>
-					</tr>
-					<?php
-						getInstalledItems("updates");
-					?>
-				</table>
+			<div class="viewRow">
+				<div class="viewCell">Rebuilder:</div>
+				<div class="viewCell"><?=$computer["rebuilder"]?></div>
+				<div class="viewCell">Password:</div>
+				<div class="viewCell"><?=$computer["password"]?></div>
 			</div>
-			<div id="configuration">
-				<table>
-					<tr>
-						<td class="tobedone" colspan="2">Configuration</td>
-					</tr>
-					<?php
-						getInstalledItems("config");
-					?>
-				</table>
+			<div class="viewRow">
+				<div class="viewCell">Model:</div>
+				<div class="viewCell"><?=$computer["model"]?></div>
+				<div class="viewCell">CPU:</div>
+				<div class="viewCell"><?=$computer["cpu"]?></div>
 			</div>
-			<div id="printer">
-				<table>
-					<tr>
-						<td class="tobedone" colspan="2">Printers</td>
-					</tr>
-					<?php
-						getInstalledItems("printers");
-					?>
-				</table>
+			<div class="viewRow">
+				<div class="viewCell">RAM:</div>
+				<div class="viewCell"><?=$computer["ram"]?></div>
+				<div class="viewCell">HDD:</div>
+				<div class="viewCell"><?=$computer["hdd"]?></div>
 			</div>
-			<div id="hardware">
-				<table>
-					<tr>
-						<td class="tobedone" colspan="2">Additional Hardware</td>
-					</tr>
-					<?php
-						getInstalledItems("addhw");
-					?>
-				</table>
+			<div class="viewRow">
+				<div class="viewCell">Optical Drive:</div>
+				<div class="viewCell"><?=$computer["opt"]?></div>
+				<div class="viewCell">Battery:</div>
+				<div class="viewCell"><?=$computer["power"]?></div>
 			</div>
-			<div id="notes">
-				<table>
-					<tr>
-						<td class="tobedone">Notes</td><td></td>
-					</tr>
-					<tr>
-						<td colspan="2"><?=$computer["notes"]?></td>
-   					</tr>
-				</table>
+			<div class="viewRow">
+				<div class="viewCell">OS License Key:</div>
+				<div class="viewCell"><?=$computer["oskey"]?></div>
+				<div class="viewCell">Express Service Code:</div>
+				<div class="viewCell"><?=$computer["escode"]?></div>
+			</div>
+			<div class="viewRow">
+				<div class="viewCell">MAC Address (LAN):</div>
+				<div class="viewCell"><?=$computer["maclan"]?></div>
+				<div class="viewCell">MAC Address (WLAN):</div>
+				<div class="viewCell"><?=$computer["macwifi"]?></div>
+			</div>
+			<div class="viewRow">
+				<div class="viewCell">Date of Build:</div>
+				<div class="viewCell"><?=$computer["date"]?></div>
+				<div class="viewCell">Date of Purchase:</div>
+				<div class="viewCell"><?=$computer["dop"]?></div>
+			</div>
+			<div class="viewRow">
+				<div class="viewCell">Cell Phone Number:</div>
+				<div class="viewCell"><?=$computer["cell"]?></div>
+				<div class="viewCell">Broadview Number:</div>
+				<div class="viewCell"><?=$computer["broadview"]?></div>
+			</div>
+			<div class="viewRow">
+				<div class="viewCell">Silverpop Account:</div>
+				<div class="viewCell"><?=$computer["silverpop"]?></div>
+				<div class="viewCell">EFax Account:</div>
+				<div class="viewCell"><?=$computer["efax"]?></div>
+			</div>
+			<div class="viewSection">
+				<div class="viewRow gray">Applications</div>
+				<?php
+					getInstalledItems("programs");
+				?>
+			</div>
+			<div class="viewSection">
+				<div class="viewRow gray">Updates to be installed</div>
+				<?php
+					getInstalledItems("updates");
+				?>
+			</div>
+			<div class="viewSection">
+				<div class="viewRow gray">Configuration</div>
+				<?php
+					getInstalledItems("config");
+				?>
+			</div>
+			<div class="viewSection">
+				<div class="viewRow gray">Printers</div>
+				<?php
+					getInstalledItems("printers");
+				?>
+			</div>
+			<div class="viewSection">
+				<div class="viewRow gray">Additional Hardware</div>
+				<?php
+					getInstalledItems("addhw");
+				?>
+			</div>
+			<div class="viewSection">
+				<div class="viewRow gray">Notes</div>
+				<div class="viewRow"><?=$computer["notes"]?></div>
 			</div>
 			<form id="deleteComputer" action="actions/deleteItemAction.php" method="post">
 				<input type="hidden" name="item" value="<?=$computer["computer_name"]?>"/>

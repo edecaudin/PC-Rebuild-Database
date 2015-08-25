@@ -1,10 +1,8 @@
 @media print {
-	
-	/* Global Styles */
-	
 	body {
-		font-family: "Roboto Condensed", sans-serif;
 		font-size: 10pt;
+		
+		color: #333333;
 	}
 
 	.noPrint {
@@ -14,36 +12,11 @@
 	div#content {
 		width: 100%;
 	}
-
-	div.portal {
-		width: 100%;
-		float: left;
-		color: white;
-		background-color: royalblue;
-		text-align: center;
-	}
 	
 	div#viewComputer.portal {
+		margin-bottom: 5px;
 		padding-top: 7px;
 		padding-bottom: 7px;
-		margin-bottom: 5px;
-	}
-
-	table {
-		clear: left;
-	}
-
-	td {
-		width: 23%;
-	}
-
-	td.big {
-		font-size: 26px;
-	}
-
-	.tobedone {
-		background-color: #CCC;
-		padding: 0.5% 1% 0.5% 1%;
 	}
 
 	h1#printComputerName, h2#printOS {
@@ -52,10 +25,5 @@
 	
 	h1#printComputerName {
 		margin-right: 20px;
-	}
-
-	#software, #updates, #configuration, #printer, #hardware, #notes {
-		width: 50%;
-		float: left;
 	}
 }

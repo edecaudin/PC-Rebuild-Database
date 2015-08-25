@@ -106,7 +106,7 @@
 						</tr>
 						<tr>
 							<td>Notes:</td>
-							<td colspan="3"><textarea name="notes"><?=$computer["notes"]?></textarea></td>
+							<td colspan="3"><textarea name="notes" id="notesTextArea"><?=$computer["notes"]?></textarea></td>
 						</tr>
 						<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
 				</table>
