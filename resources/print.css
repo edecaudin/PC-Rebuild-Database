@@ -2,11 +2,15 @@
 	body {
 		font-size: 10pt;
 		
-		color: #333333;
+		color: #222222;
 	}
 
 	.noPrint {
 		display: none;
+	}
+	
+	.gray {
+		color: #222222;
 	}
 	
 	div#content {
