@@ -17,7 +17,7 @@
 				<h2>Welcome to the Vendome PC Rebuild Database <?=$_SESSION['username']?>!</h2>
 			</div>
 			<div class="box">
-				<h2><a href="newComputer.php"><span class="green">Add</span> a new computer</a></h2>
+				<h2><a href="addComputer.php"><span class="green">Add</span> a new computer</a></h2>
 				Click on this box to create a new rebuild form or to just enter a new machine into the database.
 			</div>
 			<div class="box">

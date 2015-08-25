@@ -8,7 +8,6 @@
 	$computer = new Row(new Table("computer"), intval($_POST["computer_id"]));
 
 	$pageTitle = "Edited {$computer["computer_name"]}";
-	
 ?>
 <!doctype html>
 <html>

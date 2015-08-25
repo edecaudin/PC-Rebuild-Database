@@ -23,21 +23,15 @@
 			$this->result = $mysqlConnection->query("SELECT * FROM `{$this->table->getName()}` WHERE `{$this->table->getName()}_id` = '{$this->id}'")->fetch_assoc();
 			$this->doesExist = !is_null($this->id) && !is_null($this->result);
 		}
-		
 		function __destructor() {
 			global $mysqlConnection;
 			$mysqlConnection->close();
 		}
-		
-		function doesExist() {
-			return $this->doesExist;
-		}
-		
 		function offsetSet($offset, $value) {
 			global $mysqlConnection;
 			if (!is_null($offset)) {
 				$this->result[$offset] = $value;
-				$mysqlConnection->query("UPDATE `{$this->table->getName()}` SET `{$offset}` = '{$value}' WHERE `{$this->table->getName()}_id` = {$this->id}");
+				$mysqlConnection->query("UPDATE `{$this->table->getName()}` SET `{$offset}` = '{$value}' WHERE `{$this->table->getName()}_id` = '{$this->id}'");
 			}
 		}
 		function offsetExists($offset) {
@@ -48,5 +42,8 @@
 		}
 		function offsetGet($offset) {
 			return isset($this->result[$offset]) ? $this->result[$offset] : null;
+		}
+		function doesExist() {
+			return $this->doesExist;
 		}
 	}

@@ -11,12 +11,16 @@
 		function __construct($name) {
 			$this->name = mysql_real_escape_string($name);
 		}
+		function __destructor() {
+			global $mysqlConnection;
+			$mysqlConnection->close();
+		}
 		function runQuery($search = null, $columns = null) {
 			global $mysqlConnection;
 			if (is_null($search)) {
-				return $mysqlConnection->query("SELECT * FROM `{$this->name}` ORDER BY `{$this->name}_name` ASC")->fetch_all(MYSQLI_ASSOC);
+				return $mysqlConnection->query("SELECT * FROM `{$this->getName()}` ORDER BY `{$this->getName()}_name` ASC")->fetch_all(MYSQLI_ASSOC);
 			} else {
-				$query = "SELECT * FROM `{$this->name}` WHERE ";
+				$query = "SELECT * FROM `{$this->getName()}` WHERE ";
 				for ($i = 0; $i < count($columns) - 1; $i++){
 					$query = $query."{$columns[$i]} LIKE ('%{$search}%') OR ";
 				}
@@ -26,13 +30,26 @@
 			
 			
 		}
-		function __destructor() {
-			global $mysqlConnection;
-			$mysqlConnection->close();
-		}
-
 		function getName() {
 			return $this->name;
+		}
+		function addItem($itemName) {
+			$itemName = mysql_real_escape_string($itemName);
+
+			global $mysqlConnection;
+			$mysqlConnection->query("INSERT INTO `{$this->getName()}` (`{$this->getName()}_name`) VALUES ('{$itemName}')");
+		}
+		function deleteItem($itemName) {
+			$itemName = mysql_real_escape_string($itemName);
+			global $mysqlConnection;
+			$mysqlConnection->query("DELETE FROM `{$this->getName()}` WHERE `{$this->getName()}_name` = '{$itemName}'");
+		}
+		function doesContain($itemName) {
+			$result = $this->runQuery();
+			foreach ($result as $row) {
+				if ($row[$this->getName()."_name"] == $itemName) return true;
+			}
+			return false;
 		}
 	}
 ?>

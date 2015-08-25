@@ -8,7 +8,11 @@
 <html>
 	<head>
 		<?php include '../head.php' ?>
-		<script>timer=setTimeout(function(){ window.location="../login.php";}, 1500)</script>
+		<script>
+			timer=setTimeout(function() {
+				window.location="../login.php";
+			}, 1500);
+		</script>
 	</head>
 	<body>
 		<?php include '../header.php' ?>

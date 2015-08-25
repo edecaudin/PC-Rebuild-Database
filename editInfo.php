@@ -1,7 +1,7 @@
 <?php
 	session_start();
 
-    require("checkLoggedIn.php");
+	require("checkLoggedIn.php");
 	include_once("pc_stuff_lookup.php");
 
 	require_once("classes/Table.php");

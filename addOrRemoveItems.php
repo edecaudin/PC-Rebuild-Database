@@ -27,8 +27,7 @@
 				<h2><span class="green">Add</span> an application</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="application"/>
-					<input type="hidden" name="field" value="application_name"/>
+					<input type="hidden" name="tableName" value="application"/>
 					<input type="submit" value="Add Application"/>
 				</form>
 			</div>
@@ -36,8 +35,7 @@
 				<h2><span class="green">Add</span> a printer</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="printer"/>
-					<input type="hidden" name="field" value="printer_name"/>
+					<input type="hidden" name="tableName" value="printer"/>
 					<input type="submit" value="Add Printer"/>
 				</form>
 			</div>
@@ -45,8 +43,7 @@
 				<h2><span class="green">Add</span> something to update</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="update"/>
-					<input type="hidden" name="field" value="update_name"/>
+					<input type="hidden" name="tableName" value="update"/>
 					<input type="submit" value="Add Update"/>
 				</form>
 			</div>
@@ -54,8 +51,7 @@
 				<h2><span class="green">Add</span> a configuration step</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="config"/>
-					<input type="hidden" name="field" value="configuration"/>
+					<input type="hidden" name="tableName" value="config"/>
 					<input type="submit" value="Add Configuration"/>
 				</form>
 			</div>
@@ -63,8 +59,7 @@
 				<h2><span class="green">Add</span> hardware to give to users</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="hardware"/>
-					<input type="hidden" name="field" value="additionalhardware"/>
+					<input type="hidden" name="tableName" value="hardware"/>
 					<input type="submit" value="Add Hardware"/>
 				</form>
 			</div>
@@ -72,86 +67,79 @@
 				<h2><span class="green">Add</span> an OS</h2>
 				<form action="support/addItemAction.php" method="post">
 					<input type="text" name="item"/>
-					<input type="hidden" name="table" value="operating_systems"/>
-					<input type="hidden" name="field" value="os_select"/>
+					<input type="hidden" name="tableName" value="operating_system"/>
 					<input type="submit" value="Add OS"/>
 				</form>
 			</div>
 			<div class="box">
 				<h2><span class="red">Remove</span> an application</h2>
-				<form id="removeApplication" action="support/removeItemAction.php" method="post">
+				<form id="removeApplication" action="support/deleteItemAction.php" method="post">
 					<select id="selectApplication" name="item">
 						<?php  
 							getTableItems("application");
 						?>
 					</select>
-					<input type="hidden" name="table" value="application"/>
-					<input type="hidden" name="field" value="application_name"/>
+					<input type="hidden" name="tableName" value="application"/>
 					<input type="button" value="Remove Application" onClick="removeItem('selectApplication', 'removeApplication')"/>
 				</form>
 			</div>
 			<div class="box">
 				<h2><span class="red">Remove</span> a printer</h2>
-				<form id="removePrinter" action="support/removeItemAction.php" method="post">
+				<form id="removePrinter" action="support/deleteItemAction.php" method="post">
 					<select id="selectPrinter" name="item">
 						<?php  
 							getTableItems("printer");
 						?>
 					</select>
-					<input type="hidden" name="table" value="printer"/>
-					<input type="hidden" name="field" value="printer_name"/>
+					<input type="hidden" name="tableName" value="printer"/>
 					<input type="button" value="Remove Printer" onClick="removeItem('selectPrinter', 'removePrinter')"/>
 				</form>
 			</div>
 			<div class="box">
 				<h2><span class="red">Remove</span> something to update</h2>
-				<form id="removeUpdate" action="support/removeItemAction.php" method="post">
+				<form id="removeUpdate" action="support/deleteItemAction.php" method="post">
 					<select id="selectUpdate" name="item">
 						<?php  
 							getTableItems("update");
 						?>
 					</select>
-					<input type="hidden" name="table" value="update"/>
-					<input type="hidden" name="field" value="update_name"/>
+					<input type="hidden" name="tableName" value="update"/>
 					<input type="button" value="Remove Update" onClick="removeItem('selectUpdate', 'removeUpdate')"/>
 				</form>
 			</div>
 			<div class="box">
 				<h2><span class="red">Remove</span> a configuration step</h2>
-				<form id="removeConfiguration" action="support/removeItemAction.php" method="post">
+				<form id="removeConfiguration" action="support/deleteItemAction.php" method="post">
 					<select id="selectConfiguration" name="item">
 						<?php  
 							getTableItems("config");
 						?>
 					</select>
-					<input type="hidden" name="table" value="config"/>
-					<input type="hidden" name="field" value="config_name"/>
+					<input type="hidden" name="tableName" value="config"/>
 					<input type="button" value="Remove Configuration" onClick="removeItem('selectConfiguration', 'removeConfiguration')"/>
 				</form>
 			</div>
 			<div class="box">
 				<h2><span class="red">Remove</span> hardware to give to users</h2>
-				<form id="removeHardware" action="support/removeItemAction.php" method="post">
+				<form id="removeHardware" action="support/deleteItemAction.php" method="post">
 					<select id="selectHardware" name="item">
 						<?php  
 							getTableItems("hardware");
 						?>
 					</select>
-					<input type="hidden" name="table" value="hardware"/>
-					<input type="hidden" name="field" value="hardware_name"/>
+					<input type="hidden" name="tableName" value="hardware"/>
 					<input type="button" value="Remove Hardware" onClick="removeItem('selectHardware', 'removeHardware')"/>
 				</form>
 			</div>
 			<div class="box">
 				<h2><span class="red">Remove</span> an OS</h2>
-				<form id="removeOS" action="support/removeItemAction.php" method="post">
+				<form id="removeOS" action="support/deleteItemAction.php" method="post">
 					<select id="selectOS" name="item">
 						<?php  
 							getTableItems("operating_system");
 						?>
 					</select>
-					<input type="hidden" name="table" value="operating_system"/>
-					<input type="hidden" name="field" value="operating_system_name"/>
+					<input type="hidden" name="tableName" value="operating_system"/>
 					<input type="button" value="Remove OS" onClick="removeItem('selectOS', 'removeOS')"/>
 				</form>
 			</div>

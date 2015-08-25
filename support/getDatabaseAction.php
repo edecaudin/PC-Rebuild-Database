@@ -12,7 +12,7 @@
 		$computers = $computers->runQuery();
 	} else {
 		$computers = new Table("computer");
-		$computers = $computers->runQuery($search = mysql_real_escape_string($_POST["search"]), array("computer_name", "os", "employee", "rebuilder", "cpu", "programs", "servicetag", "escode", "model"));
+		$computers = $computers->runQuery($search = $_POST["search"], array("computer_name", "os", "employee", "rebuilder", "cpu", "programs", "servicetag", "escode", "model"));
 		if (!$computers) {
 			echo "<h2 class='red' id='noResults'>No results found!</div>";
 			exit;

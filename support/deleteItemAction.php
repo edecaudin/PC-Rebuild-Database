@@ -1,12 +1,12 @@
 <?php
 	session_start();
 
-    require("../checkLoggedIn.php");
+	require("../checkLoggedIn.php");
 
 	require_once("../classes/Table.php");
 
-	$computerName = $_GET["computerName"];
-    $pageTitle = "Deleted {$computerName}";
+	$item = $_POST["item"];
+	$pageTitle = "Deleted {$_POST["tableName"]} {$_POST["item"]}";
 ?>
 <!doctype html>
 <html>
@@ -14,18 +14,18 @@
 		<?php include "../head.php"; ?>
 		<script>
 			timer=setTimeout(function() {
-				window.location="../index.php";
-			}, 1500);
+				window.location="../addOrRemoveItems.php";
+			}, 1250);
 		</script>
 	</head>
 	<body>
 		<?php include "../header.php"; ?>
 			<?php
-				$table = new Table("computer");
-				$table->deleteItem($computerName);
+				$table = new Table($_POST["tableName"]);
+				$table->deleteItem($item);
 			?>
 			<div class="portal red">
-				<h2>Succsessfuly deleted <?=$computerName?>!</h2>
+				<h2>Succsessfuly deleted <?=$_POST["tableName"]." ".$item?>!</h2>
 			</div>
 			<?php
 				include "../footer.php";

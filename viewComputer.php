@@ -59,7 +59,8 @@
 				}
 			?>
 			<div class="portal blue" id="viewComputer">
-				<h1 id="printComputerName"><?=$computer["computer_name"]?></h1><h2 id="printOS">Service Tag: <?=$computer["servicetag"]?> - OS: <?=$computer["os"]?></h2>
+				<h1 id="printComputerName"><?=$computer["computer_name"]?></h1>
+				<h2 id="printOS">Service Tag: <?=$computer["servicetag"]?> - OS: <?=$computer["os"]?></h2>
 			</div>
 			<table>
 				<tr>
