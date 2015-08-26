@@ -28,7 +28,7 @@
 				<div class=\"tableCell\">User: {$computer["employee"]}</div>
 				<div class=\"tableCell\">Model: {$computer["model"]}</div>
 				<div class=\"tableCell\">Date of Purchase: {$computer["purchase_date"]}</div>
-				<div class=\"tableCell\">MAC WLAN: {$computer["mac_wlan"]}</div>
+				<div class=\"tableCell\">MAC WLAN: {$computer["mac_wifi"]}</div>
 			</div>
 			");
 	}

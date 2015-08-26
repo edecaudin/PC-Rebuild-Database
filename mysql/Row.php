@@ -17,10 +17,6 @@
 			$this->result = $mysqlConnection->query("SELECT * FROM `{$this->table->getName()}` WHERE `{$this->table->getName()}_id` = '{$this->id}'")->fetch_assoc();
 			$this->doesExist = !is_null($this->id) && !is_null($this->result);
 		}
-		function __destructor() {
-			global $mysqlConnection;
-			$mysqlConnection->close();
-		}
 		function offsetSet($offset, $value) {
 			global $mysqlConnection;
 			if (!is_null($offset)) {
