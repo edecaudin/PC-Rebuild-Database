@@ -37,7 +37,7 @@
 					foreach ($result as $row) {
 						$isInstalled = in_array($row[$table->getName()."_name"], $installedItems);
 						echo("<div class=\"tableCell".($isInstalled ? " gray" : "")."\">
-							<input type=\"checkbox\" name=\"{$table->getName()}[]\" value=\"{$row[$table->getName()."_name"]}\"".($isInstalled ? " checked" : "")."/>
+							<input type=\"checkbox\" name=\"{$table->getName()}_list[]\" value=\"{$row[$table->getName()."_name"]}\"".($isInstalled ? " checked" : "")."/>
 							{$row[$table->getName()."_name"]}
 						</div>");
 					}
@@ -46,15 +46,15 @@
 			<form id="editConfig" action="actions/editConfigAction.php" method="post">
 				<?php
 					echo("<div class=\"tableHeader gray\"><h3>Applications</h3></div>");
-					installedStuffLookup("application", "programs");
+					installedStuffLookup("application", "application_list");
 					echo("<div class=\"tableHeader gray\"><h3>Configuration</h3></div>");
-					installedStuffLookup("config", "config");
+					installedStuffLookup("config", "config_list");
 					echo("<div class=\"tableHeader gray\"><h3>Additional Hardware</h3></div>");
-					installedStuffLookup("hardware", "addhw");
+					installedStuffLookup("hardware", "hardware_lsit");
 					echo("<div class=\"tableHeader gray\"><h3>Updates</h3></div>");
-					installedStuffLookup("update", "updates");
+					installedStuffLookup("update", "update_list");
 					echo("<div class=\"tableHeader gray\"><h3>Printers:</h3></div>");
-					installedStuffLookup("printer", "printers");
+					installedStuffLookup("printer", "printer_list");
 				?>
 				<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
 			</form>

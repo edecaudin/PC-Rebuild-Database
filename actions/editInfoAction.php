@@ -4,30 +4,28 @@
 
 	$computer = new Row(new Table("computer"), intval($_POST["computer_id"]));
 
-	$computer["computer_name"] = $_POST["computerName"];
-	$computer["os"] = $_POST["operatingsystem"];
+	$computer["computer_name"] = $_POST["computer_name"];
+	$computer["operating_system"] = $_POST["operating_system"];
+	$computer["service_tag"] = $_POST["service_tag"];
 	$computer["employee"] = $_POST["employee"];
-	$computer["exemployee"] = $_POST["exemployee"];
+	$computer["ex_employee"] = $_POST["ex_employee"];
 	$computer["rebuilder"] = $_POST["rebuilder"];
 	$computer["password"] = $_POST["password"];
-	$computer["ram"] = $_POST["ram"];
-	$computer["hdd"] = $_POST["hdd"];
-	$computer["opt"]  = $_POST["opt"];
-	$computer["power"] = $_POST["power"];
-	$computer["maclan"] = $_POST["maclan"];
-	$computer["macwifi"] = $_POST["macwifi"];
-	$computer["oskey"] = $_POST["oskey"];
-	$computer["silverpop"] = $_POST["silverpop"];
-	$computer["efax"] = $_POST["efax"];
-	$computer["broadview"] = $_POST["broadview"];
-	$computer["cell"] = $_POST["cell"];
-	$computer["notes"] = $_POST["notes"];
-	$computer["cpu"] = $_POST["cpu"];
 	$computer["model"] = $_POST["model"];
-	$computer["servicetag"] = $_POST["servicetag"];
-	$computer["escode"] = $_POST["escode"];
-	$computer["date"] = $_POST["date"];
-	$computer["dop"] = $_POST["dop"];
+	$computer["cpu"] = $_POST["cpu"];
+	$computer["ram"] = $_POST["ram"];
+	$computer["storage"] = $_POST["storage"];
+	$computer["optical_drive"]  = $_POST["optical_drive"];
+	$computer["battery"] = $_POST["battery"];
+	$computer["license_key"] = $_POST["license_key"];
+	$computer["express_service_code"] = $_POST["express_service_code"];
+	$computer["mac_lan"] = $_POST["mac_lan"];
+	$computer["mac_wifi"] = $_POST["mac_wifi"];
+	$computer["rebuild_date"] = $_POST["rebuild_date"];
+	$computer["purchase_date"] = $_POST["purchase_date"];
+	$computer["cell_number"] = $_POST["cell_number"];
+	$computer["broadview_number"] = $_POST["broadview_number"];
+	$computer["notes"] = $_POST["notes"];
 
 	header("Location: ../viewComputer.php?computerName={$computer["computer_name"]}");
 ?>

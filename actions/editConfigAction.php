@@ -9,11 +9,11 @@
 		$computer[$fieldName] = implode(" - ", $changes);
 	}
 
-	updateConfig($_POST["application"], "programs");
-	updateConfig($_POST["config"], "config");
-	updateConfig($_POST["hardware"], "addhw");
-	updateConfig($_POST["update"], "updates");
-	updateConfig($_POST["printer"], "printers");
+	updateConfig($_POST["application_list"], "application_list");
+	updateConfig($_POST["configuration_list"], "configuration_list");
+	updateConfig($_POST["hardware_list"], "hardware_list");
+	updateConfig($_POST["update_list"], "update_list");
+	updateConfig($_POST["printer_list"], "printer_list");
 
 	header("Location: ../viewComputer.php?computerName={$computer["computer_name"]}");
 ?>

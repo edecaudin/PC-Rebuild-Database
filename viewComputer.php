@@ -72,25 +72,24 @@
 				}
 			?>
 			<div class="portal blue" id="viewComputer">
-				<h3><span id="computerName"><?=$computer["computer_name"]?></span> - Service Tag: <?=$computer["servicetag"]?> - OS: <?=$computer["os"]?></h3>
+				<h3><span id="computerName"><?=$computer["computer_name"]?></span> - Service Tag: <?=$computer["service_tag"]?> - OS: <?=$computer["operating_system"]?></h3>
 			</div>
 			<?php
-				echoRow("Employee", "employee", "Ex-Employee", "exemployee");
+				echoRow("Employee", "employee", "Ex-Employee", "ex_employee");
 				echoRow("Rebuilder", "rebuilder", "Password", "password");
 				echoRow("Model", "model", "CPU", "cpu");
-				echoRow("RAM", "ram", "HDD", "hdd");
-				echoRow("Optical Drive", "opt", "Battery", "power");
-				echoRow("OS License Key", "oskey", "Express Service Code", "escode");
-				echoRow("MAC Address (LAN)", "maclan", "MAC Address (WLAN)", "macwifi");
-				echoRow("Date of Build", "date", "Date of Purchase", "dop");
-				echoRow("Cell Phone Number", "cell", "Broadview Number", "broadview");
-				echoRow("Silverpop Account", "silverpop", "EFax Account", "efax");
+				echoRow("RAM", "ram", "Storage", "storage");
+				echoRow("Optical Drive", "optical_drive", "Battery", "battery");
+				echoRow("OS License Key", "license_key", "Express Service Code", "express_service_code");
+				echoRow("MAC Address (LAN)", "mac_lan", "MAC Address (WLAN)", "mac_wifi");
+				echoRow("Rebuild Date", "rebuild_date", "Purcase Date", "purchase_date");
+				echoRow("Cell Phone Number", "cell_number", "Broadview Number", "broadview_number");
 				
-				echoSection("Applications", "programs");
-				echoSection("Updates", "updates");
-				echoSection("Configuration Steps", "config");
-				echoSection("Printers", "printers");
-				echoSection("Hardware", "addhw");
+				echoSection("Applications", "application_list");
+				echoSection("Updates", "update_list");
+				echoSection("Configuration Steps", "config_list");
+				echoSection("Printers", "printer_list");
+				echoSection("Hardware", "hardware_list");
 				echoSection("Notes", "notes");
 			?>
 			<form id="deleteComputer" action="actions/deleteItemAction.php" method="post">

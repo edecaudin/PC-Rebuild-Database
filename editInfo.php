@@ -47,27 +47,26 @@
 			?>
 			<form id="editInfo" action="actions/editInfoAction.php" method="post">
 				<div class="portal blue" id="viewComputer">
-					<h3><span id="computerName">Editing <input type="text" name="computerName" value="<?=$computer["computer_name"]?>" maxlength="15"/></span>
-					Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"/> -
-						<select name="operatingsystem">
+					<h3><span id="computerName">Editing <input type="text" name="computer_name" value="<?=$computer["computer_name"]?>" maxlength="15"/></span>
+					Service Tag: <input type="text" name="service_tag" value="<?=$computer["service_tag"]?>"/> -
+						<select name="operating_system">
 							<?php
 								$table = new Table("operating_system");
-								$table->echoRowsAsOptions($table->runQuery(), $computer["os"]);
+								$table->echoRowsAsOptions($table->runQuery(), $computer["operating_system"]);
 							?>
 						</select>
 					</h3>
 				</div>
 				<?php
-					echoRow("Employee", "employee", "Ex-Employee", "exemployee");
+					echoRow("Employee", "employee", "Ex-Employee", "ex_employee");
 					echoRow("Rebuilder", "rebuilder", "Password", "password");
 					echoRow("Model", "model", "CPU", "cpu");
-					echoRow("RAM", "ram", "HDD", "hdd");
-					echoRow("Optical Drive", "opt", "Battery", "power");
-					echoRow("OS License Key", "oskey", "Express Service Code", "escode");
-					echoRow("MAC Address (LAN)", "maclan", "MAC Address (WLAN)", "macwifi");
-					echoRow("Date of Build", "date", "Date of Purchase", "dop");
-					echoRow("Cell Phone Number", "cell", "Broadview Number", "broadview");
-					echoRow("Silverpop Account", "silverpop", "EFax Account", "efax");
+					echoRow("RAM", "ram", "Storage", "storage");
+					echoRow("Optical Drive", "optical_drive", "Battery", "battery");
+					echoRow("OS License Key", "license_key", "Express Service Code", "express_service_code");
+					echoRow("MAC Address (LAN)", "mac_lan", "MAC Address (WLAN)", "mac_wlan");
+					echoRow("Rebuild Date", "rebuild_date", "Purcase Date", "purchase_date");
+					echoRow("Cell Phone Number", "cell_number", "Broadview Number", "broadview_number");
 				?>
 				<div class="tableRow">
 					<div class="tableCell">Notes:</div>

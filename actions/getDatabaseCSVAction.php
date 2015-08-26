@@ -6,7 +6,7 @@
 	if (!isset($_GET["search"])) {
 		$computers = $table->runQuery();
 	} else {
-		$computers = $table->runQuery($_GET["search"], array("computer_name", "os", "employee", "rebuilder", "cpu", "programs", "servicetag", "escode", "model"));
+		$computers = $table->runQuery($_GET["search"], array("computer_name", "operating_system", "employee", "rebuilder", "cpu", "application_list", "service_tag", "express_service_code", "model"));
 	}
 
 	header("Content-Type: text/csv; charset=utf-8");
@@ -24,25 +24,22 @@
 		"Model",
 		"CPU",
 		"RAM",
-		"Hard Drive",
+		"Storage",
 		"Optical Drive",
-		"Power Supply",
+		"Battery",
 		"Service Tag",
 		"Express Service Code",
 		"MAC Address LAN",
 		"MAC Address WIFI",
-		"Date of Build",
+		"Rebuild Date",
 		"OS License Key",
-		"Installed Software",
+		"Applications",
 		"Updates",
 		"Configuration",
 		"Printers",
-		"Additional Hardware",
+		"Hardware",
 		"Notes",
-		"Date of Purchase",
-		"Branch",
-		"Silverpop",
-		"Efax",
+		"Purchase Date",
 		"Broadview Number",
 		"Cellphone Number"));
 	foreach ($computers as $computer) {
