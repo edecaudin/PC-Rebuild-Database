@@ -181,7 +181,7 @@ div.tableRow {
 div.tableCell {
 	width: 25%;
 	float: left;
-	min-height: 1px;
+	min-height: 22px;
 }
 
 div.tableSection {
@@ -189,12 +189,12 @@ div.tableSection {
 	float: left;
 }
 
-.viewMode {
-	
-}
-
 .editMode {
 	display: none;
+}
+
+div.tableCell input.editMode {
+	width: 90%;
 }
 
 textarea#notesTextArea {

@@ -39,34 +39,37 @@
 				for (element of document.getElementsByClassName("editMode")) {
 					element.style = editMode ? "display: inline" : "display: none";
 				}
+				document.forms['editInfo'].reset();
 			}
 		</script>
 	</head>
 	<body>
 		<?php include("templates/header.php"); ?>
 			<?php
-				function echoRow($label1, $fieldName1, $label2, $fieldName2) {
+				function echoRow($label1, $fieldName1, $attr1, $label2, $fieldName2, $attr2) {
 					global $computer;
-					echo("<div class=\"tableRow\">
-				<div class=\"tableCell\">{$label1}:</div>
-				<div class=\"tableCell\">
-					<span class=\"viewMode\">{$computer[$fieldName1]}</span>
-					");
-					if ($fieldName1 === "rebuilder") {
-						echo("<select class=\"editMode\" name=\"{$fieldName1}\">");
-						$table = new Table("rebuilder");
-						$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
-						echo("</select>");
-					} else {
-						echo("<input class=\"editMode\" type=\"text\" name=\"{$fieldName1}\" value=\"{$computer[$fieldName1]}\"/>");
+					echo("<div class=\"tableRow\">");
+					for ($i = 0; $i < 2; $i++) {
+						$label = $i == 0 ? $label1 : $label2;
+						$fieldName = $i == 0 ? $fieldName1 : $fieldName2;
+						$attr = $i == 0 ? $attr1 : $attr2;
+						echo("
+					<div class=\"tableCell\">{$label}:</div>
+					<div class=\"tableCell\">
+						<span class=\"viewMode\">{$computer[$fieldName]}</span>
+						");
+						if ($fieldName === "rebuilder") {
+							echo("<select class=\"editMode\" name=\"{$fieldName}\">");
+							$table = new Table("rebuilder");
+							$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
+							echo("</select>");
+						} else {
+							echo("<input".(is_null($attr) ? "" : " ".$attr)." class=\"editMode\" type=\"text\" name=\"{$fieldName}\" value=\"{$computer[$fieldName]}\"/>");
+						}
+						echo("
+				</div>");
 					}
 					echo("
-				</div>
-				<div class=\"tableCell\">{$label2}:</div>
-				<div class=\"tableCell\">
-					<span class=\"viewMode\">{$computer[$fieldName2]}</span>
-					<input class=\"editMode\" type=\"text\" name=\"{$fieldName2}\" value=\"{$computer[$fieldName2]}\"/>
-				</div>
 			</div>
 			");
 				}
@@ -99,6 +102,7 @@
 				<div class="portal blue" id="viewComputer">
 					<h3>
 						<span class="viewMode" id="computerName"><?=$computer["computer_name"]?></span>
+						<span class="editMode" id="computerName">Editing:</span>
 						<input class="editMode" type="text" name="computer_name" value="<?=$computer["computer_name"]?>" maxlength="15"/> -
 						Service Tag: <span class="viewMode"><?=$computer["service_tag"]?></span>
 						<input class="editMode" type="text" name="service_tag" value="<?=$computer["service_tag"]?>"/> -
@@ -112,15 +116,15 @@
 					</h3>
 				</div>
 				<?php
-					echoRow("Employee", "employee", "Ex-Employee", "ex_employee");
-					echoRow("Rebuilder", "rebuilder", "Password", "password");
-					echoRow("Model", "model", "CPU", "cpu");
-					echoRow("RAM", "ram", "Storage", "storage");
-					echoRow("Optical Drive", "optical_drive", "Battery", "battery");
-					echoRow("OS License Key", "license_key", "Express Service Code", "express_service_code");
-					echoRow("MAC Address (LAN)", "mac_lan", "MAC Address (WLAN)", "mac_wifi");
-					echoRow("Rebuild Date", "rebuild_date", "Purcase Date", "purchase_date");
-					echoRow("Cell Phone Number", "cell_number", "Broadview Number", "broadview_number");
+					echoRow("Employee", "employee", null, "Ex-Employee", "ex_employee", null);
+					echoRow("Rebuilder", "rebuilder", null, "Password", "password", null);
+					echoRow("Model", "model", null, "CPU", "cpu", null);
+					echoRow("RAM", "ram", null, "Storage", "storage", null);
+					echoRow("Optical Drive", "optical_drive", null, "Battery", "battery", null);
+					echoRow("OS License Key", "license_key", "maxlength=\"29\"", "Express Service Code", "express_service_code", null);
+					echoRow("MAC Address (LAN)", "mac_lan", "maxlength=\"17\"", "MAC Address (WLAN)", "mac_wifi", "maxlength=\"17\"");
+					echoRow("Rebuild Date", "rebuild_date", "type=\"date\"", "Purcase Date", "purchase_date", "type=\"date\"");
+					echoRow("Cell Phone Number", "cell_number", null, "Broadview Number", "broadview_number", null);
 				?>
 				<div class="tableRow">
 					<div class="tableCell">Notes:</div>
