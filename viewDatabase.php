@@ -28,9 +28,9 @@
 	<body onLoad="searchFor();">
 		<?php include("templates/header.php"); ?>
 			<div class="portal blue">
-				<h2>Search the database: <input type="text" onKeyUp="searchFor(this.value);"/></h2>
+				<h3>Search the database: <input type="text" onKeyUp="searchFor(this.value);"/></h3>
 			</div>
-			<div id="databaseTable" ></div>
+			<div id="databaseTable"></div>
 			<?php include("templates/footer.php"); ?>
 	</body>
 </html>

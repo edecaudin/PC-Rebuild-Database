@@ -14,7 +14,7 @@
 	$pageTitle = "Editing {$computer["computer_name"]}";
 	$headerContent = "<strong id=\"rightLinks\">
 					<a href=\"viewComputer.php?computerName={$computer["computer_name"]}\" class=\"navLink\">Back</a> to {$computer["computer_name"]} - 
-					<a href=\"javascript:document.forms['editInfo'].submit()\" class=\"navLink, green\">Save</a> Info
+					<a href=\"javascript:document.forms['editInfo'].submit()\" class=\"navLink green\">Save</a> Info
 				</strong>";
 ?>
 <!doctype html>
@@ -24,92 +24,56 @@
 	</head>
 	<body>
 		<?php include("templates/header.php"); ?>
+			<?php
+				function echoRow($label1, $fieldName1, $label2, $fieldName2) {
+					global $computer;
+					echo("<div class=\"tableRow\">
+					<div class=\"tableCell\">{$label1}:</div>
+					<div class=\"tableCell\">");
+					if ($fieldName1 === "rebuilder") {
+						echo("<select name=\"{$fieldName1}\">");
+						$table = new Table("rebuilder");
+						$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
+						echo("</select>");
+					} else {
+						echo("<input type=\"text\" name=\"{$fieldName1}\" value=\"{$computer[$fieldName1]}\"/>");
+					}
+					echo("</div>
+					<div class=\"tableCell\">{$label2}:</div>
+					<div class=\"tableCell\"><input type=\"text\" name=\"{$fieldName2}\" value=\"{$computer[$fieldName2]}\"/></div>
+				</div>
+				");
+				}
+			?>
 			<form id="editInfo" action="actions/editInfoAction.php" method="post">
 				<div class="portal blue" id="viewComputer">
-					<h1 id="printComputerName">Editing <input type="text" name="computerName" value="<?=$computer["computer_name"]?>" maxlength="15"/></h1>
-					<h2 id="printOS">Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"/> -
+					<h3><span id="computerName">Editing <input type="text" name="computerName" value="<?=$computer["computer_name"]?>" maxlength="15"/></span>
+					Service Tag: <input type="text" name="servicetag" value="<?=$computer["servicetag"]?>"/> -
 						<select name="operatingsystem">
 							<?php
 								$table = new Table("operating_system");
 								$table->echoRowsAsOptions($table->runQuery(), $computer["os"]);
 							?>
 						</select>
-					</h2>
+					</h3>
 				</div>
-				<table style="clear: left;">
-						<tr>
-							<td>Employee:</td>
-							<td><input type="text" name="employee" value="<?=$computer["employee"]?>"/></td>
-							<td>Ex-Employee:</td>
-							<td><input type="text" name="exemployee" value="<?=$computer["exemployee"]?>"/></td>
-						</tr>
-						<tr>
-							<td>Rebuilder:</td>
-							<td>
-								<select name="rebuilder">
-									<?php
-										$table = new Table("rebuilder");
-										$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
-									?>
-								</select>  
-							</td>
-							<td>Password:</td>
-							<td><input type="text" name="password" value="<?=$computer["password"]?>"/></td>
-						</tr>
-						<tr>
-							<td>Model:</td>
-							<td><input type="text" name="model" value="<?=$computer["model"]?>"/></td>
-							<td>CPU:</td>
-							<td><input type="text" name="cpu" value="<?=$computer["cpu"]?>"/></td>
-						</tr>
-						<tr>
-							<td>RAM:</td>
-							<td><input type="text" name="ram" value="<?=$computer["ram"]?>"/></td>
-							<td>HDD:</td>
-							<td><input type="text" name="hdd" value="<?=$computer["hdd"]?>"/></td>
-						</tr>
-						<tr>
-							<td>Optical Drive:</td>
-							<td><input type="text" name="opt" value="<?=$computer["opt"]?>"/></td>
-							<td>Battery:</td>
-							<td><input type="text" name="power" value="<?=$computer["power"]?>"/></td>
-						</tr>
-						<tr>
-							<td>OS License Key:</td>
-							<td><input type="text" name="oskey" value="<?=$computer["oskey"]?>" maxlength="29"/></td>
-							<td>Express Service Code:</td>
-							<td><input type="text" name="escode" value="<?=$computer["escode"]?>"/></td>
-						</tr>
-						<tr>
-							<td>MAC Address (LAN):</td>
-							<td><input type="text" name="maclan" value="<?=$computer["maclan"]?>" maxlength="17"/></td>
-							<td>MAC Address (WLAN):</td>
-							<td><input type="text" name="macwifi" value="<?=$computer["macwifi"]?>" maxlength="17"/></td>
-						</tr>
-						<tr>
-							<td>Rebuild Date:</td>
-							<td><input type="text" name="date" value="<?=$computer["date"]?>"/></td>
-							<td>Date of Purchase:</td>
-							<td><input type="text" name="dop" value="<?=$computer["dop"]?>"/></td>
-						</tr>
-						<tr>
-							<td>Cell Phone Number:</td>
-							<td><input type="text" name="cell" value="<?=$computer["cell"]?>"/></td>
-							<td>Broadview Number:</td>
-							<td><input type="text" name="broadview" value="<?=$computer["broadview"]?>"/></td>
-						</tr>
-						<tr>
-							<td>Silverpop Account:</td>
-							<td><input type="text" name="silverpop" value="<?=$computer["silverpop"]?>"/></td>
-							<td>EFax Account:</td>
-							<td><input type="text" name="efax" value="<?=$computer["efax"]?>"/></td>
-						</tr>
-						<tr>
-							<td>Notes:</td>
-							<td colspan="3"><textarea name="notes" id="notesTextArea"><?=$computer["notes"]?></textarea></td>
-						</tr>
-						<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
-				</table>
+				<?php
+					echoRow("Employee", "employee", "Ex-Employee", "exemployee");
+					echoRow("Rebuilder", "rebuilder", "Password", "password");
+					echoRow("Model", "model", "CPU", "cpu");
+					echoRow("RAM", "ram", "HDD", "hdd");
+					echoRow("Optical Drive", "opt", "Battery", "power");
+					echoRow("OS License Key", "oskey", "Express Service Code", "escode");
+					echoRow("MAC Address (LAN)", "maclan", "MAC Address (WLAN)", "macwifi");
+					echoRow("Date of Build", "date", "Date of Purchase", "dop");
+					echoRow("Cell Phone Number", "cell", "Broadview Number", "broadview");
+					echoRow("Silverpop Account", "silverpop", "EFax Account", "efax");
+				?>
+				<div class="tableRow">
+					<div class="tableCell">Notes:</div>
+					<div class="tableSection"><textarea name="notes" id="notesTextArea"><?=$computer["notes"]?></textarea></div>
+				</div>
+				<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
 			</form>
 			<?php include("templates/footer.php"); ?>
 	</body>

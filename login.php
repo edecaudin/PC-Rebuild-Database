@@ -17,8 +17,8 @@
 		<?php include("templates/header.php"); ?>
 			<div class="portal blue">
 				<form id="login" action="actions/loginAction.php" method="post">
-					<h2><label for="username">Username: </label><input name="username" type="text"/></h2>
-					<h2><label for="password">Password: </label><input name="password" type="password"/></h2>
+					<h3><label for="username">Username: </label><input name="username" type="text"/></h3>
+					<h3><label for="password">Password: </label><input name="password" type="password"/></h3>
 				</form>
 			</div>
 			<?php include("templates/footer.php"); ?>

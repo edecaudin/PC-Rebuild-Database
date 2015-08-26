@@ -2,9 +2,9 @@
 
 body {
 	font-family: "Roboto Condensed", sans-serif;
-	font-size: 11pt;
+	font-size: 0.95em;
 
-	color: #224242;
+	color: #222222;
 }
 
 a {
@@ -13,18 +13,24 @@ a {
 	color: inherit;
 }
 
-h1 {
-	font-size: 18pt;
-}
-
-h2 {
-	font-size: 14pt;
-}
-
-#content {
+div#content {
 	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+@media print {
+	body {
+		font-size: 10pt;
+	}
+
+	.header, .footer, #logo {
+		display: none;
+	}
+	
+	div#content {
+		width: 100%;
+	}
 }
 
 .red {
@@ -40,7 +46,6 @@ h2 {
 }
 
 .gray {
-	color: #224242;
 	background-color: lightgray;
 	transition: background-color 0.5s, color 0.5s;
 }
@@ -50,10 +55,16 @@ h2 {
 	background-color: slategray;
 }
 
+.gray:hover a.navLink {
+	text-decoration: underline;
+
+	color: inherit !important;
+}
+
 div.portal {
 	width: 100%;
 	float: left;
-	
+
 	text-align: center;
 
 	transition: background-color 0.25s;
@@ -86,14 +97,6 @@ div.portal.blue:hover {
 	background-color: #3058D0;
 }
 
-div:not(.portal)>h2 {
-	transition: text-shadow 0.05s;
-}
-
-div:not(.portal)>h2:hover {
-	text-shadow: 0.01px 0.01px 2px darkgray;
-}
-
 div.box {
 	float: left;
 	clear: left;
@@ -110,12 +113,8 @@ div.header, div.footer {
 	padding-top: 2px;
 	padding-bottom: 2px;
 
-	font-size: 12pt;
+	font-size: 1.1em;
 	text-align: center;
-
-	background-color: lightgrey;
-	color: slategray;
-	transition: background-color 0.5s, color 0.5s;
 }
 
 div.header {
@@ -127,18 +126,7 @@ div.footer {
 }
 
 div.box+div.footer {
-	margin-top: 19.5px;
-}
-
-div.header:hover, div.footer:hover {
-	color: white;
-	background-color: slategray;
-}
-
-div.header:hover a.navLink, div.footer:hover a.navLink {
-	text-decoration: underline;
-
-	color: inherit !important;
+	margin-top: 20px;
 }
 
 a.navLink {
@@ -155,7 +143,11 @@ a.navLink {
 	padding-right: 6px;
 }
 
-/* Database Styles */
+/* Table Styles */
+
+#computerName {
+	font-size: 1.4em;
+}
 
 div#databaseTable {
 	width: 100%;
@@ -163,94 +155,37 @@ div#databaseTable {
 	overflow-y: scroll;
 }
 
-div.databaseCell {
-	width: 23%;
-	float: left;
-	padding: 5px;
+div.portal+div.tableRow {
+	margin-top: 5px;
 }
 
-div#databaseHeaderCell {
-	clear: left;
-
-	background-color: lightgray;
-	transition: background-color 0.5s, color 0.5s;
-}
-
-div#databaseHeaderCell:hover {
-	color: white;
-	background-color: slategray;
-}
-
-div#databaseHeaderCell:hover a.navLink {
-	text-decoration: underline;
-}
-
-div#databaseClearCell {
-	clear: left;
-}
-
- /* View Computer Styles */
-
-div#viewComputer.portal {
-	margin-bottom: 5px;
-	padding-top: 15.5px;
-	padding-bottom: 15.5px;
-}
-
-h1#printComputerName, h2#printOS {
-	display: inline;
-}
-
-h1#printComputerName {
-	margin-right: 20px;
-}
-
-div.viewRow {
-	width: 100%;
-	float: left;
-	clear: left;
-	padding: 3px;
-}
-
-div.viewCell {
-	width: 25%;
-	float: left;
-	min-height: 1px;
-}
-
-div.viewHeader {
-	width: 50%;
-	float: left;
-}
-
-div.viewSection {
-	width: 49%;
-	float: left;
-	margin-right: 7px;
-}
-
-td {
-	width: 480px;
-	padding-left: 5px;
-	padding-right: 5px;
-}
-
-/* Edit Config Styles */
-
-.configHeader {
+div.tableHeader {
 	width: 100%;
 	float: left;
 	margin-top: 1px;
 	margin-bottom: 1px;
 }
 
-.configHeader h2 {
+div.tableHeader h3 {
 	margin: 0px;
-	padding: 4px 6px;
+	padding: 4px;
 }
 
-.configCell {
+div.tableRow {
+	width: 100%;
+	float: left;
+	clear: left;
+	padding: 4px 0px;
+}
+
+div.tableCell {
 	width: 25%;
+	float: left;
+	min-height: 1px;
+}
+
+div.tableSection {
+	width: 50%;
 	float: left;
 }
 

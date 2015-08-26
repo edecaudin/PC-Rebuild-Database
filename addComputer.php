@@ -13,7 +13,7 @@
 		<?php include("templates/header.php"); ?>
 			<div class="portal blue">
 				<form id="addComputer" action="actions/addItemAction.php" method="post">
-					<h2><label for="item">Computer Name: </label><input type="text" name="item"/></h2>
+					<h3><label for="item">Computer Name: </label><input type="text" name="item"/></h3>
 					<input type="hidden" name="tableName" value="computer"/>
 				</form>
 			</div>

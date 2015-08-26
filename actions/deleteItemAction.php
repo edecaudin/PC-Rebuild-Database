@@ -22,7 +22,7 @@
 				$table->deleteItem($item);
 			?>
 			<div class="portal red">
-				<h2>Succsessfuly deleted <?=$_POST["tableName"]." ".$item?>!</h2>
+				<h3>Succsessfuly deleted <?=$_POST["tableName"]." ".$item?>!</h3>
 			</div>
 			<?php include("../templates/footer.php"); ?>
 	</body>

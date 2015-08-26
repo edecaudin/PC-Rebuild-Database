@@ -36,7 +36,7 @@
 				$table->addItem($item);
 			?>
 			<div class="portal green">
-				<h2>Succsessfuly added <?=$_POST["tableName"]." ".$item?>!</h2>
+				<h3>Succsessfuly added <?=$_POST["tableName"]." ".$item?>!</h3>
 			</div>
 			<?php include("../templates/footer.php"); ?>
 	</body>
