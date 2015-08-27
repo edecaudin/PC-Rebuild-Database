@@ -1,9 +1,9 @@
 <!-- Begin Header -->
-		<div id="content">
+		<header>
 			<img id="logo" src="../../rebuild/resources/logo.png" alt="Vendome Group LLC">
 			<nav class="gray">
-				<?=(isset($_SESSION["username"]) ? "<strong id=\"leftLinks\"><a href=\"../../rebuild/index.php\">Home</a></strong>" : "")?>
-				<?=(isset ($navContent) ? "\n\t\t\t\t".$navContent : "\n")?>
+				<?=(isset($_SESSION["username"]) ? "<span id=\"homeNav\"><a href=\"../../rebuild/index.php\">Home</a></span>\n" : "\n")?>
 			</nav>
-			<!-- End Header -->
-			<!-- Begin Page -->
+		</header>
+		<!-- End Header -->
+		<!-- Begin Main --><?="\n"?>

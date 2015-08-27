@@ -11,11 +11,11 @@
 			$_SESSION["username"] = $user["user_name"];	
 			header("Location: ../index.php");
 			exit();
+		} else {
+			echo("<script>
+					alert(\"The username or password you entered were incorrect!\");
+					location.assign(\"../login.php\");
+				</script>");
 		}
 	}
-	session_destroy();
-	echo("<script>
-			alert(\"The username or password you entered were incorrect!\");
-			location.assign(\"../login.php\");
-		</script>");
 ?>

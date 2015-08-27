@@ -16,12 +16,14 @@
 			});
 		</script>
 	</head>
-	<body onLoad="searchFor();">
+	<body>
 		<?php include("templates/header.php"); ?>
-			<hgroup class="blue">
+		<main>
+			<div class="hero blue">
 				<h3>Search the database: <input id="searchField" name="search" type="text"/></h3>
-			</hgroup>
+			</div>
 			<div id="databaseTable"></div>
-			<?php include("templates/footer.php"); ?>
+		</main>
+		<?php include("templates/footer.php"); ?>
 	</body>
 </html>
