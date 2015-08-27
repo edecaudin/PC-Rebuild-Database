@@ -6,21 +6,38 @@
 	}
 
 	$pageTitle = "Login";
-	$headerContent = "<strong id=\"rightLinks\"><a href=\"javascript:document.forms['login'].submit();\" class=\"navLink, green\">Login</a></strong>";
+	$headerContent = "<strong id=\"rightLinks\"><a id=\"submitButton\" class=\"green\" href=\"#\">Login</a></strong>";
 ?>
 <!doctype html>
 <html>
 	<head>
 		<?php include("templates/head.php"); ?>
+		<script>
+			$(function() {
+				$("#login").submit(function(event) {
+					if ($("#username").val() === "") {
+						alert("Username is empty!");
+						event.preventDefault();
+					} else if ($("#password").val() === "") {
+						alert("Password is empty!");
+						event.preventDefault();
+					}
+				});
+				$("#submitButton").click(function(event) {
+					event.preventDefault();
+					$("#login").submit();
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<?php include("templates/header.php"); ?>
-			<div class="portal blue">
+			<hgroup class="blue">
 				<form id="login" action="actions/loginAction.php" method="post">
-					<h3><label for="username">Username: </label><input name="username" type="text"/></h3>
-					<h3><label for="password">Password: </label><input name="password" type="password"/></h3>
+					<h3><label for="username">Username: </label><input id="username" name="username" type="text"/></h3>
+					<h3><label for="password">Password: </label><input id="password" name="password" type="password"/></h3>
 				</form>
-			</div>
+			</hgroup>
 			<?php include("templates/footer.php"); ?>
 	</body>
 </html>

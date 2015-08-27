@@ -14,8 +14,8 @@
 		}
 	}
 	session_destroy();
-	echo("<script type=\"text/javascript\">
+	echo("<script>
 			alert(\"The username or password you entered were incorrect!\");
-			window.location.assign(\"../login.php\");
+			location.assign(\"../login.php\");
 		</script>");
 ?>

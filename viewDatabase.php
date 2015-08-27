@@ -8,28 +8,19 @@
 	<head>
 		<?php include("templates/head.php"); ?>
 		<script>
-			function searchFor(search) {
-				try {
-					var XMLHttp = new XMLHttpRequest();
-					XMLHttp.open("post", "actions/getDatabaseAction.php", true);
-					XMLHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-					XMLHttp.send("search=" + (typeof search == "undefined" ? "" : search));
-					XMLHttp.onreadystatechange = function() {
-						if (XMLHttp.readyState == 4) {
-							document.getElementById("databaseTable").innerHTML = XMLHttp.responseText;
-						}
-					};
-				} catch (e) {
-					alert(e);
-				}
-			}
+			$(function() {
+				$("#searchField").keyup(function(event) {
+					$("#databaseTable").load("actions/getDatabaseAction.php", $(this).serializeArray());
+				});
+				$("#searchField").keyup();
+			});
 		</script>
 	</head>
 	<body onLoad="searchFor();">
 		<?php include("templates/header.php"); ?>
-			<div class="portal blue">
-				<h3>Search the database: <input type="text" onKeyUp="searchFor(this.value);"/></h3>
-			</div>
+			<hgroup class="blue">
+				<h3>Search the database: <input id="searchField" name="search" type="text"/></h3>
+			</hgroup>
 			<div id="databaseTable"></div>
 			<?php include("templates/footer.php"); ?>
 	</body>

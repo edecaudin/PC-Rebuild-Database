@@ -2,13 +2,13 @@
 	require("checkLoggedInAction.php");
   	require_once("../mysql/Table.php");
 
+
+	$computers = new Table("computer");
 	if ($_POST["search"] === "") {
-		$computers = new Table("computer");
 		$computers = $computers->runQuery();
 		echo("<h3 id=\"downloadCSV\"><a href=\"actions/getDatabaseCSVAction.php\"><span class=\"blue\">Download</span> a .csv version of the full database</a></h3>");
 	} else {
-		$computers = new Table("computer");
-		$computers = $computers->runQuery($search = $_POST["search"], array("computer_name", "operating_system", "employee", "rebuilder", "cpu", "application_list", "service_tag", "express_service_code", "model"));
+		$computers = $computers->runQuery($search = $_POST["search"]);
 		if (!$computers) {
 			echo("<h3 class=\"red\" id=\"noResults\">No results found!</div>");
 			exit();
@@ -17,7 +17,7 @@
 	}
 
 	foreach ($computers as $computer) {
-		echo("<div class=\"tableHeader gray\"><h3>Hostname: <a href=\"viewComputer.php?computerName={$computer["computer_name"]}\" class=\"navLink\">{$computer["computer_name"]}</a></h3></div>
+		echo("<div class=\"tableHeader gray\"><h3>Hostname: <a href=\"viewComputer.php?computerName={$computer["computer_name"]}\">{$computer["computer_name"]}</a></h3></div>
 			<div class=\"tableRow\">
 				<div class=\"tableCell\">Service Tag: {$computer["service_tag"]}</div>
 				<div class=\"tableCell\">OS: {$computer["operating_system"]}</div>

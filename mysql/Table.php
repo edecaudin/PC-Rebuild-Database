@@ -10,33 +10,49 @@
 		protected $name;
 
 		function __construct($name) {
-			$this->name = mysql_real_escape_string($name);
+			global $mysqlConnection;
+			$this->name = $mysqlConnection->real_escape_string($name);
 		}
 		function runQuery($search = null, $columns = null) {
 			global $mysqlConnection;
 			if (is_null($search)) {
 				return $mysqlConnection->query("SELECT * FROM `{$this->getName()}` ORDER BY `{$this->getName()}_name` ASC")->fetch_all(MYSQLI_ASSOC);
 			} else {
-				$query = "SELECT * FROM `{$this->getName()}` WHERE ";
-				for ($i = 0; $i < count($columns) - 1; $i++){
-					$query = $query."{$columns[$i]} LIKE ('%{$search}%') OR ";
+				if (is_null($columns)) {
+					$columns = $this->getColumnNames();
 				}
-				$query = $query."{$columns[$i]} LIKE ('%{$search}%')";
+				$query = "SELECT * FROM `{$this->getName()}`";
+				if (!is_null($search)) {
+					$query = $query." WHERE ";
+					for ($i = 0; $i < count($columns) - 1; $i++){
+						$query = $query."{$columns[$i]} LIKE ('%{$search}%') OR ";
+					}
+					$query = $query."{$columns[$i]} LIKE ('%{$search}%')";
+				}
+				$query = $query." ORDER BY `{$this->getName()}_name` ASC";
 				return $mysqlConnection->query($query)->fetch_all(MYSQLI_ASSOC);
 			}
 		}
 		function getName() {
 			return $this->name;
 		}
-		function addItem($itemName) {
-			$itemName = mysql_real_escape_string($itemName);
-
+		function getColumnNames() {
 			global $mysqlConnection;
+			$columnNames = array();
+			$columns = $mysqlConnection->query("SHOW COLUMNS FROM `{$this->getName()}`")->fetch_all(MYSQLI_NUM);
+			foreach ($columns as $column) {
+				array_push($columnNames, $column[0]);
+			}
+			return $columnNames;
+		}
+		function addItem($itemName) {
+			global $mysqlConnection;
+			$itemName = $mysqlConnection->real_escape_string($itemName);
 			$mysqlConnection->query("INSERT INTO `{$this->getName()}` (`{$this->getName()}_name`) VALUES ('{$itemName}')");
 		}
 		function deleteItem($itemName) {
-			$itemName = mysql_real_escape_string($itemName);
 			global $mysqlConnection;
+			$itemName = $mysqlConnection->real_escape_string($itemName);
 			$mysqlConnection->query("DELETE FROM `{$this->getName()}` WHERE `{$this->getName()}_name` = '{$itemName}'");
 		}
 		function doesContain($itemName) {

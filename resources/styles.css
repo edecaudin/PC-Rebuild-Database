@@ -15,8 +15,7 @@ a {
 
 div#content {
 	width: 50%;
-	margin-left: auto;
-	margin-right: auto;
+	margin: auto;
 }
 
 @media print {
@@ -24,7 +23,7 @@ div#content {
 		font-size: 10pt;
 	}
 
-	.header, .footer, #logo {
+	nav, footer, #logo {
 		display: none;
 	}
 	
@@ -50,18 +49,22 @@ div#content {
 	transition: background-color 0.5s, color 0.5s;
 }
 
+.gray a {
+	color: white;
+}
+
 .gray:hover {
 	color: white;
 	background-color: slategray;
 }
 
-.gray:hover a.navLink {
+.gray:hover a {
 	text-decoration: underline;
 
 	color: inherit !important;
 }
 
-div.portal {
+hgroup {
 	width: 100%;
 	float: left;
 
@@ -70,46 +73,20 @@ div.portal {
 	transition: background-color 0.25s;
 }
 
-div.portal.red {
-	color: white !important;
-	background-color: crimson;
-}
-
-div.portal.red:hover {
-	background-color: #C30023;
-}
-
-div.portal.green {
-	color: white !important;
-	background-color: seagreen;
-}
-
-div.portal.green:hover {
-	background-color: #15723E;
-}
-
-div.portal.blue {
+hgroup.blue {
 	color: white !important;
 	background-color: royalblue;
 }
 
-div.portal.blue:hover {
+hgroup.blue:hover {
 	background-color: #3058D0;
 }
 
-div.box {
-	float: left;
-	clear: left;
-	margin: 4px;
-}
+/* Nav & Footer Styles */
 
-/* Header & Footer Styles */
-
-div.header, div.footer {
+nav, footer {
 	width: 100%;
 	float: left;
-	margin-top: 1px;
-	margin-bottom: 1px;
 	padding-top: 2px;
 	padding-bottom: 2px;
 
@@ -117,20 +94,17 @@ div.header, div.footer {
 	text-align: center;
 }
 
-div.header {
+nav {
 	border-radius: 4px 4px 0px 0px;
 }
 
-div.footer {
+footer {
 	border-radius: 0px 0px 4px 4px;
-}
-
-div.box+div.footer {
 	margin-top: 20px;
 }
 
-a.navLink {
-	color: white;
+hgroup+footer, div#databaseTable+footer {
+	margin-top: 0px;
 }
 
 #leftLinks {
@@ -155,15 +129,9 @@ div#databaseTable {
 	overflow-y: scroll;
 }
 
-div.portal+div.tableRow {
-	margin-top: 5px;
-}
-
 div.tableHeader {
 	width: 100%;
 	float: left;
-	margin-top: 1px;
-	margin-bottom: 1px;
 }
 
 div.tableHeader h3 {
@@ -184,13 +152,19 @@ div.tableCell {
 	min-height: 22px;
 }
 
+div.tableCell.gray {
+	background-color: #e5f3ff;
+	transition: background-color 0.5s, color 0.5s;
+}
+
+div.tableCell.gray:hover {
+	color: inherit;
+	background-color: #ccdae6;
+}
+
 div.tableSection {
 	width: 50%;
 	float: left;
-}
-
-.editMode {
-	display: none;
 }
 
 div.tableCell input.editMode {

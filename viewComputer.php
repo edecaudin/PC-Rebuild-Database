@@ -4,22 +4,22 @@
 
 	$computer = new Row(new Table("computer"), $_GET["computerName"]);
 	if (!$computer->doesExist()) {
-		echo("<script type=\"text/javascript\">
+		echo("<script>
 			alert(\"{$_GET["computerName"]} does not exist!\");
-			window.history.back();
+			history.back();
 		</script>");
 		exit();
 	}
 
 	$pageTitle = $computer["computer_name"];
 	$headerContent = "<strong class=\"viewMode\" id=\"rightLinks\">
-					<a href=\"javascript:toggleEdit(true)\" class=\"navLink green\">Edit</a> Info -
+					<a id=\"editButton\" class=\"navLink green\" href=\"#\">Edit</a> Info -
 					<a href=\"editConfig.php?computerName={$computer["computer_name"]}\" class=\"navLink green\">Edit</a> Config -
-					<a href=\"javascript:deleteComputer()\" class=\"navLink red\">Delete</a> {$computer["computer_name"]}
+					<a id=\"deleteButton\" class=\"navLink red\" href=\"#\">Delete</a> {$computer["computer_name"]}
 				</strong>
 				<strong class=\"editMode\" id=\"rightLinks\">
-					<a href=\"javascript:toggleEdit(false)\" class=\"navLink\">Back</a> to {$computer["computer_name"]} - 
-					<a href=\"javascript:document.forms['editInfo'].submit()\" class=\"navLink green\">Save</a> Info
+					<a id=\"viewButton\" class=\"navLink\" href=\"#\">Back</a> to {$computer["computer_name"]} - 
+					<a id=\"saveButton\" class=\"navLink green\" href=\"#\">Save</a> Info
 				</strong>";
 ?>
 <!doctype html>
@@ -27,20 +27,39 @@
 	<head>
 		<?php include("templates/head.php"); ?>
 		<script>
-			function deleteComputer() {
-				if (confirm("Are you sure you want to delete <?=$computer["computer_name"]?>?")) {
-					document.forms["deleteComputer"].submit();
-				}
-			}
-			function toggleEdit(editMode) {
-				for (element of document.getElementsByClassName("viewMode")) {
-					element.style = editMode ? "display: none" : "display: inline";
-				}
-				for (element of document.getElementsByClassName("editMode")) {
-					element.style = editMode ? "display: inline" : "display: none";
-				}
-				document.forms['editInfo'].reset();
-			}
+			$(function() {
+				$("#viewButton").click(function(event) {
+					event.preventDefault();
+					$(".viewMode").show();
+					$(".editMode").hide();
+					$("#editInfoForm").trigger("reset");
+				});
+				$("#editButton").click(function(event) {
+					event.preventDefault();
+					$(".viewMode").hide();
+					$(".editMode").show();
+				});
+				$("#deleteButton").click(function(event) {
+					event.preventDefault();
+					if (confirm("Are you sure you want to delete \"" + <?="\"".$computer["computer_name"]."\""?> + "\"?")) {
+						$.post("actions/deleteItemAction.php", {item: <?="\"".$computer["computer_name"]."\""?>, tableName: "computer"}, function(data) {
+							alert(data.message);
+							location.assign("index.php");
+						}, "json");
+					}
+				});
+				$("#saveButton").click(function(event) {
+					event.preventDefault();
+					if ($("#computerNameField").val() === "") {
+						alert("Name is empty!");
+					} else {
+						$.post("actions/editInfoAction.php", $("#editInfoForm").serialize(), function(data) {
+							location.assign("viewComputer.php?computerName=" + $("#computerNameField").val());
+						});
+					}
+				});
+				$(".editMode").hide();
+			});
 		</script>
 	</head>
 	<body>
@@ -98,12 +117,12 @@
 					}
 				}
 			?>
-			<form id="editInfo" action="actions/editInfoAction.php" method="post">
-				<div class="portal blue" id="viewComputer">
+			<form id="editInfoForm">
+				<hgroup id="viewComputer" class="blue">
 					<h3>
 						<span class="viewMode" id="computerName"><?=$computer["computer_name"]?></span>
-						<span class="editMode" id="computerName">Editing:</span>
-						<input class="editMode" type="text" name="computer_name" value="<?=$computer["computer_name"]?>" maxlength="15"/> -
+						<span class="editMode" id="computerName">Name:</span>
+						<input id="computerNameField" class="editMode" name="computer_name" type="text" value="<?=$computer["computer_name"]?>" maxlength="15"/> -
 						Service Tag: <span class="viewMode"><?=$computer["service_tag"]?></span>
 						<input class="editMode" type="text" name="service_tag" value="<?=$computer["service_tag"]?>"/> -
 						OS: <span class="viewMode"><?=$computer["operating_system"]?></span>
@@ -114,7 +133,7 @@
 							?>
 						</select>
 					</h3>
-				</div>
+				</hgroup>
 				<?php
 					echoRow("Employee", "employee", null, "Ex-Employee", "ex_employee", null);
 					echoRow("Rebuilder", "rebuilder", null, "Password", "password", null);
@@ -133,7 +152,7 @@
 						<textarea class="editMode" name="notes" id="notesTextArea"><?=$computer["notes"]?></textarea>
 					</div>
 				</div>
-				<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
+				<input name="computer_id" type="hidden" value="<?=$computer["computer_id"]?>"/>
 			</form>
 			<?php
 				echoSection("Applications", "application_list");
@@ -142,10 +161,6 @@
 				echoSection("Printers", "printer_list");
 				echoSection("Hardware", "hardware_list");
 			?>
-			<form id="deleteComputer" action="actions/deleteItemAction.php" method="post">
-				<input type="hidden" name="item" value="<?=$computer["computer_name"]?>"/>
-				<input type="hidden" name="tableName" value="computer"/>
-			</form>
 			<?php include("templates/footer.php"); ?>
 	</body>
 </html>

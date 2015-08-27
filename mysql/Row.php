@@ -20,8 +20,8 @@
 		function offsetSet($offset, $value) {
 			global $mysqlConnection;
 			if (!is_null($offset)) {
-				$this->result[$offset] = $value;
-				$mysqlConnection->query("UPDATE `{$this->table->getName()}` SET `{$offset}` = '{$value}' WHERE `{$this->table->getName()}_id` = '{$this->id}'");
+				$this->result[$offset] = $mysqlConnection->real_escape_string($value);
+				$mysqlConnection->query("UPDATE `{$this->table->getName()}` SET `{$offset}` = '{$this->result[$offset]}' WHERE `{$this->table->getName()}_id` = '{$this->id}'");
 			}
 		}
 		function offsetExists($offset) {
