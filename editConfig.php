@@ -10,6 +10,25 @@
 		</script>");
 		exit();
 	}
+	
+	function installedStuffLookup($title, $tableName) {
+		?>					<section>
+						<header class="tableRow gray"><h3><?=$title?></h3></header>
+<?php
+		global $computer;
+		$table = new Table($tableName);
+		$result = $table->runQuery();
+		$installedItems = explode(" - ", $computer[$table->getName()."_list"]);
+		foreach ($result as $row) {
+			$isInstalled = in_array($row[$table->getName()."_name"], $installedItems);
+			echo("						<div class=\"tableCell quarterWidth".($isInstalled ? " gray" : "")."\">
+							<label class=\"configLabel\"><input class=\"configCheckbox\" name=\"{$table->getName()}_list[]\" type=\"checkbox\" value=\"{$row[$table->getName()."_name"]}\"".($isInstalled ? " checked" : "")."/>
+							{$row[$table->getName()."_name"]}</label>
+						</div>
+");
+		}?>					</section>
+<?php
+	}
 
 	$pageTitle = "Editing {$computer["computer_name"]}";
 ?>
@@ -38,36 +57,16 @@
 				<a id="submitButton" class="green" href="#" >Save</a> Config
 			</span>
 			<main>
-				<div class="hero blue">
+				<header class="hero blue">
 					<h3>Editing <?=$computer["computer_name"]?></h3>
-				</div>
-				<?php
-					function installedStuffLookup($tableName) {
-						global $computer;
-						$table = new Table($tableName);
-						$result = $table->runQuery();
-						$installedItems = explode(" - ", $computer[$table->getName()."_list"]);
-						foreach ($result as $row) {
-							$isInstalled = in_array($row[$table->getName()."_name"], $installedItems);
-							echo("<div class=\"tableCell".($isInstalled ? " gray" : "")."\">
-								<label class=\"configLabel\"><input class=\"configCheckbox\" name=\"{$table->getName()}_list[]\" type=\"checkbox\" value=\"{$row[$table->getName()."_name"]}\"".($isInstalled ? " checked" : "")."/>
-								{$row[$table->getName()."_name"]}</label>
-							</div>");
-						}
-					}
-				?>
+				</header>
 				<form id="editConfigForm">
 					<?php
-						echo("<div class=\"tableHeader gray\"><h3>Applications</h3></div>");
-						installedStuffLookup("application");
-						echo("<div class=\"tableHeader gray\"><h3>Configuration</h3></div>");
-						installedStuffLookup("config");
-						echo("<div class=\"tableHeader gray\"><h3>Additional Hardware</h3></div>");
-						installedStuffLookup("hardware");
-						echo("<div class=\"tableHeader gray\"><h3>Updates</h3></div>");
-						installedStuffLookup("update");
-						echo("<div class=\"tableHeader gray\"><h3>Printers:</h3></div>");
-						installedStuffLookup("printer");
+						installedStuffLookup("Applications", "application");
+						installedStuffLookup("Configuration", "config");
+						installedStuffLookup("Hardware", "hardware");
+						installedStuffLookup("Updates", "update");
+						installedStuffLookup("Printers", "printer");
 					?>
 					<input type="hidden" name="computer_id" value="<?=$computer["computer_id"]?>"/>
 				</form>

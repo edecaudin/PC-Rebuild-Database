@@ -19,17 +19,6 @@
 		<?php include("templates/head.php"); ?>
 		<script>
 			$(function() {
-				$("#viewButton").click(function(event) {
-					event.preventDefault();
-					$(".viewMode").show();
-					$(".editMode").hide();
-					$("#editInfoForm").trigger("reset");
-				});
-				$("#editButton").click(function(event) {
-					event.preventDefault();
-					$(".viewMode").hide();
-					$(".editMode").show();
-				});
 				$("#deleteButton").click(function(event) {
 					event.preventDefault();
 					if (confirm("Are you sure you want to delete \"" + <?="\"".$computer["computer_name"]."\""?> + "\"?")) {
@@ -39,58 +28,63 @@
 						}, "json");
 					}
 				});
-				$("#saveButton").click(function(event) {
-					event.preventDefault();
-					if ($("#computerNameField").val() === "") {
-						alert("Name is empty!");
-					} else {
-						$.post("actions/editInfoAction.php", $(".editInfoForm").serialize(), function(data) {
-							location.assign("viewComputer.php?computerName=" + $("#computerNameField").val());
-						});
+				$("label").click(function(event) {
+					$(".fieldValue").show();
+					$(".fieldInput").hide();
+					$("#" + $(this).attr("for") + "Value").hide();
+					$("#" + $(this).attr("for") + "Input").show();
+				});
+				$("span.fieldValue").click(function(event) {
+					$(".fieldValue").show();
+					$(".fieldInput").hide();
+					$(this).hide();
+					$("#" + $(this).attr("id").replace("Value", "Input")).show();
+				});
+				function submit(element) {
+					$.post("actions/editInfoAction.php", element.serialize()+"&computer_id=<?=$computer["computer_id"]?>", function(data) {
+						location.assign("viewComputer.php?computerName=" + $("#computer_nameInput").val());
+					});
+				}
+				$(".fieldInput").change(function(event) {
+					submit($(this));
+				});
+				$("select.fieldInput").focusout(function(event) {
+					if (typeof $(this).attr("value") == "undefined") {
+						submit($(this));
 					}
 				});
-				$(".editMode").hide();
+				$(".fieldInput").hide();
 			});
 		</script>
 	</head>
 	<body>
 		<?php include("templates/header.php"); ?>
 		<span id="customNav">
-			<span class="viewMode">
-				<a id="editButton" class="navLink green" href="#">Edit</a> Info -
-				<a href="editConfig.php?computerName=<?=$computer["computer_name"]?>" class="navLink green">Edit</a> Config -
-				<a id="deleteButton" class="navLink red" href="#">Delete</a> <?=$computer["computer_name"]?>
-			</span>
-			<span class="editMode">
-				<a id="viewButton" class="navLink" href="#">Back</a> to <?=$computer["computer_name"]?> - 
-				<a id="saveButton" class="navLink green" href="#">Save</a> Info
-			</span>
+			<a href="editConfig.php?computerName=<?=$computer["computer_name"]?>" class="navLink green">Edit</a> Config -
+			<a id="deleteButton" class="navLink red" href="#">Delete</a> <?=$computer["computer_name"]?>
 		</span>
 		<main>
-			<div id="viewComputer" class="hero blue">
-				<form class="editInfoForm">
-					<h3>
-						<span id="computerName" class="viewMode"><?=$computer["computer_name"]?></span>
-						<label id="computerName" class="editMode" for="computer_name">Name:</label>
-						<input id="computerNameField" class="editMode" name="computer_name" type="text" value="<?=$computer["computer_name"]?>" maxlength="15"/> -
+			<header id="viewComputer" class="hero blue">
+				<h3>
+					<label id="computer_nameValue" class="fieldValue" for="computer_name"><?=$computer["computer_name"]?></label>
+					<input id="computer_nameInput" class="fieldInput" name="computer_name" type="text" value="<?=$computer["computer_name"]?>" maxlength="15"/> -
 
-						<label for="service_tag">Service Tag:</label>
-						<span class="viewMode"><?=$computer["service_tag"]?></span>
-						<input class="editMode" type="text" name="service_tag" value="<?=$computer["service_tag"]?>"/> -
+					<label for="service_tag">Service Tag:</label>
+					<span id="service_tagValue" class="fieldValue"><?=$computer["service_tag"]?></span>
+					<input id="service_tagInput" class="fieldInput" name="service_tag" type="text" value="<?=$computer["service_tag"]?>"/> -
 
-						<label for="operating_system">OS:</label>
-						<span class="viewMode"><?=$computer["operating_system"]?></span>
-						<select class="editMode" name="operating_system">
-							<?php
-								$table = new Table("operating_system");
-								$table->echoRowsAsOptions($table->runQuery(), $computer["operating_system"]);
-								echo("\n");
-							?>
-						</select>
-					</h3>
-				</form>
-			</div>
-			<form class="editInfoForm">
+					<label for="operating_system">OS:</label>
+					<span id="operating_systemValue" class="fieldValue"><?=$computer["operating_system"]?></span>
+					<select id="operating_systemInput" class="fieldInput" name="operating_system">
+						<?php
+							$table = new Table("operating_system");
+							$table->echoRowsAsOptions($table->runQuery(), $computer["operating_system"]);
+							echo("\n");
+						?>
+					</select>
+				</h3>
+			</header>
+			<section>
 				<?php
 				function echoRow($label1, $fieldName1, $attr1, $label2, $fieldName2, $attr2) {
 					global $computer;
@@ -100,17 +94,17 @@
 						$fieldName = $i == 0 ? $fieldName1 : $fieldName2;
 						$attr = $i == 0 ? $attr1 : $attr2;
 						echo("
-					<div class=\"tableCell\">{$label}:</div>
-					<div class=\"tableCell\">
-						<span class=\"viewMode\">{$computer[$fieldName]}</span>
+					<div class=\"tableCell quarterWidth\"><label for=\"{$fieldName}\">{$label}:</label></div>
+					<div class=\"tableCell quarterWidth\">
+						<span id=\"{$fieldName}Value\" class=\"fieldValue\">{$computer[$fieldName]}</span>
 						");
 						if ($fieldName === "rebuilder") {
-							echo("<select class=\"editMode\" name=\"{$fieldName}\">");
+							echo("<select id=\"{$fieldName}Input\" class=\"fieldInput\" name=\"{$fieldName}\">");
 							$table = new Table("rebuilder");
 							$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
 							echo("</select>");
 						} else {
-							echo("<input".(is_null($attr) ? "" : " ".$attr)." class=\"editMode\" type=\"text\" name=\"{$fieldName}\" value=\"{$computer[$fieldName]}\"/>");
+							echo("<input".(is_null($attr) ? "" : " ".$attr)." id=\"{$fieldName}Input\" class=\"fieldInput\" name=\"{$fieldName}\" type=\"text\" value=\"{$computer[$fieldName]}\"/>");
 						}
 						echo("
 				</div>");
@@ -118,7 +112,7 @@
 					echo("
 			</div>
 			");
-					}
+				}
 					echoRow("Employee", "employee", null, "Ex-Employee", "ex_employee", null);
 					echoRow("Rebuilder", "rebuilder", null, "Password", "password", null);
 					echoRow("Model", "model", null, "CPU", "cpu", null);
@@ -130,45 +124,46 @@
 					echoRow("Cell Phone Number", "cell_number", null, "Broadview Number", "broadview_number", null);
 				?>
 				<div class="tableRow">
-					<div class="tableCell">Notes:</div>
-					<div class="tableSection">
-						<span class="viewMode"><?=$computer["notes"]?></span>
-						<textarea class="editMode" name="notes" id="notesTextArea"><?=$computer["notes"]?></textarea>
+					<div class="tableCell quarterWidth"><label for="notes">Notes:</label></div>
+					<div class="tableCell halfWidth">
+						<span id="notesValue" class="fieldValue"><?=$computer["notes"]?></span>
+						<textarea id="notesInput" class="fieldInput" name="notes"><?=$computer["notes"]?></textarea>
 					</div>
 				</div>
-				<input name="computer_id" type="hidden" value="<?=$computer["computer_id"]?>"/>
-			</form>
-			<?php
-				function echoSection($title, $fieldName) {
-					global $computer;
-					echo("<div class=\"tableSection\">
-				<div class=\"tableHeader gray\"><h3>{$title}</h3></div>
+			</section>
+			<section>
+				<?php
+					function echoSection($title, $fieldName) {
+						global $computer;
+						echo("<section class=\"halfWidth\">
+					<header class=\"tableRow gray\"><h3>{$title}</h3></header>
+					");
+					echoInstalledItems($fieldName);
+					echo("		</section>
 				");
-				echoInstalledItems($fieldName);
-				echo("		</div>
-			");
-				}
-				function echoInstalledItems($fieldName) {
-					global $computer;
-					if ($computer[$fieldName] === "") {
-						echo("<div class=\"tableRow\">
-								Nothing to do here!
-							</div>");
-					} else {
-						$items = explode(" - ", $computer[$fieldName]);
-						foreach ($items as $item) {
+					}
+					function echoInstalledItems($fieldName) {
+						global $computer;
+						if ($computer[$fieldName] === "") {
 							echo("<div class=\"tableRow\">
-									<input type=\"checkbox\"/>{$item}
+									Nothing to do here!
 								</div>");
+						} else {
+							$items = explode(" - ", $computer[$fieldName]);
+							foreach ($items as $item) {
+								echo("<div class=\"tableRow\">
+										<input type=\"checkbox\"/>{$item}
+									</div>");
+							}
 						}
 					}
-				}
-				echoSection("Applications", "application_list");
-				echoSection("Updates", "update_list");
-				echoSection("Configuration Steps", "config_list");
-				echoSection("Printers", "printer_list");
-				echoSection("Hardware", "hardware_list");
-			?>
+					echoSection("Applications", "application_list");
+					echoSection("Updates", "update_list");
+					echoSection("Configuration Steps", "config_list");
+					echoSection("Printers", "printer_list");
+					echoSection("Hardware", "hardware_list");
+				?>
+			</section>
 		</main>
 		<?php include("templates/footer.php"); ?>
 	</body>

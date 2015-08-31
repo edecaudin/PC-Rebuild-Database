@@ -10,25 +10,25 @@ body {
 	color: #222222;
 }
 
+main, section, header, nav, footer, .hero, .databaseTable, .tableRow, .tableCell, #notesTextArea {
+	width: 100%;
+	float: left;
+}
+
 a {
 	text-decoration: none;
 
 	color: inherit;
 }
 
-main {
-	width: 100%;
-	float: left;
-}
-
 @media print {
 	body {
 		width: 100%;
-		
+
 		font-size: 10pt;
 	}
 
-	header, footer {
+	header img, header nav, footer {
 		display: none;
 	}
 }
@@ -67,14 +67,7 @@ main {
 
 /* Header & Footer Styles */
 
-header {
-	width: 100%;
-	float: left;
-}
-
 nav, footer {
-	width: 100%;
-	float: left;
 	padding-top: 2px;
 	padding-bottom: 2px;
 
@@ -104,80 +97,68 @@ footer {
 	padding-right: 6px;
 }
 
-.hero {
-	width: 100%;
-	float: left;
-
+header.hero {
 	text-align: center;
 }
 
-.hero.blue {
+header.hero.blue {
 	color: white !important;
 	background-color: royalblue;
 	transition: background-color 0.25s;
 }
 
-.hero.blue:hover {
+header.hero.blue:hover {
 	background-color: #3058D0;
 }
 
 /* Table Styles */
 
-#computerName {
+.halfWidth {
+	width: 50%;
+}
+
+.quarterWidth {
+	width: 25%;
+}
+
+#computer_nameValue {
 	font-size: 1.4em;
 }
 
-div#databaseTable {
-	float: left;
-	width: 100%;
+#databaseTable {
 	max-height: 550px;
 	overflow-y: scroll;
 }
 
-div.tableHeader {
-	width: 100%;
-	float: left;
-}
-
-div.tableHeader h3 {
-	margin: 0px;
-	padding: 4px;
-}
-
-div.tableRow {
-	width: 100%;
-	float: left;
+.tableRow {
 	clear: left;
 	padding: 4px 0px;
 }
 
-div.tableCell {
-	width: 25%;
-	float: left;
+header.tableRow h3 {
+	margin: 0px;
+	padding: 4px;
+}
+
+.tableCell {
 	min-height: 22px;
 }
 
-div.tableCell.gray {
+.tableCell.gray {
 	background-color: #e5f3ff;
 	transition: background-color 0.5s, color 0.5s;
 }
 
-div.tableCell.gray:hover {
+.tableCell.gray:hover {
 	color: inherit;
 	background-color: #ccdae6;
 }
 
-div.tableSection {
-	width: 50%;
-	float: left;
-}
-
-div.tableCell input.editMode {
+.tableCell input.editMode {
 	width: 90%;
 }
 
-textarea#notesTextArea {
-	width: 100%;
+#notesInput {
 	height: 75px;
 	resize: none;
 }

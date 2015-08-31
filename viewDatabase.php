@@ -19,9 +19,9 @@
 	<body>
 		<?php include("templates/header.php"); ?>
 		<main>
-			<div class="hero blue">
+			<header class="hero blue">
 				<h3>Search the database: <input id="searchField" name="search" type="text"/></h3>
-			</div>
+			</header>
 			<div id="databaseTable"></div>
 		</main>
 		<?php include("templates/footer.php"); ?>

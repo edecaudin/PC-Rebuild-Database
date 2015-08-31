@@ -17,18 +17,18 @@
 	}
 
 	foreach ($computers as $computer) {
-		echo("<div class=\"tableHeader gray\"><h3>Hostname: <a href=\"viewComputer.php?computerName={$computer["computer_name"]}\">{$computer["computer_name"]}</a></h3></div>
+		echo("<div class=\"tableRow tableHeader gray\"><h3>Hostname: <a href=\"viewComputer.php?computerName={$computer["computer_name"]}\">{$computer["computer_name"]}</a></h3></div>
 			<div class=\"tableRow\">
-				<div class=\"tableCell\">Service Tag: {$computer["service_tag"]}</div>
-				<div class=\"tableCell\">OS: {$computer["operating_system"]}</div>
-				<div class=\"tableCell\">Date of Build: {$computer["rebuild_date"]}</div>
-				<div class=\"tableCell\">MAC LAN: {$computer["mac_lan"]}</div>
+				<div class=\"tableCell quarterWidth\">Service Tag: {$computer["service_tag"]}</div>
+				<div class=\"tableCell quarterWidth\">OS: {$computer["operating_system"]}</div>
+				<div class=\"tableCell quarterWidth\">Date of Build: {$computer["rebuild_date"]}</div>
+				<div class=\"tableCell quarterWidth\">MAC LAN: {$computer["mac_lan"]}</div>
 			</div>
 			<div class=\"tableRow\">
-				<div class=\"tableCell\">User: {$computer["employee"]}</div>
-				<div class=\"tableCell\">Model: {$computer["model"]}</div>
-				<div class=\"tableCell\">Date of Purchase: {$computer["purchase_date"]}</div>
-				<div class=\"tableCell\">MAC WLAN: {$computer["mac_wifi"]}</div>
+				<div class=\"tableCell quarterWidth\">User: {$computer["employee"]}</div>
+				<div class=\"tableCell quarterWidth\">Model: {$computer["model"]}</div>
+				<div class=\"tableCell quarterWidth\">Date of Purchase: {$computer["purchase_date"]}</div>
+				<div class=\"tableCell quarterWidth\">MAC WLAN: {$computer["mac_wifi"]}</div>
 			</div>
 			");
 	}
