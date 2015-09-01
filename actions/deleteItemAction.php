@@ -6,5 +6,5 @@
 	$table = new Table($_POST["tableName"]);
 	$table->deleteItem($item);
 	
-	echo(json_encode(array("message" => "Successfully deleted \"{$item}\"!")));
+	echo(json_encode(array("message" => "Successfully deleted {table->getName()} \"{$item}\"!")));
 ?>

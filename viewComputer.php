@@ -22,38 +22,53 @@
 				$("#deleteButton").click(function(event) {
 					event.preventDefault();
 					if (confirm("Are you sure you want to delete \"" + <?="\"".$computer["computer_name"]."\""?> + "\"?")) {
-						$.post("actions/deleteItemAction.php", {item: <?="\"".$computer["computer_name"]."\""?>, tableName: "computer"}, function(data) {
-							alert(data.message);
-							location.assign("index.php");
-						}, "json");
+						$.post(
+							"actions/deleteItemAction.php",
+							{item: <?="\"".$computer["computer_name"]."\""?>, tableName: "computer"}, 
+							function(data) {
+								alert(data.message);
+								location.assign("index.php");
+							},
+							"json"
+						);
 					}
 				});
-				$("label").click(function(event) {
-					$(".fieldValue").show();
-					$(".fieldInput").hide();
-					$("#" + $(this).attr("for") + "Value").hide();
-					$("#" + $(this).attr("for") + "Input").show();
-				});
-				$("span.fieldValue").click(function(event) {
-					$(".fieldValue").show();
-					$(".fieldInput").hide();
-					$(this).hide();
-					$("#" + $(this).attr("id").replace("Value", "Input")).show();
-				});
-				function submit(element) {
-					$.post("actions/editInfoAction.php", element.serialize()+"&computer_id=<?=$computer["computer_id"]?>", function(data) {
-						location.assign("viewComputer.php?computerName=" + $("#computer_nameInput").val());
+				$(".editSection input, .editSection textarea, .editSection select").change(function(event) {
+					$.post(
+						"actions/editInfoAction.php",
+						$(this).serialize()+"&computer_id=<?=$computer["computer_id"]?>"
+					)
+					.done($.proxy(function() {
+						$("header.hero").addClass("green");
+						html = $("header.hero h3").html();
+						$("header.hero h3").html("Sucsessfully edited <?=$computer["computer_name"]?>!<span id=\"heroSpacer\">&nbsp;</span>");
+						setTimeout($.proxy(function() {
+							if ($(this).attr("name") === "computer_name" ) {
+								location.assign("viewComputer.php?computerName=" + $(this).val());
+							} else if ($(this).attr("name") === "service_tag" || $(this).attr("name") === "operating_system") {
+								location.reload();
+							} else {
+								$("header.hero").removeClass("green");
+								$("header.hero h3").html(html);
+							}
+						}, this), 1000);
+					}, this))
+					.fail(function() {
+						$("header.hero").addClass("red");
+						html = $("header.hero h3").html();
+						$("header.hero h3").html("Failed to edit <?=$computer["computer_name"]?>!<span id=\"heroSpacer\">&nbsp;</span>");
+						setTimeout(function() {
+							$("header.hero").removeClass("red");
+							$("header.hero h3").html(html);
+						}, 1000);
 					});
-				}
-				$(".fieldInput").change(function(event) {
-					submit($(this));
 				});
-				$("select.fieldInput").focusout(function(event) {
-					if (typeof $(this).attr("value") == "undefined") {
-						submit($(this));
-					}
-				});
-				$(".fieldInput").hide();
+				<?php if ($computer["operating_system"] === "") {?>
+					$("#operating_systemInput").prop("selectedIndex", -1);
+				<?php }
+					if ($computer["rebuilder"] === "") {?>
+					$("#rebuilderInput").prop("selectedIndex", -1);
+				<?php }?>
 			});
 		</script>
 	</head>
@@ -64,18 +79,15 @@
 			<a id="deleteButton" class="navLink red" href="#">Delete</a> <?=$computer["computer_name"]?>
 		</span>
 		<main>
-			<header id="viewComputer" class="hero blue">
+			<header class="hero blue editSection">
 				<h3>
-					<label id="computer_nameValue" class="fieldValue" for="computer_name"><?=$computer["computer_name"]?></label>
-					<input id="computer_nameInput" class="fieldInput" name="computer_name" type="text" value="<?=$computer["computer_name"]?>" maxlength="15"/> -
+					<input id="computer_nameInput" name="computer_name" type="text" value="<?=$computer["computer_name"]?>" maxlength="15"/> -
 
 					<label for="service_tag">Service Tag:</label>
-					<span id="service_tagValue" class="fieldValue"><?=$computer["service_tag"]?></span>
-					<input id="service_tagInput" class="fieldInput" name="service_tag" type="text" value="<?=$computer["service_tag"]?>"/> -
+					<input name="service_tag" type="text" value="<?=$computer["service_tag"]?>"/> -
 
 					<label for="operating_system">OS:</label>
-					<span id="operating_systemValue" class="fieldValue"><?=$computer["operating_system"]?></span>
-					<select id="operating_systemInput" class="fieldInput" name="operating_system">
+					<select name="operating_system">
 						<?php
 							$table = new Table("operating_system");
 							$table->echoRowsAsOptions($table->runQuery(), $computer["operating_system"]);
@@ -84,7 +96,7 @@
 					</select>
 				</h3>
 			</header>
-			<section>
+			<section class="editSection">
 				<?php
 				function echoRow($label1, $fieldName1, $attr1, $label2, $fieldName2, $attr2) {
 					global $computer;
@@ -96,15 +108,14 @@
 						echo("
 					<div class=\"tableCell quarterWidth\"><label for=\"{$fieldName}\">{$label}:</label></div>
 					<div class=\"tableCell quarterWidth\">
-						<span id=\"{$fieldName}Value\" class=\"fieldValue\">{$computer[$fieldName]}</span>
 						");
 						if ($fieldName === "rebuilder") {
-							echo("<select id=\"{$fieldName}Input\" class=\"fieldInput\" name=\"{$fieldName}\">");
+							echo("<select name=\"{$fieldName}\">");
 							$table = new Table("rebuilder");
 							$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
 							echo("</select>");
 						} else {
-							echo("<input".(is_null($attr) ? "" : " ".$attr)." id=\"{$fieldName}Input\" class=\"fieldInput\" name=\"{$fieldName}\" type=\"text\" value=\"{$computer[$fieldName]}\"/>");
+							echo("<input".(is_null($attr) ? "" : " ".$attr)." name=\"{$fieldName}\" type=\"text\" value=\"{$computer[$fieldName]}\"/>");
 						}
 						echo("
 				</div>");
@@ -125,9 +136,8 @@
 				?>
 				<div class="tableRow">
 					<div class="tableCell quarterWidth"><label for="notes">Notes:</label></div>
-					<div class="tableCell halfWidth">
-						<span id="notesValue" class="fieldValue"><?=$computer["notes"]?></span>
-						<textarea id="notesInput" class="fieldInput" name="notes"><?=$computer["notes"]?></textarea>
+					<div class="tableCell threeQuarterWidth">
+						<textarea name="notes"><?=$computer["notes"]?></textarea>
 					</div>
 				</div>
 			</section>

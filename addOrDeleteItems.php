@@ -16,8 +16,14 @@
 						alert("Name is empty!");
 					} else {
 						$.post("actions/addItemAction.php", $(this).parent("form").serialize(), function(data) {
-							alert(data.message);
-							location.reload();
+							$("header.hero").addClass("green");
+							html = $("header.hero h3").html();
+							$("header.hero h3").html(data.message);
+							setTimeout(function() {
+								$("header.hero").removeClass("green");
+								$("header.hero h3").html(html);
+								location.reload();
+							}, 1000);
 						}, "json");
 					}
 				});
@@ -25,8 +31,14 @@
 					event.preventDefault();
 					if (confirm("Are you sure you want to delete \"" + $(this).siblings(".deleteSelect").val() + "\"?")) {
 						$.post("actions/deleteItemAction.php", $(this).parent("form").serialize(), function(data) {
-							alert(data.message);
-							location.reload();
+							$("header.hero").addClass("green");
+							html = $("header.hero h3").html();
+							$("header.hero h3").html(data.message);
+							setTimeout(function() {
+								$("header.hero").removeClass("green");
+								$("header.hero h3").html(html);
+								location.reload();
+							}, 1000);
 						}, "json");
 					}
 				});

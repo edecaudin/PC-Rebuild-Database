@@ -10,9 +10,21 @@ body {
 	color: #222222;
 }
 
-main, section, header, nav, footer, .hero, .databaseTable, .tableRow, .tableCell, #notesTextArea {
+main, section, header, nav, footer, section, .hero, .databaseTable, .tableRow, .tableCell, #notesTextArea {
 	width: 100%;
 	float: left;
+}
+
+main>section:first-of-type {
+	margin-top: 12px;
+}
+
+main>section:last-child {
+	margin-bottom: 16px;
+}
+
+section .tableRow:first-child h3:first-of-type {
+	margin-top: 4px;
 }
 
 a {
@@ -104,11 +116,19 @@ header.hero {
 header.hero.blue {
 	color: white !important;
 	background-color: royalblue;
-	transition: background-color 0.25s;
+	transition: background-color 0.25s, content 0.25s;
 }
 
 header.hero.blue:hover {
 	background-color: #3058D0;
+}
+
+header.hero.green {
+	background-color: seagreen;
+}
+
+header.hero.red {
+	background-color: crimson;
 }
 
 /* Table Styles */
@@ -121,8 +141,8 @@ header.hero.blue:hover {
 	width: 25%;
 }
 
-#computer_nameValue {
-	font-size: 1.4em;
+.threeQuarterWidth {
+	width: 75%;
 }
 
 #databaseTable {
@@ -132,16 +152,17 @@ header.hero.blue:hover {
 
 .tableRow {
 	clear: left;
-	padding: 4px 0px;
+	margin-bottom: 6px;
 }
 
 header.tableRow h3 {
 	margin: 0px;
-	padding: 4px;
+	padding: 4px 6px 6px 6px;
 }
 
 .tableCell {
-	min-height: 22px;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 .tableCell.gray {
@@ -154,11 +175,37 @@ header.tableRow h3 {
 	background-color: #ccdae6;
 }
 
-.tableCell input.editMode {
-	width: 90%;
+.editSection input, .editSection textarea  {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+
+	font-family: inherit;
+	font-size: inherit;
 }
 
-#notesInput {
-	height: 75px;
-	resize: none;
+header.editSection input {
+	width: 10%;
+
+	font-weight: bold;
+	text-align: center;
+
+	color: white;
+	background-color: inherit;
+}
+
+#computer_nameInput, #heroSpacer {
+	width: 20%;
+
+	font-size: 1.4em;
+	text-align: right;
+}
+.editSection:not(header) input, .editSection:not(header) select {
+	width: 95%;
+}
+
+.editSection textarea {
+	width: 100%;
+	height: 50px;
+	resize: vertical;
 }

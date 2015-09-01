@@ -8,6 +8,6 @@
 		echo(json_encode(array("message" => "{$item} already exists!")));
 	} else {
 		$table->addItem($item);
-		echo(json_encode(array("message" => "Successfully added \"{$item}\"!")));
+		echo(json_encode(array("message" => "Successfully added {$table->getName()} \"{$item}\"!")));
 	}
 ?>

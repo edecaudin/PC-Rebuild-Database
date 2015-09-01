@@ -14,7 +14,7 @@
 					if ($("#item").val() === "") {
 						alert("Name is empty!");
 					} else {
-						$.post("actions/addItemAction.php", $("form").serialize(), function(data) {
+						$.post("actions/addItemAction.php", $("#item").serialize()+"&tableName=computer", function(data) {
 							alert(data.message);
 							location.assign("viewComputer.php?computerName="+$("#item").val());
 						}, "json");
@@ -28,10 +28,7 @@
 			<span id="customNav"><a id="submitButton" class="green" href="#">Add</a> Computer</span>
 			<main>
 				<header class="hero blue">
-					<form>
-						<h3><label for="item">Computer Name: </label><input id="item" type="text" name="item"/></h3>
-						<input type="hidden" name="tableName" value="computer"/>
-					</form>
+					<h3><label for="item">Computer Name: </label><input id="item" name="item" type="text"/></h3>
 				</header>
 			</main>
 			<?php include("templates/footer.php"); ?>
