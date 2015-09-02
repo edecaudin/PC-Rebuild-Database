@@ -155,13 +155,13 @@
 					function echoInstalledItems($fieldName) {
 						global $computer;
 						if ($computer[$fieldName] === "") {
-							echo("<div class=\"tableRow\">
+							echo("<div class=\"tableCell\">
 									Nothing to do here!
 								</div>");
 						} else {
 							$items = explode(" - ", $computer[$fieldName]);
 							foreach ($items as $item) {
-								echo("<div class=\"tableRow\">
+								echo("<div class=\"tableCell\">
 										<input type=\"checkbox\"/>{$item}
 									</div>");
 							}

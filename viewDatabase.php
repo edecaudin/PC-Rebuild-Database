@@ -22,7 +22,7 @@
 			<header class="hero blue">
 				<h3>Search the database: <input id="searchField" name="search" type="text"/></h3>
 			</header>
-			<div id="databaseTable"></div>
+			<section id="databaseTable"></section>
 		</main>
 		<?php include("templates/footer.php"); ?>
 	</body>

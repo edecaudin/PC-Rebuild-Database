@@ -10,7 +10,7 @@ body {
 	color: #222222;
 }
 
-main, section, header, nav, footer, section, .hero, .databaseTable, .tableRow, .tableCell, #notesTextArea {
+main, section, header, nav, footer, section, .hero, .tableRow, .tableCell, #databaseTable, #notesTextArea {
 	width: 100%;
 	float: left;
 }
@@ -146,13 +146,10 @@ header.hero.red {
 }
 
 #databaseTable {
+	margin-top: 1px;
+	margin-bottom: 0px;
 	max-height: 550px;
 	overflow-y: scroll;
-}
-
-.tableRow {
-	clear: left;
-	margin-bottom: 6px;
 }
 
 header.tableRow h3 {
@@ -161,8 +158,11 @@ header.tableRow h3 {
 }
 
 .tableCell {
-	margin-top: 2px;
-	margin-bottom: 2px;
+	padding: 4px 0px;
+}
+
+.tableCell input[type=checkbox] {
+	margin-left: 4px;
 }
 
 .tableCell.gray {
@@ -200,6 +200,7 @@ header.editSection input {
 	font-size: 1.4em;
 	text-align: right;
 }
+
 .editSection:not(header) input, .editSection:not(header) select {
 	width: 95%;
 }

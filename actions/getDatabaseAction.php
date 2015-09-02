@@ -2,7 +2,6 @@
 	require("checkLoggedInAction.php");
   	require_once("../mysql/Table.php");
 
-
 	$computers = new Table("computer");
 	if ($_POST["search"] === "") {
 		$computers = $computers->runQuery();
@@ -17,7 +16,7 @@
 	}
 
 	foreach ($computers as $computer) {
-		echo("<div class=\"tableRow tableHeader gray\"><h3>Hostname: <a href=\"viewComputer.php?computerName={$computer["computer_name"]}\">{$computer["computer_name"]}</a></h3></div>
+		echo("<header class=\"tableRow gray\"><h3>Hostname: <a href=\"viewComputer.php?computerName={$computer["computer_name"]}\">{$computer["computer_name"]}</a></h3></header>
 			<div class=\"tableRow\">
 				<div class=\"tableCell quarterWidth\">Service Tag: {$computer["service_tag"]}</div>
 				<div class=\"tableCell quarterWidth\">OS: {$computer["operating_system"]}</div>

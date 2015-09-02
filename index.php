@@ -8,6 +8,14 @@
 <html>
 	<head>
 		<?php include("templates/head.php"); ?>
+		<script>
+			$(function() {
+				$("#computerName").change(function() {
+					location.assign("viewComputer.php?computerName=" + $("#computerName").val());
+				});
+				$("#computerName").prop("selectedIndex", 0);
+			})
+		</script>
 	</head>
 	<body>
 		<?php include("templates/header.php"); ?>
@@ -26,17 +34,15 @@
 				</div>
 				<div class="tableRow">
 					<h3><span class="blue">View</span> a computer</h3>
-					<form action="viewComputer.php" method="get">
-						Edit and create a printable report of any computer:
-						<select name="computerName">
-							<?php
-								$table = new Table("computer");
-								$table->echoRowsAsOptions($table->runQuery());
-								echo "\n";
-							?>
-						</select> 
-						<input type="submit" value="Get Report"/>
-					</form>
+					Edit and create a printable report of any computer:
+					<select id="computerName" name="computerName">
+						<option disabled>Select a computer</option>
+						<?php
+							$table = new Table("computer");
+							$table->echoRowsAsOptions($table->runQuery());
+							echo "\n";
+						?>
+					</select>
 				</div>
 				<div class="tableRow">
 					<h3><a href="viewDatabase.php"><span class="blue">View</span> the database</a></h3>
