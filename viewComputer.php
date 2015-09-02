@@ -34,6 +34,9 @@
 					}
 				});
 				$(".editSection input, .editSection textarea, .editSection select").change(function(event) {
+					if ($(this).is("select")) {
+						$(this).siblings(".selectPrintValue").first().text($(this).val());
+					}
 					$.post(
 						"actions/editInfoAction.php",
 						$(this).serialize()+"&computer_id=<?=$computer["computer_id"]?>"
@@ -94,6 +97,7 @@
 							echo("\n");
 						?>
 					</select>
+					<span class="selectPrintValue"><?=$computer["operating_system"]?></span>
 				</h3>
 			</header>
 			<section class="editSection">
@@ -111,9 +115,10 @@
 						");
 						if ($fieldName === "rebuilder") {
 							echo("<select name=\"{$fieldName}\">");
-							$table = new Table("rebuilder");
-							$table->echoRowsAsOptions($table->runQuery(), $computer["rebuilder"]);
+							$table = new Table($fieldName);
+							$table->echoRowsAsOptions($table->runQuery(), $computer[$fieldName]);
 							echo("</select>");
+							echo("<span class=\"selectPrintValue\">{$computer[$fieldName]}</span>");
 						} else {
 							echo("<input".(is_null($attr) ? "" : " ".$attr)." name=\"{$fieldName}\" type=\"text\" value=\"{$computer[$fieldName]}\"/>");
 						}

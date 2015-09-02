@@ -40,8 +40,12 @@ a {
 		font-size: 10pt;
 	}
 
-	header img, header nav, footer {
+	header img, header nav, footer, select {
 		display: none;
+	}
+	
+	 .selectPrintValue {
+		display: inline !important;
 	}
 }
 
@@ -201,12 +205,15 @@ header.editSection input {
 	text-align: right;
 }
 
+.selectPrintValue {
+	display: none;
+}
+
 .editSection:not(header) input, .editSection:not(header) select {
 	width: 95%;
 }
 
 .editSection textarea {
 	width: 100%;
-	height: 50px;
 	resize: vertical;
 }
