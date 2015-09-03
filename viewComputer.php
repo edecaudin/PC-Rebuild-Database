@@ -67,10 +67,10 @@
 					});
 				});
 				<?php if ($computer["operating_system"] === "") {?>
-					$("#operating_systemInput").prop("selectedIndex", -1);
+					$("#operating_systemInput").prop("selectedIndex", 0);
 				<?php }
 					if ($computer["rebuilder"] === "") {?>
-					$("#rebuilderInput").prop("selectedIndex", -1);
+					$("#rebuilderInput").prop("selectedIndex", 0);
 				<?php }?>
 			});
 		</script>
@@ -90,7 +90,8 @@
 					<input name="service_tag" type="text" value="<?=$computer["service_tag"]?>"/> -
 
 					<label for="operating_system">OS:</label>
-					<select name="operating_system">
+					<select id="operating_systemInput" name="operating_system">
+						<option disabled>Select an OS</option>
 						<?php
 							$table = new Table("operating_system");
 							$table->echoRowsAsOptions($table->runQuery(), $computer["operating_system"]);
@@ -114,7 +115,8 @@
 					<div class=\"tableCell quarterWidth\">
 						");
 						if ($fieldName === "rebuilder") {
-							echo("<select name=\"{$fieldName}\">");
+							echo("<select id=\"{$fieldName}Input\" name=\"{$fieldName}\">");
+							echo("<option disabled>Select a {$fieldName}</option>");
 							$table = new Table($fieldName);
 							$table->echoRowsAsOptions($table->runQuery(), $computer[$fieldName]);
 							echo("</select>");
